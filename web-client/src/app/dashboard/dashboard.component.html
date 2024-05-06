@@ -1,0 +1,16 @@
+<div id="dashboard-page" class="dashboard-page">
+    <div *ngFor="let building of buildings" class="inline-card">
+        <div class="card"  (click)="dormClick(building)">
+            <img src="api/Images/Small_Buildings/{{building.nameQueryParameter}}.jpg" class="image" />
+            <div class="info">
+                <h2 class="name">{{building.name}}</h2>
+                <ngx-stars [size]="2" [readonly]="true" [initialStars]="building.averageRating" ></ngx-stars>
+                <div class="style-cost">
+                    <h3 class="style">{{building.style}}</h3>
+                    <h3 class="cost">{{building.cost}}</h3>
+                </div>
+                <button class="load-button">Review</button>
+            </div>
+        </div>
+    </div>
+</div>

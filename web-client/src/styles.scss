@@ -1,0 +1,91 @@
+// All colors are ordered darkest -> lightest
+// Primary Colors
+$shades-of-red: 
+#610316,
+#8A041A, 
+#AB091E, 
+#E00122, 
+#E12D39, 
+#EF4E4E, 
+#F86A6A, 
+#FF9B9B, 
+#FFBDBD, 
+#FFE3E3;
+
+// Secondary Colors
+$shades-of-yellow:
+#B44D12,
+#CB6E17,
+#DE911D,
+#F0B429,
+#F7C948,
+#FADB5F,
+#FCE588,
+#FFF3C4,
+#FFFBEA;
+
+// Neutral Colors
+$shades-of-blue-grey: 
+#102A43,
+#243B53,
+#334E68,
+#486581,
+#627D98,
+#829AB1,
+#9FB3C8,
+#BCCCDC,
+#D9E2EC,
+#F0F4F8;
+
+// Supporting Colors
+$shades-of-cyan: 
+#044E54,
+#0A6C74,
+#0E7C86,
+#14919B,
+#2CB1BC,
+#38BEC9,
+#54D1DB,
+#87EAF2,
+#BEF8FD,
+#E0FCFF;
+
+// Supporting Colors
+$shades-of-green: 
+#2B4005,
+#42600C,
+#507712,
+#63921A,
+#7BB026,
+#94C843,
+#ABDB5E,
+#C7EA8F,
+#E2F7C2,
+#F2FDE0;
+
+// Given the list and index, return the color
+@function get-color($color-list, $index) {
+    @return nth($color-list, $index);
+}
+$primary-color: get-color($shades-of-red, 4);
+
+$pixel-sizes:
+12px,
+14px,
+16px,
+18px,
+20px,
+24px,
+32px,
+48px;
+
+@function get-size($index) {
+    @return nth($pixel-sizes, $index);
+}
+
+body, html {
+    height: 100%;
+    width: 100%;
+    margin: 0 !important;
+    background-color: get-color($shades-of-blue-grey, 9);
+  }
