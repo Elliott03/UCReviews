@@ -8,6 +8,8 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace api.Controllers;
 
+#nullable enable
+
 [ApiController]
 [Route("[controller]")]
 public class AuthenticationController : ControllerBase
@@ -32,7 +34,7 @@ public class AuthenticationController : ControllerBase
 
         if (user == null)
             return Unauthorized();
-        
+
         string jwt = _service.GenerateToken(user);
         var response = new AuthenticationResponse();
         response.jwt = jwt;
@@ -43,6 +45,7 @@ public class AuthenticationController : ControllerBase
     {
         public string? Email { get; set; }
         public string? Password { get; set; }
+
     }
     public class RegisterRequestBody
     {
@@ -50,6 +53,6 @@ public class AuthenticationController : ControllerBase
     }
     public class AuthenticationResponse
     {
-        public string jwt { get; set; }
+        public string jwt { get; set; } = "{}";
     }
 }
