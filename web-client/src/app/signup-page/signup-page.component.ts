@@ -1,5 +1,4 @@
 import { Component, signal } from '@angular/core';
-import { UserService } from '../core/services/user.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../core/services/auth.service';
 import { FormControl, Validators } from '@angular/forms';

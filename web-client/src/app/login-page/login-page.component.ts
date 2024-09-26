@@ -1,12 +1,8 @@
-import { Component, OnInit, Signal, signal } from '@angular/core';
+import { Component, Signal, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../core/services/user.service';
-import * as jwt_decode from 'jwt-decode';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import { secretKey } from '../secret';
-import { Token } from '@angular/compiler';
 import { AuthService } from '../core/services/auth.service';
-import { IDecodedJwt } from '../Models/User';
 import { FormControl, Validators } from '@angular/forms';
 import { merge } from 'rxjs';
 import { checkIsNumber } from '../core/validators/pin-password.validator';
@@ -43,8 +39,7 @@ export class LoginPageComponent{
   async login() {
     if (this.password.valid) {
       try {
-        console.log(this.email, this.password.value);
-        const response = await this._authService.login(this.email, this.password.value!.toString()).toPromise();
+        const response = await this._authService.login(this.email, this.password.value!).toPromise();
         if (response) {
           const sub = localStorage.getItem('sub');
           const user = await this._userService.getUserById(Number(sub)).toPromise();
