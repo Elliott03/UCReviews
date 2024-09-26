@@ -28,20 +28,6 @@
     flex-direction: column;
 
 }
-.email-text {
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-    color: get-color($shades-of-blue-grey, 3);
-}
-
-.error-text {
-    margin: 25px auto;
-    font-family: 'Inter', sans-serif;
-    color: red;
-}
-.email-input:focus {
-    outline: none;
-}
 
 .signup-button {
     width: 430px;

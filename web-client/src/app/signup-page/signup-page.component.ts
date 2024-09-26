@@ -25,7 +25,7 @@ constructor(
     .subscribe(() => this.updateErrorMessage());
   }
 
-  signupButton() {
+  signup() {
     if (this.email.valid) {
       this._authService.register(this.email.value!).subscribe();
       this._router.navigate(['/login'], {state: { email: this.email.value}});
@@ -37,7 +37,7 @@ constructor(
       this.errorMessage.set("Email is required");
     } else  if (this.email.hasError('email')){
       this.errorMessage.set("Invalid Email");
-    } else if (this.email.hasError("validUcEmail")) {
+    } else if (this.email.hasError("invalidUcEmail")) {
       this.errorMessage.set("Not a UC Email");
     }
   }

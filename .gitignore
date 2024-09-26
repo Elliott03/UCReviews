@@ -264,3 +264,5 @@ paket-files/
 .DS_Store
 .vscode/
 web-client/pnpm-lock.yaml
+
+api/appsettings.json

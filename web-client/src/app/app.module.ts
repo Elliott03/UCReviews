@@ -18,6 +18,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 
@@ -39,6 +40,7 @@ import {MatButtonModule} from '@angular/material/button';
         MatInputModule,
         ReactiveFormsModule,
         MatButtonModule,
+        BrowserAnimationsModule,
         RouterModule.forRoot([
             { path: 'signup', component: SignupPageComponent },
             { path: 'login', component: LoginPageComponent },
