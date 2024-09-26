@@ -9,11 +9,17 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { RouterModule } from '@angular/router';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { DormPageComponent } from './dorm-page/dorm-page.component';
 import { NgxStarsModule } from 'ngx-stars';
 import { AuthGuard } from './core/guards/auth.guard';
+import {MatCardModule} from '@angular/material/card';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+
+
 
 @NgModule({ declarations: [
         AppComponent,
@@ -23,10 +29,16 @@ import { AuthGuard } from './core/guards/auth.guard';
         DashboardComponent,
         DormPageComponent
     ],
-    bootstrap: [AppComponent], imports: [BrowserModule,
+    bootstrap: [AppComponent], 
+    imports: [BrowserModule,
         AppRoutingModule,
         FormsModule,
         NgxStarsModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        MatButtonModule,
         RouterModule.forRoot([
             { path: 'signup', component: SignupPageComponent },
             { path: 'login', component: LoginPageComponent },

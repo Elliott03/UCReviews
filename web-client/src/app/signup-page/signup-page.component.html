@@ -1,13 +1,22 @@
-<div id="signup-page" class="signup-page">
-    <div class="signup-layout">
-        <h1 class="signup-text">Sign Up</h1>
-        <img src="../../assets/ucreviews-logo.png" class="logo"/>
-        <div class="signup-form">
-            <h2 class="email-text">Email</h2>
-            <input [(ngModel)]="email" type="text" class="email-input"/>
-            <h3 [ngStyle]="{'visibility': isError ? 'visible' : 'hidden'}" class="error-text">{{errorMessage}}</h3>
-            <button class="signup-button" (click)="signupClick()">Sign Up</button>
-        </div>
-        <h3 class="footer-text">We are not affiliated with University of Cincinnati</h3>
+<mat-card class="signup-layout">
+    <h1 class="signup-text">Sign Up</h1>
+    <img src="../../assets/ucreviews-logo.png" class="logo"/>
+    <div class="signup-form">
+        <h2 class="email-text">Email</h2>
+
+        <mat-form-field appearance="outline">
+            <mat-label>UC Email</mat-label>
+            <input 
+            required 
+            matInput 
+            [formControl]="email"
+            placeholder="example@mail.uc.edu"> 
+        </mat-form-field>
+        @if (email.invalid) {
+            <mat-error class="err">{{errorMessage()}}</mat-error>
+          }
+        <button mat-flat-button class="signup-button" (click)="signupButton()" >Sign Up</button>
     </div>
-</div>
+    <h3 class="footer-text">We are not affiliated with University of Cincinnati</h3>
+</mat-card>
+
