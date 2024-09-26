@@ -263,3 +263,4 @@ paket-files/
 #Others
 .DS_Store
 .vscode/
+web-client/pnpm-lock.yaml
