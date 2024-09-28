@@ -14,7 +14,7 @@ import { checkIsNumber } from '../core/validators/pin-password.validator';
 })
 export class LoginPageComponent{
   email: string = "";
-  password = new FormControl('', [Validators.required, checkIsNumber(), Validators.maxLength(6), Validators.minLength(6)]); // Second validator matches to a 6 digit number
+  password = new FormControl('', [Validators.required, checkIsNumber(), Validators.maxLength(6), Validators.minLength(6)]);
   isError: boolean = false;
   validationErrorMessage = signal('');
   authenticationError: boolean = false;
