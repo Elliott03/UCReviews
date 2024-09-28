@@ -52,7 +52,6 @@ export class DormPageComponent implements OnInit{
     } else {
       this._router.navigate(['/signup']);
     }
-
   }
   updateCharacterCount(event: any) {
     const currentText: string = event.target.value;
