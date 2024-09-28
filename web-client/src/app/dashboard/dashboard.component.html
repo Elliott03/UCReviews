@@ -1,7 +1,7 @@
 <div id="dashboard-page" class="dashboard-page">
   @for (building of buildings; track building) {
     <div class="inline-card">
-      <div class="card"  (click)="dormClick(building)">
+      <mat-card class="card" (click)="dormClick(building)">
         <img src="api/Images/Small_Buildings/{{building.nameQueryParameter}}.jpg" class="image" />
         <div class="info">
           <h2 class="name">{{building.name}}</h2>
@@ -10,9 +10,9 @@
             <h3 class="style">{{building.style}}</h3>
             <h3 class="cost">{{building.cost}}</h3>
           </div>
-          <button class="load-button">Review</button>
+          <button mat-flat-button>Review</button>
         </div>
-      </div>
+      </mat-card> 
     </div>
   }
 </div>

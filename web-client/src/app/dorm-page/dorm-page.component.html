@@ -10,20 +10,20 @@
   </div>
   <h3 class="description">{{building?.description}}</h3>
   <hr class="horizontal-line">
-  <div class="create-review">
+  <mat-card class="create-review">
     <h2 class="username">{{username}}</h2>
-    <textarea [maxLength]="1000" (input)="updateCharacterCount($event)" [(ngModel)]="reviewText" class="create-review-text" placeholder="Review text here"></textarea>
+    <textarea matInput [maxLength]="1000" (input)="updateCharacterCount($event)" [(ngModel)]="reviewText" class="create-review-text" placeholder="Review text here"></textarea>
     <h5 class="character-counter">{{currentCharacterCount}} / {{maxCharacterCount}}</h5>
     <ngx-stars #reviewRating class="rating-stars" [readonly]="false" [initialStars]="0" [size]="3"></ngx-stars>
-    <button (click)="sendReview()" class="review-button" >Review</button>
-  </div>
+    <button mat-flat-button (click)="sendReview()" class="secondary review-button" >Review</button>
+  </mat-card>
   <hr class="horizontal-line">
   @for (review of reviews; track review) {
-    <div class="single-review">
+    <mat-card class="single-review">
       <h2 class="username">{{emailToUsername(review.user.email)}}</h2>
       <h3 class="review-text">{{review.reviewText}}</h3>
       <ngx-stars class="review-stars" #reviewRating [readonly]="true" [initialStars]="review.starRating" [size]="2"></ngx-stars>
       <h3 class="time-created">{{convertDateToReadable(review.timeCreated)}}</h3>
-    </div>
+    </mat-card>
   }
 </div>

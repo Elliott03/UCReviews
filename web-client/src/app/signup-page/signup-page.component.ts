@@ -1,43 +1,43 @@
-import { Component } from '@angular/core';
-import { UserService } from '../core/services/user.service';
+import { Component, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../core/services/auth.service';
+import { FormControl, Validators } from '@angular/forms';
+import { merge } from 'rxjs';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import { checkValidUcEmail } from '../core/validators/mail-uc-edu.validator';
+
 @Component({
   selector: 'signup-page',
   templateUrl: './signup-page.component.html',
   styleUrls: ['./signup-page.component.scss']
 })
 export class SignupPageComponent {
-  email: string = "";
-  isError: boolean = false;
-  errorMessage: string = "";
-  constructor(
-    private _authService: AuthService,
-    private _router: Router
-    ) {}
+  readonly email = new FormControl('', [Validators.required, Validators.email, checkValidUcEmail()]);
+  errorMessage = signal('');
 
-    signupClick() {
-      this.email = this.email.toLowerCase().trim();
-      if (this.isValidEmail()) {
-        this._authService.register(this.email).subscribe();
-        this._router.navigate(['/login'], { state: { email: this.email }});
-      }
-    }
+constructor(
+  private _authService: AuthService,
+  private _router: Router
+  ) {
+    merge(this.email.statusChanges, this.email.valueChanges)
+    .pipe(takeUntilDestroyed())
+    .subscribe(() => this.updateErrorMessage());
+  }
 
-    isValidEmail(): boolean {
-      const emailEnding = "@mail.uc.edu";
-      if (!this.email.endsWith(emailEnding)) {
-        this.isError = true;
-        this.errorMessage = `Email must end with ${emailEnding}`;
-        return false;
-      }
-      if (this.email.length <= emailEnding.length) {
-        this.isError = true;
-        this.errorMessage = "Email must be valid length";
-        return false;
-      }
-      this.isError = false;
-      this.errorMessage = "";
-      return true;
+  signup() {
+    if (this.email.valid) {
+      this._authService.register(this.email.value!).subscribe();
+      this._router.navigate(['/login'], {state: { email: this.email.value}});
     }
+  }
+
+  updateErrorMessage() {
+    if (this.email.hasError('required')) {
+      this.errorMessage.set("Email is required");
+    } else  if (this.email.hasError('email')){
+      this.errorMessage.set("Invalid Email");
+    } else if (this.email.hasError("invalidUcEmail")) {
+      this.errorMessage.set("Not a UC Email");
+    }
+  }
 }

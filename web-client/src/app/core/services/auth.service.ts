@@ -1,4 +1,4 @@
-import { Injectable, signal } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { AuthenticationRequestBody, IAuthenticationResponse, IDecodedJwt, IUser, RegisterRequestBody } from "src/app/Models/User";
 import { Observable, shareReplay, tap } from "rxjs";
 import { HttpClient } from "@angular/common/http";
@@ -29,9 +29,6 @@ export class AuthService  {
             localStorage.setItem('sub', decodedToken?.sub);
             localStorage.setItem('id_token', token);
         }
-
-        // const expiresAt = moment().add(token.expiresIn, 'second');
-        // localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()));
     }
     getUserId() {
         const id = localStorage.getItem('sub');
@@ -43,23 +40,11 @@ export class AuthService  {
     logout() {
         localStorage.removeItem('id_token');
         localStorage.removeItem('expires_at');
-        // localStorage.removeItem('expires_at');
     }
     public isLoggedIn() {
-        //return moment().isBefore(this.getExpiration());
         return localStorage.getItem('id_token') ? true : false;
     }
-
-
-    // getExpiration() {
-    //     const expiration = localStorage.getItem('expires_at');
-    //     if (expiration) {
-    //         const expiresAt = JSON.parse(expiration);
-    //         return moment(expiresAt);
-    //     }
-    //     return;
-    // }
-
+    
     getDecodedJwt(token: string): IDecodedJwt | null {
         try {
           return jwt_decode.jwtDecode<IDecodedJwt>(token);

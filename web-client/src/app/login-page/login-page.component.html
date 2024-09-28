@@ -1,13 +1,25 @@
-<div id="login-page" class="login-page">
-    <div class="login-layout">
-        <h1 class="login-text">Login</h1>
-        <img src="../../assets/ucreviews-logo.png" class="logo"/>
-        <div class="login-form">
-            <h2 class="password-text">Password</h2>
-            <input [(ngModel)]="password" type="text" class="password-input"/>
-            <h3 [ngStyle]="{'visibility': isError ? 'visible' : 'hidden'}" class="error-text">{{errorMessage}}</h3>
-            <button class="login-button" (click)="loginClick()">Login</button>
-        </div>
-        <h3 class="footer-text">We are not affiliated with University of Cincinnati</h3>
+
+<mat-card class="login-layout">
+    <h1 class="login-text">Login</h1>
+    <img src="../../assets/ucreviews-logo.png" class="logo"/>
+    <div class="login-form">
+
+        <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input
+                type="password"
+                required 
+                matInput 
+                [formControl]="password"
+                placeholder="******"> 
+        </mat-form-field>
+        @if (password.invalid) {
+            <mat-error>{{validationErrorMessage()}}</mat-error>
+        }
+        <button mat-flat-button (click)="login()" >Login</button>
+        @if (authenticationError) {
+            <mat-error>{{authenticationErrorMessage()}}</mat-error>
+        }
     </div>
-</div>
+    <h3 class="footer-text">We are not affiliated with University of Cincinnati</h3>
+</mat-card>

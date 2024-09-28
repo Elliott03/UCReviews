@@ -55,11 +55,7 @@
     height: 400px;
     background-color: get-color($shades-of-blue-grey, 10);
     margin: 20px 0;
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    overflow-y: auto;
-    border-radius: 5px;
 }
 .username {
     font-family: 'Inter', sans-serif;
@@ -89,29 +85,17 @@
 }
 
 .review-button {
-    background-color: $primary-color;
     border: none;
     width: 15em;
     height: 5em;
-    border-radius: 5px;
     margin: get-size(3) 0;
-    color: get-color($shades-of-red, 10);
-}
-
-.review-button:hover {
-    background-color: get-color($shades-of-red, 3);
-    cursor: pointer;
 }
 
 .single-review {
     margin: 20px 0;
     width: 60%;
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    overflow-y: auto;
     background-color: get-color($shades-of-blue-grey, 10);
-    border-radius: 5px;
 }
 
 .review-text {

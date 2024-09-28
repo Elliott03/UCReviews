@@ -1,5 +1,19 @@
-// All colors are ordered darkest -> lightest
-// Primary Colors
+@use '@angular/material' as mat;
+@use '../m3-theme.scss' as light;
+
+@include mat.core();
+
+$web-client-theme: light.$light-theme;
+:root {
+  @include mat.all-component-themes($web-client-theme);
+}
+html {
+  @include mat.core-theme($web-client-theme);
+}
+
+
+
+
 $shades-of-red: 
 #610316,
 #8A041A, 
@@ -89,3 +103,6 @@ body, html {
     margin: 0 !important;
     background-color: get-color($shades-of-blue-grey, 9);
   }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

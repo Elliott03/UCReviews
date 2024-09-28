@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../core/services/user.service';
 import { BuildingService } from '../core/services/building.service';
 import { ISmallBuilding } from '../Models/Building';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from '../core/services/auth.service';
 
 @Component({

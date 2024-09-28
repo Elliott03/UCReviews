@@ -1,12 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Signal, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../core/services/user.service';
-import * as jwt_decode from 'jwt-decode';
-
-import { secretKey } from '../secret';
-import { Token } from '@angular/compiler';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import { AuthService } from '../core/services/auth.service';
-import { IDecodedJwt } from '../Models/User';
+import { FormControl, Validators } from '@angular/forms';
+import { merge } from 'rxjs';
+import { checkIsNumber } from '../core/validators/pin-password.validator';
 
 @Component({
   selector: 'login-page',
@@ -15,9 +14,12 @@ import { IDecodedJwt } from '../Models/User';
 })
 export class LoginPageComponent{
   email: string = "";
-  password: string = "";
+  password = new FormControl('', [Validators.required, checkIsNumber(), Validators.maxLength(6), Validators.minLength(6)]);
   isError: boolean = false;
-  errorMessage: string = "";
+  validationErrorMessage = signal('');
+  authenticationError: boolean = false;
+  authenticationErrorMessage: Signal<string> = signal("Incorrect Password");
+
   constructor(
     private _userService: UserService,
     private _router: Router,
@@ -28,13 +30,15 @@ export class LoginPageComponent{
     if (currentNavigation && currentNavigation.extras && currentNavigation.extras.state) {
       this.email = currentNavigation.extras.state['email'];
     }
+    merge(this.password.statusChanges, this.password.valueChanges)
+    .pipe(takeUntilDestroyed())
+    .subscribe(() => this.updateErrorMessage());
   }
 
-  async loginClick() {
-    this.password = this.password.toLowerCase().trim();
-    if (this.isValidPassword()) {
+  async login() {
+    if (this.password.valid) {
       try {
-        const response = await this._authService.login(this.email, this.password).toPromise();
+        const response = await this._authService.login(this.email, this.password.value!).toPromise();
         if (response) {
           const sub = localStorage.getItem('sub');
           const user = await this._userService.getUserById(Number(sub)).toPromise();
@@ -44,31 +48,21 @@ export class LoginPageComponent{
           }
         }
       } catch (error) {
-        this.isError = true;
-        this.errorMessage = "Incorrect Password";
+        this.authenticationError = true;
+        console.error(error);
       }
     }
   }
   
-  isValidPassword(): boolean {
-    if (!this.isNumeric(this.password)) {
-      this.isError = true;
-      this.errorMessage = "Password must be numeric"
-      return false;
-    }
-    if (this.password.length < 6) {
-      this.isError = true;
-      this.errorMessage = "Password must be 6 characters";
-      return false;
-    }
 
-    this.isError = false;
-    this.errorMessage = "";
-    return true;
+  updateErrorMessage() {
+
+    if (this.password.hasError("required")) {
+      this.validationErrorMessage.set("Password is required");
+    } else if (this.password.hasError("notANumber")) {
+      this.validationErrorMessage.set("Password must be a number");
+    } else if (this.password.hasError("minlength") || this.password.hasError("maxlength")) {
+      this.validationErrorMessage.set("Password should be 6 digits");
+    } 
   }
-
-  isNumeric(input: string): boolean {
-    return /^[0-9]+$/.test(input);
-  }
-
 }

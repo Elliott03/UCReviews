@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ILargeBuilding, ISmallBuilding } from '../Models/Building';
+import { ILargeBuilding } from '../Models/Building';
 import { BuildingService } from '../core/services/building.service';
 import { NgxStarsComponent } from 'ngx-stars';
 import { IUser } from '../Models/User';
@@ -52,7 +52,6 @@ export class DormPageComponent implements OnInit{
     } else {
       this._router.navigate(['/signup']);
     }
-
   }
   updateCharacterCount(event: any) {
     const currentText: string = event.target.value;
