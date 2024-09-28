@@ -6,7 +6,6 @@ public class LargeBuildingDto
     public string Name { get; set; }
     public string Style { get; set; }
     public string Cost { get; set; }
-    public string LargeImage { get; set; }
     public string Description { get; set; }
     public double AverageRating { get; set; }
     public string NameQueryParameter { get; set; }
