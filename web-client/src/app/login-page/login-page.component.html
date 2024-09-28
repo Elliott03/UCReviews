@@ -16,7 +16,7 @@
         @if (password.invalid) {
             <mat-error>{{validationErrorMessage()}}</mat-error>
         }
-        <button mat-flat-button class="login-button" (click)="login()" >Login</button>
+        <button mat-flat-button (click)="login()" >Login</button>
         @if (authenticationError) {
             <mat-error>{{authenticationErrorMessage()}}</mat-error>
         }

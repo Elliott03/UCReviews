@@ -15,7 +15,7 @@
     <textarea matInput [maxLength]="1000" (input)="updateCharacterCount($event)" [(ngModel)]="reviewText" class="create-review-text" placeholder="Review text here"></textarea>
     <h5 class="character-counter">{{currentCharacterCount}} / {{maxCharacterCount}}</h5>
     <ngx-stars #reviewRating class="rating-stars" [readonly]="false" [initialStars]="0" [size]="3"></ngx-stars>
-    <button mat-flat-button (click)="sendReview()" class="review-button" >Review</button>
+    <button mat-flat-button (click)="sendReview()" class="secondary review-button" >Review</button>
   </mat-card>
   <hr class="horizontal-line">
   @for (review of reviews; track review) {
