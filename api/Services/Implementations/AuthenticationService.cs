@@ -33,13 +33,13 @@ public class AuthenticationService : IAuthenticationService
         }
         _mailService.SendMail(email, unHashedPassword);
         // Hash and salt the password
-        byte[] salt = RandomNumberGenerator.GetBytes(128/8);
+        byte[] salt = RandomNumberGenerator.GetBytes(128 / 8);
         string hashedPassword = Convert.ToBase64String(KeyDerivation.Pbkdf2(
             password: unHashedPassword!,
             salt: salt,
             prf: KeyDerivationPrf.HMACSHA256,
             iterationCount: 100000,
-            numBytesRequested: 256/8
+            numBytesRequested: 256 / 8
         ));
         await _userService.AddUser(email, hashedPassword, salt);
     }
@@ -48,13 +48,15 @@ public class AuthenticationService : IAuthenticationService
         var user = await _userService.GetUserByEmail(email);
         if (user != null)
         {
+            if (user.PasswordExpiration < DateTime.Now)
+                return null;
             byte[] storedSalt = user.Salt;
             string hashedPassword = Convert.ToBase64String(KeyDerivation.Pbkdf2(
             password: password!,
             salt: storedSalt,
             prf: KeyDerivationPrf.HMACSHA256,
             iterationCount: 100000,
-            numBytesRequested: 256/8
+            numBytesRequested: 256 / 8
             ));
             if (user.Password.Equals(hashedPassword))
                 return user;
@@ -87,7 +89,7 @@ public class AuthenticationService : IAuthenticationService
     }
 
 
-    public bool IsJwtValid(string token) 
+    public bool IsJwtValid(string token)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(_configuration["Authentication:SecretForKey"]);

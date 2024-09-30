@@ -8,29 +8,31 @@ namespace api.Services.Implementations;
 public class UserService : IUserService
 {
     private readonly IUserRepository _repository;
-    public UserService(IUserRepository repository) 
+    public UserService(IUserRepository repository)
     {
         _repository = repository;
     }
-    
+
     public async Task AddUser(string email, string password, byte[] salt)
     {
         var temporaryUser = await _repository.GetUserByEmail(email);
-        if (temporaryUser != null) 
+        if (temporaryUser != null)
         {
             temporaryUser.Password = password;
             temporaryUser.Salt = salt;
             await _repository.UpdateUser(temporaryUser);
             return;
         }
-            
+
         var user = new User
         {
             Email = email,
             Password = password,
             TimeCreated = DateTime.Now,
-            Salt = salt
+            Salt = salt,
+            PasswordExpiration = DateTime.Now.Add(TimeSpan.FromMinutes(15))
         };
+
         await _repository.AddUser(user);
     }
     public async Task<User> GetUserByEmail(string email)

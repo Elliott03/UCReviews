@@ -11,4 +11,6 @@ public class User
     public DateTime TimeCreated { get; set; }
     public byte[] Salt { get; set; }
     public List<Review> Reviews { get; set; }
+
+    public DateTime PasswordExpiration { get; set; }
 }
