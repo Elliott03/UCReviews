@@ -5,7 +5,6 @@ export interface ILargeBuilding {
     name: string,
     style: string,
     cost: string,
-    largeImage: string,
     averageRating: number,
     description: string,
     nameQueryParameter: string,
@@ -17,7 +16,6 @@ export interface ISmallBuilding {
     name: string,
     style: string,
     cost: string,
-    smallImage: string,
     nameQueryParameter: string,
     averageRating: number,
     image: string
