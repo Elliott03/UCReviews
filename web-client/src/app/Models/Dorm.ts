@@ -1,6 +1,6 @@
 import { IReview } from "./Review"
 
-export interface ILargeBuilding {
+export interface ILargeDorm {
     id: number,
     name: string,
     style: string,
@@ -11,7 +11,7 @@ export interface ILargeBuilding {
     reviews: IReview[]
 }
 
-export interface ISmallBuilding {
+export interface ISmallDorm {
     id: number,
     name: string,
     style: string,

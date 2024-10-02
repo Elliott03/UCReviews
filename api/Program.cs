@@ -17,13 +17,13 @@ builder.Services.AddDbContext<UCReviewsContext>(options =>
 // Add service layer dependencies to the container
 builder.Services.AddTransient<IAuthenticationService, AuthenticationService>();
 builder.Services.AddTransient<IUserService, UserService>();
-builder.Services.AddTransient<IBuildingService, BuildingService>();
+builder.Services.AddTransient<IDormService, DormService>();
 builder.Services.AddTransient<IReviewService, ReviewService>();
 builder.Services.AddTransient<IMailService, MailService>();
 
 // Add repository layer dependencies to the container
 builder.Services.AddTransient<IUserRepository, UserRepository>();
-builder.Services.AddTransient<IBuildingRepository, BuildingRepository>();
+builder.Services.AddTransient<IDormRepository, DormRepository>();
 builder.Services.AddTransient<IReviewRepository, ReviewRepository>();
 
 

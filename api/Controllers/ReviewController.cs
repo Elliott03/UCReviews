@@ -27,10 +27,10 @@ public class ReviewController : ControllerBase
 
     }
 
-    [HttpGet("{buildingId}")]
-    public async Task<ActionResult<List<Review>>> GetReviewByBuildingId(int buildingId)
+    [HttpGet("{dormId}")]
+    public async Task<ActionResult<List<Review>>> GetReviewByDormId(int dormId)
     {
-            return await _service.GetReviewsByBuildingId(buildingId);
+            return await _service.GetReviewsByDormId(dormId);
 
     }
 

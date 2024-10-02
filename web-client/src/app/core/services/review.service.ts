@@ -10,8 +10,8 @@ import { IReview, SaveReview } from "src/app/Models/Review";
 export class ReviewService {
     constructor(private _http: HttpClient) 
     {}
-    getReviewsByBuildingId(buildingId: number): Observable<IReview[]> {
-        return this._http.get<IReview[]>(`/api/Review/${buildingId}`);
+    getReviewsByDormId(dormId: number): Observable<IReview[]> {
+        return this._http.get<IReview[]>(`/api/Review/${dormId}`);
     }
     addReview(review: SaveReview): Observable<IReview[]> {
         return this._http.post<IReview[]>('/api/Review', review);

@@ -15,9 +15,9 @@ public class ReviewRepository : IReviewRepository
     {
         return await _dbContext.Review.ToListAsync();
     }
-    public async Task<List<Review>> GetReviewsByBuildingId(int buildingId) 
+    public async Task<List<Review>> GetReviewsByDormId(int dormId) 
     {
-        return await _dbContext.Review.Include(r => r.User).Where(r => r.BuildingId == buildingId).ToListAsync();
+        return await _dbContext.Review.Include(r => r.User).Where(r => r.DormId == dormId).ToListAsync();
     }
     public async Task SaveReview(Review review)
     {

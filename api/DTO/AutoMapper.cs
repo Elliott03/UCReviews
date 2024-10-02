@@ -7,7 +7,7 @@ public class Mapper : Profile
     public Mapper()
     {
         CreateMap<User, UserDto>();
-        CreateMap<Building, LargeBuildingDto>();
-        CreateMap<Building, SmallBuildingDto>();
+        CreateMap<Dorm, LargeDormDto>();
+        CreateMap<Dorm, SmallDormDto>();
     }
 }
