@@ -266,3 +266,5 @@ paket-files/
 web-client/pnpm-lock.yaml
 
 api/appsettings.json
+
+scripts/
