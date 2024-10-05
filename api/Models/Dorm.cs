@@ -1,6 +1,6 @@
 namespace api.Models;
 using System.ComponentModel.DataAnnotations;
-public class Building
+public class Dorm
 {
     [Key]
     public int Id { get; set; }

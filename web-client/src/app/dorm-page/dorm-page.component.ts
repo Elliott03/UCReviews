@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ILargeBuilding } from '../Models/Building';
-import { BuildingService } from '../core/services/building.service';
+import { ILargeDorm } from '../Models/Dorm';
+import { DormService } from '../core/services/dorm.service';
 import { NgxStarsComponent } from 'ngx-stars';
 import { IUser } from '../Models/User';
 import { IReview, SaveReview } from '../Models/Review';
@@ -14,7 +14,7 @@ import { ReviewService } from '../core/services/review.service';
   styleUrls: ['./dorm-page.component.scss']
 })
 export class DormPageComponent implements OnInit{
-  building: ILargeBuilding | undefined;
+  dorm: ILargeDorm | undefined;
   reviews: IReview[] | undefined;
   user: IUser | undefined;
   username: string | undefined;
@@ -29,7 +29,7 @@ export class DormPageComponent implements OnInit{
   reviewStarsComponent: NgxStarsComponent = new NgxStarsComponent();
   constructor(
     private route: ActivatedRoute,
-    private _buildingService: BuildingService,
+    private _dormService: DormService,
     private _reviewService: ReviewService,
     private _authService: AuthService,
     private _router: Router
@@ -38,10 +38,10 @@ export class DormPageComponent implements OnInit{
   ngOnInit(): void {
     if (this._authService.isLoggedIn()) {
       const queryParam = this.route.snapshot.params['dorm'];
-      this._buildingService.getBuilding(queryParam).subscribe((building) => {
-        this.building = building;
-        this.dormStarsComponent.setRating(building.averageRating);
-        this.reviews = this.reverseReviewList(this.building.reviews);
+      this._dormService.getDorm(queryParam).subscribe((dorm) => {
+        this.dorm = dorm;
+        this.dormStarsComponent.setRating(dorm.averageRating);
+        this.reviews = this.reverseReviewList(this.dorm.reviews);
       });
       const stringUser = localStorage.getItem('user');
       if (stringUser) {
@@ -63,13 +63,13 @@ export class DormPageComponent implements OnInit{
   }
   sendReview() {
     const userId = this._authService.getUserId();
-    if(this.reviewText && userId != -1 && this.building) {
+    if(this.reviewText && userId != -1 && this.dorm) {
       this._reviewService.addReview(
         new SaveReview(
           this.reviewText,
           this.reviewStarsComponent.rating.toString(),
           userId,
-          this.building.id
+          this.dorm.id
         ))
         .subscribe((reviewList) => {
           this.reviews = this.reverseReviewList(reviewList);

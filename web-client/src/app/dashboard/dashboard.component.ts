@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { BuildingService } from '../core/services/building.service';
-import { ISmallBuilding } from '../Models/Building';
+import { DormService } from '../core/services/dorm.service';
+import { ISmallDorm } from '../Models/Dorm';
 import { Router } from '@angular/router';
 import { AuthService } from '../core/services/auth.service';
 
@@ -10,24 +10,24 @@ import { AuthService } from '../core/services/auth.service';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit{
-  buildings: ISmallBuilding[] = [];
+  dorms: ISmallDorm[] = [];
   constructor(
-    private _buildingService: BuildingService,
+    private _dormService: DormService,
     private _router: Router,
     public _authService: AuthService
     )
   {}
   ngOnInit(): void {
     if (this._authService.isLoggedIn()) {
-      this._buildingService.getBuildings().subscribe(buildings => {
-        this.buildings = buildings;
+      this._dormService.getDorms().subscribe(dorms => {
+        this.dorms = dorms;
     });
     } else {
       this._router.navigate(['/signup']);
     }
   }
 
-  dormClick(building: ISmallBuilding) {
-    this._router.navigate(['/dorm', building.nameQueryParameter]);
+  dormClick(dorm: ISmallDorm) {
+    this._router.navigate(['/dorm', dorm.nameQueryParameter]);
   }
 }

@@ -13,10 +13,10 @@ public class Review
     public DateTime TimeCreated { get; set; }
     [ForeignKey("User")]
     public int UserId { get; set; }
-    [ForeignKey("Building")]
-    public int BuildingId { get; set; }
+    [ForeignKey("Dorm")]
+    public int DormId { get; set; }
 
     public User User { get; set; }
-    public Building Building { get; set; }
+    public Dorm Dorm { get; set; }
     
 }
