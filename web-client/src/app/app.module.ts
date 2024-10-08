@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { SignupPageComponent } from './signup-page/signup-page.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { DormDashboardComponent } from './dorm-dashboard/dorm-dashboard.component';
 import { RouterModule } from '@angular/router';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -20,6 +20,8 @@ import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TextFieldModule} from '@angular/cdk/text-field';
+import { OverallDashboardComponent } from './overall-dashboard/overall-dashboard.component';
+import { ParkingDashboardComponent } from './parking-dashboard/parking-dashboard.component';
 
 
 
@@ -28,7 +30,7 @@ import { TextFieldModule} from '@angular/cdk/text-field';
         LoginPageComponent,
         SignupPageComponent,
         NavbarComponent,
-        DashboardComponent,
+        DormDashboardComponent,
         DormPageComponent
     ],
     bootstrap: [AppComponent], 
@@ -46,8 +48,10 @@ import { TextFieldModule} from '@angular/cdk/text-field';
         RouterModule.forRoot([
             { path: 'signup', component: SignupPageComponent },
             { path: 'login', component: LoginPageComponent },
-            { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
-            { path: 'dorm/:dorm', component: DormPageComponent, canActivate: [AuthGuard] },
+            { path: 'dashboard', component: OverallDashboardComponent, canActivate: [AuthGuard]},
+            { path: 'dashboard/housing', component: DormDashboardComponent, canActivate: [AuthGuard]},
+            { path: 'dashboard/housing/:dorm', component: DormPageComponent, canActivate: [AuthGuard]},
+            { path: 'dashboard/parking', component: ParkingDashboardComponent, canActivate: [AuthGuard]},
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
             { path: '**', redirectTo: 'dashboard', pathMatch: 'full' }
         ])], providers: [

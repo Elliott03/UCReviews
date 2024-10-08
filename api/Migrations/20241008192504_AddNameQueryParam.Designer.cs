@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api.Models;
 
@@ -11,9 +12,11 @@ using api.Models;
 namespace api.Migrations
 {
     [DbContext(typeof(UCReviewsContext))]
-    partial class UCReviewsContextModelSnapshot : ModelSnapshot
+    [Migration("20241008192504_AddNameQueryParam")]
+    partial class AddNameQueryParam
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

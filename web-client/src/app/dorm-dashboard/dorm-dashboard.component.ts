@@ -5,11 +5,11 @@ import { Router } from '@angular/router';
 import { AuthService } from '../core/services/auth.service';
 
 @Component({
-  selector: 'dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  selector: 'dorm-dashboard',
+  templateUrl: './dorm-dashboard.component.html',
+  styleUrls: ['./dorm-dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit{
+export class DormDashboardComponent implements OnInit{
   dorms: ISmallDorm[] = [];
   constructor(
     private _dormService: DormService,
@@ -28,6 +28,6 @@ export class DashboardComponent implements OnInit{
   }
 
   dormClick(dorm: ISmallDorm) {
-    this._router.navigate(['/dorm', dorm.nameQueryParameter]);
+    this._router.navigate(['/dashboard/housing', dorm.nameQueryParameter]);
   }
 }
