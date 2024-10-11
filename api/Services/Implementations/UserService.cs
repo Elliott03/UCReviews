@@ -15,11 +15,13 @@ public class UserService : IUserService
 
     public async Task AddUser(string email, string password, byte[] salt)
     {
+        var passwordExpiration = DateTime.Now.Add(TimeSpan.FromMinutes(15));
         var temporaryUser = await _repository.GetUserByEmail(email);
         if (temporaryUser != null)
         {
             temporaryUser.Password = password;
             temporaryUser.Salt = salt;
+            temporaryUser.PasswordExpiration = passwordExpiration;
             await _repository.UpdateUser(temporaryUser);
             return;
         }
@@ -30,7 +32,7 @@ public class UserService : IUserService
             Password = password,
             TimeCreated = DateTime.Now,
             Salt = salt,
-            PasswordExpiration = DateTime.Now.Add(TimeSpan.FromMinutes(15))
+            PasswordExpiration = passwordExpiration
         };
 
         await _repository.AddUser(user);
