@@ -22,14 +22,8 @@ public class DormRepository : IDormRepository
         return await _dbContext.Dorm.Include(b => b.Reviews).ThenInclude(r => r.User).Where(b => b.NameQueryParameter == queryParam).FirstOrDefaultAsync();
     }
 
-    public async Task<Dorm> GetDormById(int id) 
+    public async Task<Dorm> GetDormById(int id)
     {
         return await _dbContext.Dorm.Include(b => b.Reviews).Where(b => b.Id == id).FirstOrDefaultAsync();
-    }
-    public async Task SetDormRating(decimal average, int id) 
-    {
-        Dorm dorm = await _dbContext.Dorm.Where(b => b.Id == id).FirstOrDefaultAsync();
-        dorm.AverageRating = average;
-        await _dbContext.SaveChangesAsync();
     }
 }

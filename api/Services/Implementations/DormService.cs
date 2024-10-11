@@ -27,11 +27,4 @@ public class DormService : IDormService
         return dorm;
     }
 
-    public async Task SetDormRating(int dormId) 
-    {
-        Dorm dorm = await _repository.GetDormById(dormId);
-        List<Review> reviews = dorm.Reviews;
-        decimal average = reviews.Average(r => r.StarRating);
-        await _repository.SetDormRating(average, dorm.Id);
-    }
 }

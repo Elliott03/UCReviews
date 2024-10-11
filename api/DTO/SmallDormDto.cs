@@ -9,6 +9,5 @@ public class SmallDormDto
     public string Style { get; set; }
     public string Cost { get; set; }
     public string NameQueryParameter { get; set; }
-    public double AverageRating { get; set; }
     public IActionResult Image { get; set; }
 }

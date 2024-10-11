@@ -20,6 +20,7 @@ export class DashboardComponent implements OnInit{
   ngOnInit(): void {
     if (this._authService.isLoggedIn()) {
       this._dormService.getDorms().subscribe(dorms => {
+        console.log({dorms});
         this.dorms = dorms;
     });
     } else {

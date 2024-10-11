@@ -5,10 +5,10 @@ export interface ILargeDorm {
     name: string,
     style: string,
     cost: string,
-    averageRating: number,
     description: string,
     nameQueryParameter: string,
     reviews: IReview[]
+    averageRating: number,
 }
 
 export interface ISmallDorm {

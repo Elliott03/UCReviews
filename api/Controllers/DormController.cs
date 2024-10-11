@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using api.Models;
 using AutoMapper;
 namespace api.Controllers;
+
 [ApiController]
 [Route("[controller]")]
 [Authorize]
