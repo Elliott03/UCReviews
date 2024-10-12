@@ -14,7 +14,7 @@ public class DormRepository : IDormRepository
 
     public async Task<IEnumerable<Dorm>> GetAllDorms()
     {
-        return await _dbContext.Dorm.ToListAsync();
+        return await _dbContext.Dorm.Include(b => b.Reviews).ThenInclude(r => r.User).ToListAsync();
     }
 
     public async Task<Dorm> GetDorm(string queryParam)

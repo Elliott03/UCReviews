@@ -1,22 +1,20 @@
 import { IReview } from './Review';
 
-export interface ILargeDorm {
+interface IBaseDorm {
   id: number;
   name: string;
   style: string;
   cost: string;
-  description: string;
-  nameQueryParameter: string;
   reviews: IReview[];
 }
 
-export interface ISmallDorm {
-  id: number;
-  name: string;
-  style: string;
-  cost: string;
+export interface ILargeDorm extends IBaseDorm {
+  description: string;
   nameQueryParameter: string;
-  averageRating: number;
+}
+
+export interface ISmallDorm extends IBaseDorm {
+  nameQueryParameter: string;
   image: string;
 }
 

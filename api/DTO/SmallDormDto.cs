@@ -1,5 +1,4 @@
-
-
+using api.Models;
 using Microsoft.AspNetCore.Mvc;
 
 public class SmallDormDto 
@@ -10,4 +9,6 @@ public class SmallDormDto
     public string Cost { get; set; }
     public string NameQueryParameter { get; set; }
     public IActionResult Image { get; set; }
+
+    public List<Review> Reviews { get; set; }
 }
