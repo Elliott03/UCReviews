@@ -60,6 +60,11 @@
     margin-left: get-size(7);
 }
 
+.dashboard-page {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
 
 @media only screen and (max-width: 700px) {
     .inline-card {
