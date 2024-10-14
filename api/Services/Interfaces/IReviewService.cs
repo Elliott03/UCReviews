@@ -1,5 +1,8 @@
 namespace api.Services.Interfaces;
+
 using api.Models;
+using api.ViewModels;
+
 public interface IReviewService
 {
     public Task<IEnumerable<Review>> GetReviews();

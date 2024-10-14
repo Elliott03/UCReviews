@@ -1,5 +1,8 @@
+namespace api.Models;
+
 using System.ComponentModel.DataAnnotations;
 using api.Models;
+
 public class ParkingGarage
 {
     [Key]

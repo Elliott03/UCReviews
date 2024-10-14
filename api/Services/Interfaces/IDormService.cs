@@ -1,4 +1,5 @@
 namespace api.Services.Interfaces;
+
 using api.Models;
 
 public interface IDormService

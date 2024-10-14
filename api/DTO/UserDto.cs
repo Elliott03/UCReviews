@@ -1,6 +1,7 @@
+namespace api.Dto;
+
 using api.Models;
 
-namespace api.Dto;
 public class UserDto
 {
     

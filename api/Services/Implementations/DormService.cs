@@ -1,11 +1,10 @@
+namespace api.Services.Implementations;
+
 using Microsoft.AspNetCore.Mvc;
 using api.Models;
 using api.Repositories.Interfaces;
 using api.Services.Interfaces;
 using AutoMapper;
-
-
-namespace api.Services.Implementations;
 
 public class DormService : IDormService
 {

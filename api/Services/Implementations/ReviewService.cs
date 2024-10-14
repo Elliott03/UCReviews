@@ -1,10 +1,11 @@
+namespace api.Services.Implementations;
+
 using System.Collections;
 using api.Models;
 using api.Repositories.Interfaces;
 using api.Services.Interfaces;
+using api.ViewModels;
 using Microsoft.EntityFrameworkCore;
-
-namespace api.Services.Implementations;
 
 public class ReviewService : IReviewService
 {

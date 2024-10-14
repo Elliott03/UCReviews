@@ -1,3 +1,5 @@
+namespace api.Dto;
+
 using api.Models;
 
 public class LargeDormDto 

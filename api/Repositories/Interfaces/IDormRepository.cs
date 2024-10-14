@@ -1,5 +1,7 @@
 namespace api.Repositories.Interfaces;
+
 using api.Models;
+
 public interface IDormRepository
 {
     public Task<IEnumerable<Dorm>> GetAllDorms();
