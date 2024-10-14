@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DormService } from '../core/services/dorm.service';
-import { ISmallDorm } from '../Models/Dorm';
+import { ISmallDorm, ISmallDormWithRating } from '../Models/Dorm';
 import { Router } from '@angular/router';
 import { AuthService } from '../core/services/auth.service';
 
@@ -10,7 +10,7 @@ import { AuthService } from '../core/services/auth.service';
   styleUrls: ['./dorm-dashboard.component.scss']
 })
 export class DormDashboardComponent implements OnInit{
-  dorms: ISmallDorm[] = [];
+  dorms: ISmallDormWithRating[] = [];
   constructor(
     private _dormService: DormService,
     private _router: Router,

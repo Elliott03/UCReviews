@@ -10,7 +10,7 @@ public class ReviewService : IReviewService
 {
     private readonly IReviewRepository _repository;
     private readonly IDormService _dormService;
-    public ReviewService(IReviewRepository repository, IDormService dormService) 
+    public ReviewService(IReviewRepository repository, IDormService dormService)
     {
         _repository = repository;
         _dormService = dormService;
@@ -19,11 +19,11 @@ public class ReviewService : IReviewService
     {
         return await _repository.GetAllReviews();
     }
-    public async Task<List<Review>> GetReviewsByDormId(int dormId) 
+    public async Task<List<Review>> GetReviewsByDormId(int dormId)
     {
         return await _repository.GetReviewsByDormId(dormId);
     }
-    public async Task<List<Review>> SaveReview(SaveReviewViewModel reviewViewModel) 
+    public async Task<List<Review>> SaveReview(SaveReviewViewModel reviewViewModel)
     {
         var review = new Review
         {
@@ -34,9 +34,8 @@ public class ReviewService : IReviewService
             DormId = reviewViewModel.DormId
         };
         await _repository.SaveReview(review);
-        await _dormService.SetDormRating(reviewViewModel.DormId);
         return await _repository.GetReviewsByDormId(reviewViewModel.DormId);
     }
 
-    
+
 }
