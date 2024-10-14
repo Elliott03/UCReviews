@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api.Models;
 
@@ -11,9 +12,11 @@ using api.Models;
 namespace api.Migrations
 {
     [DbContext(typeof(UCReviewsContext))]
-    partial class UCReviewsContextModelSnapshot : ModelSnapshot
+    [Migration("20241008191639_AddParkingGarages")]
+    partial class AddParkingGarages
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,9 +48,6 @@ namespace api.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("NameQueryParameter")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("PermitRequired")
                         .HasColumnType("bit");
 
@@ -64,7 +64,6 @@ namespace api.Migrations
                             Latitude = 39.129894,
                             Longitude = -84.516852,
                             Name = "CCM Garage",
-                            NameQueryParameter = "CCM",
                             PermitRequired = false
                         },
                         new
@@ -75,7 +74,6 @@ namespace api.Migrations
                             Latitude = 39.128439,
                             Longitude = -84.516615999999999,
                             Name = "Calhoun Garage",
-                            NameQueryParameter = "Calhoun",
                             PermitRequired = false
                         },
                         new
@@ -86,7 +84,6 @@ namespace api.Migrations
                             Latitude = 39.135716000000002,
                             Longitude = -84.515223000000006,
                             Name = "Campus Green Garage",
-                            NameQueryParameter = "Campus_Green",
                             PermitRequired = false
                         },
                         new
@@ -97,7 +94,6 @@ namespace api.Migrations
                             Latitude = 39.134303000000003,
                             Longitude = -84.517270999999994,
                             Name = "Clifton Court Garage",
-                            NameQueryParameter = "Clifton_Court",
                             PermitRequired = false
                         },
                         new
@@ -108,7 +104,6 @@ namespace api.Migrations
                             Latitude = 39.134689999999999,
                             Longitude = -84.520307000000003,
                             Name = "Clifton Lots",
-                            NameQueryParameter = "Clifton_Lots",
                             PermitRequired = true
                         },
                         new
@@ -119,7 +114,6 @@ namespace api.Migrations
                             Latitude = 39.129001000000002,
                             Longitude = -84.512904000000006,
                             Name = "Corry Garage",
-                            NameQueryParameter = "Corry",
                             PermitRequired = false
                         },
                         new
@@ -130,7 +124,6 @@ namespace api.Migrations
                             Latitude = 39.134089000000003,
                             Longitude = -84.494940999999997,
                             Name = "Digital Futures",
-                            NameQueryParameter = "Digital_Futures",
                             PermitRequired = false
                         },
                         new
@@ -141,7 +134,6 @@ namespace api.Migrations
                             Latitude = 39.130840999999997,
                             Longitude = -84.521377000000001,
                             Name = "Stratford Heights Garage",
-                            NameQueryParameter = "Stratford_Heights",
                             PermitRequired = true
                         },
                         new
@@ -152,7 +144,6 @@ namespace api.Migrations
                             Latitude = 39.134614999999997,
                             Longitude = -84.510986000000003,
                             Name = "University Avenue Garage",
-                            NameQueryParameter = "University_Avenue",
                             PermitRequired = false
                         },
                         new
@@ -163,7 +154,6 @@ namespace api.Migrations
                             Latitude = 39.130166000000003,
                             Longitude = -84.515963999999997,
                             Name = "Varsity Village Garage",
-                            NameQueryParameter = "Varsity_Village",
                             PermitRequired = false
                         },
                         new
@@ -174,7 +164,6 @@ namespace api.Migrations
                             Latitude = 39.135024999999999,
                             Longitude = -84.515180000000001,
                             Name = "Woodside Avenue Garage",
-                            NameQueryParameter = "Woodside_Avenue",
                             PermitRequired = false
                         },
                         new
@@ -185,7 +174,6 @@ namespace api.Migrations
                             Latitude = 39.138082474177075,
                             Longitude = -84.501192464167943,
                             Name = "Blood Cancer Healing Center",
-                            NameQueryParameter = "Blood_Cancer_Healing_Center",
                             PermitRequired = false
                         },
                         new
@@ -196,7 +184,6 @@ namespace api.Migrations
                             Latitude = 39.137669000000002,
                             Longitude = -84.505159000000006,
                             Name = "Eden Garage",
-                            NameQueryParameter = "Eden",
                             PermitRequired = false
                         },
                         new
@@ -207,7 +194,6 @@ namespace api.Migrations
                             Latitude = 39.138082474177075,
                             Longitude = -84.501192464167943,
                             Name = "Kingsgate Garage",
-                            NameQueryParameter = "Kingsgate",
                             PermitRequired = false
                         });
                 });

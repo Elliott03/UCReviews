@@ -24,6 +24,11 @@ public class UCReviewsContext : DbContext
         .WithOne(r => r.Dorm)
         .HasForeignKey(r => r.DormId);
 
+        builder.Entity<ParkingGarage>()
+        .HasMany(g => g.Reviews)
+        .WithOne(r => r.ParkingGarage)
+        .HasForeignKey(r => r.ParkingGarageId);
+
         builder.Entity<Dorm>()
         .HasData(
         new Dorm
@@ -162,6 +167,167 @@ public class UCReviewsContext : DbContext
             NameQueryParameter = "USquare"
         }
         );
+
+        builder.Entity<ParkingGarage>()
+        .HasData
+        (
+            new ParkingGarage
+            {
+                Id = 1,
+                Name = "CCM Garage",
+                NameQueryParameter = "CCM",
+                Latitude = 39.129894,
+                Longitude = -84.516852,
+                Campus = "Uptown Campus",
+                Address = "CCM Blvd, Cincinnati, OH 45219",
+                PermitRequired = false
+            },
+            new ParkingGarage
+            {
+                Id = 2,
+                Name = "Calhoun Garage",
+                NameQueryParameter = "Calhoun",
+                Latitude = 39.128439,
+                Longitude = -84.516616,
+                Campus = "Uptown Campus",
+                Address = "230 Calhoun St, Cincinnati, OH 45219",
+                PermitRequired = false
+            },
+            new ParkingGarage
+            {
+                Id = 3,
+                Name = "Campus Green Garage",
+                NameQueryParameter = "Campus_Green",
+                Latitude = 39.135716,
+                Longitude = -84.515223,
+                Campus = "Uptown Campus",
+                Address = "2935 Campus Green Dr, Cincinnati, OH 45221",
+                PermitRequired = false
+            },
+            new ParkingGarage
+            {
+                Id = 4,
+                Name = "Clifton Court Garage",
+                NameQueryParameter = "Clifton_Court",
+                Latitude = 39.134303,
+                Longitude = -84.517271,
+                Campus = "Uptown Campus",
+                Address = "CCM Blvd, Cincinnati, OH 45219",
+                PermitRequired = false
+            },
+            new ParkingGarage
+            {
+                Id = 5,
+                Name = "Clifton Lots",
+                NameQueryParameter = "Clifton_Lots",
+                Latitude = 39.134690,
+                Longitude = -84.520307,
+                Campus = "Uptown Campus",
+                Address = "2915 Clifton Ave, Cincinnati, OH 45220",
+                PermitRequired = true
+            },
+            new ParkingGarage
+            {
+                Id = 6,
+                Name = "Corry Garage",
+                NameQueryParameter = "Corry",
+                Latitude = 39.129001,
+                Longitude = -84.512904,
+                Campus = "Uptown Campus",
+                Address = "2529 Scioto Ln, Cincinnati, OH 45219",
+                PermitRequired = false
+            },
+            new ParkingGarage
+            {
+                Id = 7,
+                Name = "Digital Futures",
+                NameQueryParameter = "Digital_Futures",
+                Latitude = 39.134089,
+                Longitude = -84.494941,
+                Campus = "Uptown Campus",
+                Address = "3080 Exploration Ave, Cincinnati, OH 45206",
+                PermitRequired = false
+            },
+            new ParkingGarage
+            {
+                Id = 8,
+                Name = "Stratford Heights Garage",
+                NameQueryParameter = "Stratford_Heights",
+                Latitude = 39.130841,
+                Longitude = -84.521377,
+                Campus = "Uptown Campus",
+                Address = "2630 Stratford Ave, Cincinnati, OH 45220",
+                PermitRequired = true
+            },
+            new ParkingGarage
+            {
+                Id = 9,
+                Name = "University Avenue Garage",
+                NameQueryParameter = "University_Avenue",
+                Latitude = 39.134615,
+                Longitude = -84.510986,
+                Campus = "Uptown Campus",
+                Address = "40 W University Ave, Cincinnati, OH 45221",
+                PermitRequired = false
+            },
+            new ParkingGarage
+            {
+                Id = 10,
+                Name = "Varsity Village Garage",
+                NameQueryParameter = "Varsity_Village",
+                Latitude = 39.130166,
+                Longitude = -84.515964,
+                Campus = "Uptown Campus",
+                Address = "200 Varsity Village Drive, Cincinnati, OH 45221",
+                PermitRequired = false
+            },
+            new ParkingGarage
+            {
+                Id = 11,
+                Name = "Woodside Avenue Garage",
+                NameQueryParameter = "Woodside_Avenue",
+                Latitude = 39.135025,
+                Longitude = -84.515180,
+                Campus = "Uptown Campus",
+                Address = "2913 Woodside Drive, Cincinnati, OH 45219",
+                PermitRequired = false
+            },
+            new ParkingGarage
+            {
+                Id = 12,
+                Name = "Blood Cancer Healing Center",
+                NameQueryParameter = "Blood_Cancer_Healing_Center",
+                Latitude = 39.138082474177075,
+                Longitude = -84.50119246416794,
+                Campus = "Medical Campus",
+                Address = "3232 Healing Way, Cincinnati, OH 45229",
+                PermitRequired = false
+            },
+            new ParkingGarage
+            {
+                Id = 13,
+                Name = "Eden Garage",
+                NameQueryParameter = "Eden",
+                Latitude = 39.137669,
+                Longitude = -84.505159,
+                Campus = "Medical Campus",
+                Address = "3223 Eden Ave, Cincinnati, OH 45220",
+                PermitRequired = false
+            },
+            new ParkingGarage
+            {
+                Id = 14,
+                Name = "Kingsgate Garage",
+                NameQueryParameter = "Kingsgate",
+                Latitude = 39.138082474177075,
+                Longitude = -84.50119246416794,
+                Campus = "Medical Campus",
+                Address = "151 Goodman Dr, Cincinnati, OH 45219",
+                PermitRequired = false
+            }
+        );
+
+
         base.OnModelCreating(builder);
     }
 }
