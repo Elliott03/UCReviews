@@ -7,6 +7,8 @@ public class UCReviewsContext : DbContext
     public DbSet<User> User { get; set; }
     public DbSet<Review> Review { get; set; }
     public DbSet<Dorm> Dorm { get; set; }
+    public DbSet<ParkingGarage> ParkingGarage { get; set; }
+
     public UCReviewsContext(DbContextOptions<UCReviewsContext> options)
         : base(options)
     {

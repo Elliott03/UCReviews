@@ -8,6 +8,9 @@ public class ParkingGarage
     [Key]
     public int Id { get; set; }
     public string Name { get; set; }
+
+    public string Slug => Name.Replace(' ', '-').ToLower();
+
     public string NameQueryParameter { get; set; }
     public double Latitude { get; set; }
     public double Longitude { get; set; }
