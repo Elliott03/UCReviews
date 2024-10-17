@@ -6,6 +6,8 @@ public class UCReviewsContext : DbContext
     public DbSet<User> User { get; set; }
     public DbSet<Review> Review { get; set; }
     public DbSet<Dorm> Dorm { get; set; }
+    public DbSet<ParkingGarage> ParkingGarage { get; set; }
+    public DbSet<DiningHall> DiningHall { get; set; }
     public UCReviewsContext(DbContextOptions<UCReviewsContext> options)
         : base(options)
     {
@@ -28,6 +30,11 @@ public class UCReviewsContext : DbContext
         .HasMany(g => g.Reviews)
         .WithOne(r => r.ParkingGarage)
         .HasForeignKey(r => r.ParkingGarageId);
+
+        builder.Entity<DiningHall>()
+        .HasMany(d => d.Reviews)
+        .WithOne(r => r.DiningHall)
+        .HasForeignKey(r => r.DiningHallId);
 
         builder.Entity<Dorm>()
         .HasData(
@@ -326,7 +333,192 @@ public class UCReviewsContext : DbContext
                 PermitRequired = false
             }
         );
-
+        builder.Entity<DiningHall>()
+        .HasData
+        (
+            new DiningHall
+            {
+                Id = 1,
+                Name = "Cincy Grill",
+                Category = "Retail Dining",
+                Description = "Located on the second floor of the Tangeman University Center, Cincy Grill is home to grill favorites such as chicken tenders, smash burgers, loaded tots and much more.",
+                IncludedInMealPlan = "Meal Exchange",
+                Location = "Cincy Grill - Tangemen University Center, 2701 Bearcat Way",
+                NameQueryParameter = "CincyGrill"
+            },
+            new DiningHall
+            {
+                Id = 2,
+                Name = "Chick-fil-A",
+                Category = "Retail Dining",
+                Description = "A favorite stop for breakfast, lunch, or dinner, Chick-fil-A offers premium chicken sandwiches, salads, nuggets, waffle fries, and more.",
+                IncludedInMealPlan = "No",
+                Location = "Chick-Fil-A - Tangeman University Center, 2701 Bearcat Way",
+                NameQueryParameter = "ChickFilA"
+                
+            },
+            new DiningHall
+            {
+                Id = 3,
+                Name = "Teachers Café",
+                Category = "Café",
+                Description = "Teachers Café offers a wide variety of grab ‘n go sandwiches, salads, fruit cups, parfaits and more. If you need a pick-me-up, we also serve Rooted Grounds coffee.",
+                IncludedInMealPlan = "Meal Exchange",
+                Location = "Teachers Café, 2610 University Circle",
+                NameQueryParameter = "TeachersCafé"
+            },
+            new DiningHall
+            {
+                Id = 4,
+                Name = "Bearcats Café",
+                Category = "Café",
+                Description = "Bearcats Café, located in TUC offers both a grab and go style meal or a hot meal to go. \nBABB (Bad-Ass Breakfast Burritos) - Satisfy your early-morning or late-night cravings with burritos packed with premium meats, crispy potatoes, cheese, and eggs, all wrapped in a soft tortilla. Top it off with our addictive sauces for a truly satisfying meal. \nStuffed Sensation - Treat yourself to Otis Spunkmeyer cookies stuffed with irresistible fillings like Oreos® and Reese’s. These decadent cookies are sure to be a hit, whether served fresh or pre-packaged. \nTo the Max Mexican - Build a healthy, flavorful bowl or burrito at To The Max Mexican. Choose from fresh, authentically seasoned ingredients, carefully portioned for a balanced meal. \nAC BBQ - Enjoy rich, flavorful barbecue rooted in Black excellence and community, created by Anthony Anderson and Cedric the Entertainer. AC Barbeque brings people together with its delicious, culturally inspired dishes.",
+                IncludedInMealPlan = "Carryout and Limited Seating",
+                Location = "Bearcats Café - Tangeman University Center, 2701 Bearcat Way",
+                NameQueryParameter = "BearcatsCafé"
+            },
+            new DiningHall
+            {
+                Id = 5,
+                Name = "CampusView Café",
+                Category = "Café",
+                Description = "Campus View Café offers a wide variety of grab ‘n go sandwiches, salads, fruit cups, parfaits and more. If you need a pick-me-up, we also serve Rooted Grounds coffee.",
+                IncludedInMealPlan = "Meal Exchange",
+                Location = "Campus View Café - University Hall, 51 Goodman Avenue - Medical Campus",
+                NameQueryParameter = "CampusViewCafé"
+            },
+            new DiningHall
+            {
+                Id = 6,
+                Name = "On the Green",
+                Category = "Resident Dining",
+                Description = "On the Green is an all-you-care-to-eat dining facility that boasts 8 dining stations, dishing up comfort food classics, made-to-order stir-fry and pasta, homemade soups, fresh salads with local greens, and in-house baked desserts. On the Green also features Simple Servings, an allergen-friendly station committed to providing delicious, wholesome meals safely prepared free of 8 of the top allergens, plus gluten as well as Simple Zone a “pantry” where food items needed by customers with celiac disease or food allergies can be housed with precautions against cross-contact can be found.",
+                IncludedInMealPlan = "Dine In",
+                Location = "On The Green - Marian Spencer Hall, 2911 Scioto Lane",
+                NameQueryParameter = "OTG"
+            },
+            new DiningHall
+            {
+                Id = 7,
+                Name = "MarketPointe",
+                Category = "Resident Dining",
+                Description = "MarketPointe is a 37,000 foot state-of-the-art dining facility that boasts 8 dining stations that put you at the center of a culinary food hall experience. From delicious, plant-forward dishes and nourishing made-to-order sandwiches to authentic global bowls and craveable Latin-infused flavors, MarketPointe has something for everyone. MarketPointe also features Simple Servings, an allergen-friendly station committed to providing delicious, wholesome meals safely prepared free of 8 of the top allergens, plus gluten. Cap your dining experience with a fresh-roasted cup of local Rooted Grounds coffee and something sweet.",
+                IncludedInMealPlan = "Dine In",
+                Location = "MarketPointe - Siddal Hall, 2580 Corbett Drive",
+                NameQueryParameter = "MarketPointe"
+            },
+            new DiningHall
+            {
+                Id = 8,
+                Name = "Halal Shack",
+                Category = "Retail Dining",
+                Description = "At The Halal Shack, our food is Made with Love. Our culture is rooted in Middle Eastern & Mediterranean heritage which embodies bonds that are created through sharing food Made With Love. Find us at Tangeman University Center.",
+                IncludedInMealPlan = "Meal Exchange after 2 P.M.",
+                Location = "The Halal Shack - Tangeman University Center, 2701 Bearcat Way",
+                NameQueryParameter = "HalalShack"
+                
+            },
+            new DiningHall
+            {
+                Id = 9,
+                Name = "Pei Wei",
+                Category = "Retail Dining",
+                Description = "Pei Wei at Tangeman University Center offers authentic, Asian-inspired cuisine without compromising on quality or convenience.",
+                IncludedInMealPlan = "No",
+                Location = "Pei Wei - Tangeman University Center, 2701 Bearcat Way",
+                NameQueryParameter = "PeiWei"
+            },
+            new DiningHall
+            {
+                Id = 10,
+                Name = "Market on Main",
+                Category = "CStore",
+                Description = "Market on Main is your mini-grocery store in the heart of campus! Water by the case, dairy, snacks, grab-and-go, heat-and-eat meals, beverages and more are available for all of your convenience needs.",
+                IncludedInMealPlan = "No",
+                Location = "Market on Main, 2820 Bearcat Way",
+                NameQueryParameter = "MarketOnMain"
+            },
+            new DiningHall
+            {
+                Id = 11,
+                Name = "Center Court",
+                Category = "Resident Dining",
+                Description = "Center Court is an expansive all-you-care-to-eat facility that boasts over a dozen unique dining destinations to feed hungry Bearcats. Enjoy favorites like pizza, handhelds, Indian cuisine from Choolaah, and made-to-order handcrafted sandwiches to an expansive salad bar, homemade soups and indulgent desserts. Center Court also features Simple Servings, an allergen-friendly station committed to providing delicious, wholesome meals safely prepared free of 8 of the top allergens, plus gluten.",
+                IncludedInMealPlan = "Dine In",
+                Location = "Center Court - Campus Recreation Center, 2810 Woodside Drive",
+                NameQueryParameter = "CenterCourt"
+            },
+            new DiningHall
+            {
+                Id = 12,
+                Name = "DAAP Café",
+                Category = "Café",
+                Description = "DAAP Café serves your favorite breakfast, lunch, and dinner options. The Café also serves Simply to Go sandwiches, salads, & snacks for students who are hungry and on the go. If you need a pick-me-up, we also serve iced bubble tea and Rooted Grounds coffee.",
+                IncludedInMealPlan = "Meal Exchange",
+                Location = "DAAP Café @ Aronoff Center, 2624 Clifton Avenue",
+                NameQueryParameter = "DaapCafé"
+            },
+            new DiningHall
+            {
+                Id = 13,
+                Name = "The 86 Coffee Bar",
+                Category = "Café",
+                Description = "Partnering with the local Pneuma Coffee Roasters, renowned for their commitment to quality, The 86 Coffee Bar offers an array of meticulously crafted brews, from rich espressos to velvety lattes. Moreover, the menu extends beyond traditional offerings, with specialty drinks inspired by the creativity of CCM's community.",
+                IncludedInMealPlan = "No",
+                Location = "College-Conservatory of Music, 2604 Backstage Drive",
+                NameQueryParameter="86Coffee"
+            },
+            new DiningHall
+            {
+                Id = 14,
+                Name = "Mainstreet Express Mart",
+                Category = "CStore",
+                Description = "Salty and sweet snacks, grab-and-go salads, sandwiches, fruit cups, heat-and-eat meals, beverages and more are available at the Mainstreet Express Mart.",
+                IncludedInMealPlan = "No",
+                Location = "Tangeman University Center, 2701 Bearcat Way",
+                NameQueryParameter = "Mainstreet"
+            },
+            new DiningHall
+            {
+                Id = 15,
+                Name = "Starbucks - Linder",
+                Category = "Café",
+                Description = "Starbucks roasts high-quality whole bean coffees. Other premium beverage options include rich espressos, lattes, and Tazo Teas. Starbucks also serves a variety of pastries and confections.",
+                IncludedInMealPlan = "No",
+                Location = "Starbucks @ Lindner Hall, 2906 Woodside Drive",
+                NameQueryParameter = "Starbucks_Linder"
+            },
+            new DiningHall
+            {
+                Id = 16,
+                Name = "Starbucks - Langsam",
+                Category = "Café",
+                Description = "Starbucks roasts high-quality whole bean coffees. Other premium beverage options include rich espressos, lattes, and Tazo Teas. Starbucks also serves a variety of pastries and confections.",
+                IncludedInMealPlan = "No",
+                Location = "Starbucks @ Langsam Library, 2911 Woodside Drive",
+                NameQueryParameter = "Starbucks_Langsam"
+            },  
+            new DiningHall
+            {
+                Id = 17,
+                Name = "Stadium View Café",
+                Category = "Resident Dining",
+                Description = "Stadium View Café features Sicilian pizza and a build-your-own rice bowl station. \nThe Café also serves an exclusive game day menu during football season.",
+                IncludedInMealPlan = "Dine In and Carryout",
+                Location = "Bearcats Café - Tangeman University Center, 2701 Bearcat Way",
+                NameQueryParameter = "StadiumView"
+            },
+            new DiningHall
+            {
+                Id = 18,
+                Name = "Starbucks - Medical Campus",
+                Category = "Café",
+                Description = "Starbucks roasts high-quality whole bean coffees. Other premium beverage options include rich espressos, lattes, and Tazo Teas. Starbucks also serves a variety of pastries and confections.",
+                IncludedInMealPlan = "No",
+                Location = "Starbucks @ Medical Science Building, 234 Goodman Drive",
+                NameQueryParameter = "Starbucks_Medical"
+            }
+        );
 
         base.OnModelCreating(builder);
     }
