@@ -1,8 +1,8 @@
+namespace api.Repositories.Implementations;
+
 using api.Models;
 using api.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
-
-namespace api.Repositories.Implementations;
 
 public class ReviewRepository : IReviewRepository
 {

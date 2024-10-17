@@ -1,3 +1,5 @@
+namespace api.Services.Implementations;
+
 using System.IdentityModel.Tokens.Jwt;
 using System.Reflection.Metadata.Ecma335;
 using System.Security.Claims;
@@ -7,7 +9,6 @@ using api.Models;
 using api.Services.Interfaces;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.IdentityModel.Tokens;
-namespace api.Services.Implementations;
 
 public class AuthenticationService : IAuthenticationService
 {

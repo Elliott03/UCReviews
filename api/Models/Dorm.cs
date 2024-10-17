@@ -1,5 +1,7 @@
 namespace api.Models;
+
 using System.ComponentModel.DataAnnotations;
+
 public class Dorm
 {
     [Key]

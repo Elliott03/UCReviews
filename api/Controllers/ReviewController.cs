@@ -1,8 +1,10 @@
+namespace api.Controllers;
+
 using api.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using api.Models;
-namespace api.Controllers;
+using api.ViewModels;
 
 [ApiController]
 [Route("[controller]")]

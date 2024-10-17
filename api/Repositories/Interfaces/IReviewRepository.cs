@@ -1,5 +1,7 @@
 namespace api.Repositories.Interfaces;
+
 using api.Models;
+
 public interface IReviewRepository
 {
     public Task<IEnumerable<Review>> GetAllReviews();

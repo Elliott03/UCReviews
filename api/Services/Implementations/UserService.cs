@@ -1,9 +1,9 @@
+namespace api.Services.Implementations;
+
 using api.Models;
 using api.Repositories.Interfaces;
 using api.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
-
-namespace api.Services.Implementations;
 
 public class UserService : IUserService
 {

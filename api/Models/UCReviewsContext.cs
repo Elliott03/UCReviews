@@ -1,4 +1,5 @@
 namespace api.Models;
+
 using Microsoft.EntityFrameworkCore;
 
 public class UCReviewsContext : DbContext
