@@ -1,8 +1,11 @@
 namespace api.Models;
+
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-public class Review 
+#nullable enable
+
+public class Review
 {
     [Key]
     public int Id { get; set; }
@@ -21,5 +24,5 @@ public class Review
     public User User { get; set; }
     public Dorm? Dorm { get; set; }
     public ParkingGarage? ParkingGarage { get; set; }
-    
+
 }

@@ -1,10 +1,12 @@
+namespace api.Controllers;
+
 using api.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using api.Models;
 using AutoMapper;
-namespace api.Controllers;
+using api.Dto;
 
 [ApiController]
 [Route("[controller]")]

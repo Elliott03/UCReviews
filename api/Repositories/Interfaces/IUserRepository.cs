@@ -1,5 +1,7 @@
 namespace api.Repositories.Interfaces;
+
 using api.Models;
+
 public interface IUserRepository
 {
     public Task AddUser(User user);

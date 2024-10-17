@@ -1,9 +1,9 @@
+namespace api.Repositories.Implementations;
+
 using System.Collections;
 using api.Models;
 using api.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
-
-namespace api.Repositories.Implementations;
 
 public class UserRepository : IUserRepository
 {

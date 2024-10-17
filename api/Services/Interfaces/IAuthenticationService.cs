@@ -1,6 +1,6 @@
-using api.Models;
-
 namespace api.Services.Interfaces;
+
+using api.Models;
 
 public interface IAuthenticationService
 {

@@ -1,5 +1,7 @@
 namespace api.Services.Interfaces;
+
 using api.Models;
+
 public interface IUserService
 {
     public Task AddUser(string email, string password, byte[] salt);
