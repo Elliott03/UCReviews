@@ -22,6 +22,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TextFieldModule} from '@angular/cdk/text-field';
 import { OverallDashboardComponent } from './overall-dashboard/overall-dashboard.component';
 import { ParkingDashboardComponent } from './parking-dashboard/parking-dashboard.component';
+import { GaragePageComponent } from './garage-page/garage-page.component';
+import { GarageDashboardComponent } from './garage-dashboard/garage-dashboard.component';
 
 
 
@@ -33,7 +35,7 @@ import { ParkingDashboardComponent } from './parking-dashboard/parking-dashboard
         DormDashboardComponent,
         DormPageComponent
     ],
-    bootstrap: [AppComponent], 
+    bootstrap: [AppComponent],
     imports: [BrowserModule,
         AppRoutingModule,
         FormsModule,
@@ -52,6 +54,8 @@ import { ParkingDashboardComponent } from './parking-dashboard/parking-dashboard
             { path: 'dashboard/housing', component: DormDashboardComponent, canActivate: [AuthGuard]},
             { path: 'dashboard/housing/:dorm', component: DormPageComponent, canActivate: [AuthGuard]},
             { path: 'dashboard/parking', component: ParkingDashboardComponent, canActivate: [AuthGuard]},
+            { path: 'dashboard/garages', component: GarageDashboardComponent, canActivate: [AuthGuard]},
+            { path: 'dashboard/garages/:slug', component: GaragePageComponent, canActivate: [AuthGuard]},
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
             { path: '**', redirectTo: 'dashboard', pathMatch: 'full' }
         ])], providers: [
