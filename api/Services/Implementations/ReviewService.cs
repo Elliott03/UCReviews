@@ -32,10 +32,25 @@ public class ReviewService : IReviewService
             StarRating = reviewViewModel.Rating,
             TimeCreated = DateTime.Now,
             UserId = reviewViewModel.UserId,
-            DormId = reviewViewModel.DormId
+            DormId = reviewViewModel.DormId,
+            ParkingGarageId = reviewViewModel.ParkingGarageId,
+            DiningHallId = reviewViewModel.DiningHallId
         };
         await _repository.SaveReview(review);
-        return await _repository.GetReviewsByDormId(reviewViewModel.DormId);
+        if (review.DormId != null)
+        {
+            return await _repository.GetReviewsByDormId(reviewViewModel.DormId.Value);
+        } 
+        else if (review.ParkingGarageId != null)
+        {
+            return await _repository.GetReviewsByParkingGarageId(reviewViewModel.ParkingGarageId.Value);
+        }
+        else if (review.DiningHallId != null)
+        {
+            return await _repository.GetReviewsByDiningHallId(reviewViewModel.DiningHallId.Value);
+        }
+        return null;
+        
     }
 
 
