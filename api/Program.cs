@@ -20,11 +20,14 @@ builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IDormService, DormService>();
 builder.Services.AddTransient<IReviewService, ReviewService>();
 builder.Services.AddTransient<IMailService, MailService>();
+builder.Services.AddTransient<IDiningHallService, DiningHallService>();
+
 
 // Add repository layer dependencies to the container
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IDormRepository, DormRepository>();
 builder.Services.AddTransient<IReviewRepository, ReviewRepository>();
+builder.Services.AddTransient<IDiningHallRepository, DiningHallRepository>();
 
 
 
