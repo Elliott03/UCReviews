@@ -20,9 +20,11 @@ public class Review
     public int? DormId { get; set; }
     [ForeignKey("ParkingGarage")]
     public int? ParkingGarageId { get; set; }
+    [ForeignKey("DiningHall")]
+    public int? DiningHallId { get; set; }
 
     public User User { get; set; }
     public Dorm? Dorm { get; set; }
     public ParkingGarage? ParkingGarage { get; set; }
-
+    public DiningHall? DiningHall { get; set; }
 }
