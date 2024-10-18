@@ -8,6 +8,11 @@ public class ParkingGarageService : IParkingGarageService
 {
     private readonly IParkingGarageService _parkingGarageService;
 
+    public ParkingGarageService(IParkingGarageService parkingGarageService)
+    {
+        _parkingGarageService = parkingGarageService;
+    }
+
     public async Task<ParkingGarage> GetParkingGarage(string slug)
     {
         return await _parkingGarageService.GetParkingGarage(slug);
