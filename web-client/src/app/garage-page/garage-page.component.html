@@ -1,1 +1,7 @@
-<p>garage-page works!</p>
+@if(garage) {
+
+<p>{{ JSON.stringify(garage) }}</p>
+
+<h1>{{ garage.name }} - {{ garage.campus }}</h1>
+
+}

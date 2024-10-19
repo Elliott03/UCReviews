@@ -6,6 +6,6 @@ namespace api.Services.Interfaces;
 public interface IParkingGarageService
 {
     public Task<IEnumerable<ParkingGarage>> GetParkingGarages();
-    public Task<ParkingGarage> GetParkingGarageById(int id);
-    public Task<ParkingGarage> GetParkingGarage(string slug);
+    public Task<ParkingGarage> GetParkingGarage(int id, bool includeReviews);
+    public Task<ParkingGarage> GetParkingGarage(string slug, bool includeReviews);
 }

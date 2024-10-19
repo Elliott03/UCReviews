@@ -8,9 +8,8 @@ describe('GaragePageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GaragePageComponent]
-    })
-    .compileComponents();
+      imports: [GaragePageComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(GaragePageComponent);
     component = fixture.componentInstance;

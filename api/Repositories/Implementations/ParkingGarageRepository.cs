@@ -2,6 +2,7 @@ using System;
 using api.Models;
 using api.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace api.Repositories.Implementations;
 
@@ -19,13 +20,26 @@ public class ParkingGarageRepository : IParkingGarageRepository
         return await _dbContext.ParkingGarage.ToListAsync();
     }
 
-    public async Task<ParkingGarage> GetParkingGarage(string slug)
+    public async Task<ParkingGarage> GetParkingGarage(string slug, bool includeReviews)
     {
-        return await _dbContext.ParkingGarage.Where(g => g.Slug == slug).FirstAsync();
+        return await HandleGetGarage(includeReviews, g => g.Slug == slug);
     }
 
-    public async Task<ParkingGarage> GetParkingGarageById(int id)
+    public async Task<ParkingGarage> GetParkingGarage(int id, bool includeReviews)
     {
-        return await _dbContext.ParkingGarage.Where(g => g.Id == id).FirstAsync();
+        return await HandleGetGarage(includeReviews, g => g.Id == id);
+    }
+
+
+    private async Task<ParkingGarage> HandleGetGarage(bool includeReviews, Expression<Func<ParkingGarage, bool>> predicate)
+    {
+        var query = _dbContext.ParkingGarage.AsQueryable();
+
+        if (includeReviews)
+        {
+            query = query.Include(g => g.Reviews);
+        }
+
+        return await query.Where(predicate).FirstOrDefaultAsync();
     }
 }

@@ -28,9 +28,12 @@ public class UCReviewsContext : DbContext
         .HasForeignKey(r => r.DormId);
 
         builder.Entity<ParkingGarage>()
+        .HasIndex(g => g.Slug).IsUnique();
+
+        builder.Entity<ParkingGarage>()
         .HasMany(g => g.Reviews)
-        .WithOne(r => r.ParkingGarage)
-        .HasForeignKey(r => r.ParkingGarageId);
+        .WithOne(g => g.ParkingGarage)
+        .HasForeignKey(g => g.ParkingGarageId);
 
         builder.Entity<Dorm>()
         .HasData(
@@ -178,6 +181,7 @@ public class UCReviewsContext : DbContext
             {
                 Id = 1,
                 Name = "CCM Garage",
+                Slug = "ccm",
                 NameQueryParameter = "CCM",
                 Latitude = 39.129894,
                 Longitude = -84.516852,
@@ -189,6 +193,7 @@ public class UCReviewsContext : DbContext
             {
                 Id = 2,
                 Name = "Calhoun Garage",
+                Slug = "calhoun",
                 NameQueryParameter = "Calhoun",
                 Latitude = 39.128439,
                 Longitude = -84.516616,
@@ -200,6 +205,7 @@ public class UCReviewsContext : DbContext
             {
                 Id = 3,
                 Name = "Campus Green Garage",
+                Slug = "campus-green",
                 NameQueryParameter = "Campus_Green",
                 Latitude = 39.135716,
                 Longitude = -84.515223,
@@ -211,6 +217,7 @@ public class UCReviewsContext : DbContext
             {
                 Id = 4,
                 Name = "Clifton Court Garage",
+                Slug = "clifton-court",
                 NameQueryParameter = "Clifton_Court",
                 Latitude = 39.134303,
                 Longitude = -84.517271,
@@ -222,6 +229,7 @@ public class UCReviewsContext : DbContext
             {
                 Id = 5,
                 Name = "Clifton Lots",
+                Slug = "clifton-lots",
                 NameQueryParameter = "Clifton_Lots",
                 Latitude = 39.134690,
                 Longitude = -84.520307,
@@ -233,6 +241,7 @@ public class UCReviewsContext : DbContext
             {
                 Id = 6,
                 Name = "Corry Garage",
+                Slug = "corry",
                 NameQueryParameter = "Corry",
                 Latitude = 39.129001,
                 Longitude = -84.512904,
@@ -244,6 +253,7 @@ public class UCReviewsContext : DbContext
             {
                 Id = 7,
                 Name = "Digital Futures",
+                Slug = "digital-futures",
                 NameQueryParameter = "Digital_Futures",
                 Latitude = 39.134089,
                 Longitude = -84.494941,
@@ -255,6 +265,7 @@ public class UCReviewsContext : DbContext
             {
                 Id = 8,
                 Name = "Stratford Heights Garage",
+                Slug = "stratford-heights",
                 NameQueryParameter = "Stratford_Heights",
                 Latitude = 39.130841,
                 Longitude = -84.521377,
@@ -266,6 +277,7 @@ public class UCReviewsContext : DbContext
             {
                 Id = 9,
                 Name = "University Avenue Garage",
+                Slug = "university-avenue",
                 NameQueryParameter = "University_Avenue",
                 Latitude = 39.134615,
                 Longitude = -84.510986,
@@ -277,6 +289,7 @@ public class UCReviewsContext : DbContext
             {
                 Id = 10,
                 Name = "Varsity Village Garage",
+                Slug = "varsity-village",
                 NameQueryParameter = "Varsity_Village",
                 Latitude = 39.130166,
                 Longitude = -84.515964,
@@ -288,6 +301,7 @@ public class UCReviewsContext : DbContext
             {
                 Id = 11,
                 Name = "Woodside Avenue Garage",
+                Slug = "woodside-avenue",
                 NameQueryParameter = "Woodside_Avenue",
                 Latitude = 39.135025,
                 Longitude = -84.515180,
@@ -299,6 +313,7 @@ public class UCReviewsContext : DbContext
             {
                 Id = 12,
                 Name = "Blood Cancer Healing Center",
+                Slug = "blood-cancer-healing-center",
                 NameQueryParameter = "Blood_Cancer_Healing_Center",
                 Latitude = 39.138082474177075,
                 Longitude = -84.50119246416794,
@@ -310,6 +325,7 @@ public class UCReviewsContext : DbContext
             {
                 Id = 13,
                 Name = "Eden Garage",
+                Slug = "eden",
                 NameQueryParameter = "Eden",
                 Latitude = 39.137669,
                 Longitude = -84.505159,
@@ -321,6 +337,7 @@ public class UCReviewsContext : DbContext
             {
                 Id = 14,
                 Name = "Kingsgate Garage",
+                Slug = "kingsgate",
                 NameQueryParameter = "Kingsgate",
                 Latitude = 39.138082474177075,
                 Longitude = -84.50119246416794,

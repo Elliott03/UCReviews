@@ -2,6 +2,7 @@ namespace api.Models;
 
 using System.ComponentModel.DataAnnotations;
 using api.Models;
+using Microsoft.EntityFrameworkCore;
 
 public class ParkingGarage
 {
@@ -9,7 +10,8 @@ public class ParkingGarage
     public int Id { get; set; }
     public string Name { get; set; }
 
-    public string Slug => Name.Replace(' ', '-').ToLower();
+    [Required]
+    public string Slug;
 
     public string NameQueryParameter { get; set; }
     public double Latitude { get; set; }
@@ -18,5 +20,5 @@ public class ParkingGarage
     public string Campus { get; set; }
     public string Address { get; set; }
     public bool PermitRequired { get; set; }
-    public List<Review> Reviews { get; set; }
+    public List<Review> Reviews { get; set; } = [];
 }

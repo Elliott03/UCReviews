@@ -1,30 +1,31 @@
 using System;
 using api.Models;
+using api.Repositories.Interfaces;
 using api.Services.Interfaces;
 
 namespace api.Services.Implementations;
 
 public class ParkingGarageService : IParkingGarageService
 {
-    private readonly IParkingGarageService _parkingGarageService;
+    private readonly IParkingGarageRepository _parkingGarageRepository;
 
-    public ParkingGarageService(IParkingGarageService parkingGarageService)
+    public ParkingGarageService(IParkingGarageRepository parkingGarageRepository)
     {
-        _parkingGarageService = parkingGarageService;
+        _parkingGarageRepository = parkingGarageRepository;
     }
 
-    public async Task<ParkingGarage> GetParkingGarage(string slug)
+    public async Task<ParkingGarage> GetParkingGarage(string slug, bool includeReviews)
     {
-        return await _parkingGarageService.GetParkingGarage(slug);
+        return await _parkingGarageRepository.GetParkingGarage(slug, includeReviews);
     }
 
-    public async Task<ParkingGarage> GetParkingGarageById(int id)
+    public async Task<ParkingGarage> GetParkingGarage(int id, bool includeReviews)
     {
-        return await _parkingGarageService.GetParkingGarageById(id);
+        return await _parkingGarageRepository.GetParkingGarage(id, includeReviews);
     }
 
     public async Task<IEnumerable<ParkingGarage>> GetParkingGarages()
     {
-        return await _parkingGarageService.GetParkingGarages();
+        return await _parkingGarageRepository.GetAllParkingGarages();
     }
 }

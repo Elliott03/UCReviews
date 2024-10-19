@@ -1,4 +1,5 @@
 import { ILargeDorm } from "./Dorm";
+import { IParkingGarage } from "./ParkingGarage";
 import { IUser } from "./User";
 
 export interface IReview {
@@ -9,7 +10,8 @@ export interface IReview {
     userId: number,
     dormId: number,
     user: IUser,
-    dorm: ILargeDorm
+    dorm?: ILargeDorm
+    parkingGarage?: IParkingGarage
 }
 
 export class SaveReview {
