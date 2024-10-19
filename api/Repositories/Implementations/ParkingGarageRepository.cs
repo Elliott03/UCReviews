@@ -37,7 +37,7 @@ public class ParkingGarageRepository : IParkingGarageRepository
 
         if (includeReviews)
         {
-            query = query.Include(g => g.Reviews);
+            query = query.Include(g => g.Reviews).ThenInclude(r => r.User);
         }
 
         return await query.Where(predicate).FirstOrDefaultAsync();

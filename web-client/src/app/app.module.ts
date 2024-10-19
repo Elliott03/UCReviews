@@ -33,7 +33,8 @@ import { GarageDashboardComponent } from './garage-dashboard/garage-dashboard.co
         SignupPageComponent,
         NavbarComponent,
         DormDashboardComponent,
-        DormPageComponent
+        DormPageComponent,
+        GaragePageComponent,
     ],
     bootstrap: [AppComponent],
     imports: [BrowserModule,
