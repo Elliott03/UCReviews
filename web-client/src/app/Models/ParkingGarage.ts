@@ -12,3 +12,5 @@ export interface IParkingGarage {
   permitRequired: boolean;
   reviews: IReview[];
 }
+
+export type ParkingGarage = IParkingGarage;

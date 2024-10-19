@@ -4,12 +4,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ReviewService } from '../core/services/review.service';
 import { GarageService } from '../core/services/garage.service';
 import { firstValueFrom } from 'rxjs';
-import { IParkingGarage } from '../Models/ParkingGarage';
+import { IParkingGarage, ParkingGarage } from '../Models/ParkingGarage';
 import { NgxStarsComponent } from 'ngx-stars';
 import { emailToUsername as _emailToUsername } from '../core/helpers/emailToUsername';
 import { convertDateToReadable as _convertDateToReadable } from '../core/helpers/convertDateToReadable';
 import { IUser } from '../Models/User';
-import { IReview, SaveReview } from '../Models/Review';
+import { IReview, SaveParkingGarageReview, SaveReview } from '../Models/Review';
 
 @Component({
   selector: 'garage-page',
@@ -78,7 +78,7 @@ export class GaragePageComponent implements OnInit {
     if (!this.reviewText || userId === -1 || !this.garage) return;
     const reviewList = await firstValueFrom(
       this._reviewService.addReview(
-        new SaveReview(
+        new SaveParkingGarageReview(
           this.reviewText,
           this.reviewStarsComponent.rating.toString(),
           userId,

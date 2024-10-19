@@ -25,3 +25,5 @@ export interface ILargeDormWithRating extends ILargeDorm {
 export interface ISmallDormWithRating extends ISmallDorm {
   averageRating: number;
 }
+
+export type Dorm = IBaseDorm;
