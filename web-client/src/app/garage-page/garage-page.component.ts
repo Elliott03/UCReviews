@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '../core/services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReviewService } from '../core/services/review.service';
@@ -19,7 +19,7 @@ import { IReview, SaveParkingGarageReview } from '../Models/Review';
   templateUrl: './garage-page.component.html',
   styleUrl: './garage-page.component.scss',
 })
-export class GaragePageComponent implements OnInit {
+export class GaragePageComponent implements OnInit, AfterViewInit {
   garage?: IParkingGarageWithRating;
   reviews: IReview[] | undefined;
   JSON: any;
@@ -80,28 +80,44 @@ export class GaragePageComponent implements OnInit {
   }
 
   ngAfterViewInit() {
+    // Wait for the garage data to be loaded
     if (this.garage) {
-      this.garageStarsComponent.setRating(this.garage.averageRating);
+      this.setGarageRating();
+    } else {
+      // If garage is not yet loaded, listen for it
+      this.route.params.subscribe(async (params) => {
+        const slug = params['slug'];
+        this.garage = await firstValueFrom(
+          this._garageService.getParkingGarage(slug, true)
+        );
+        this.setGarageRating();
+      });
+    }
+  }
+
+  private setGarageRating() {
+    if (this.garageStarsComponent && this.garage) {
+      this.garageStarsComponent.setRating(this.garage.averageRating || 0);
     }
   }
 
   async sendReview() {
     const userId = this._authService.getUserId();
     if (!this.reviewText || userId === -1 || !this.garage) return;
+    const newReview = new SaveParkingGarageReview(
+      this.reviewText,
+      this.reviewStarsComponent.rating.toString(),
+      userId,
+      this.garage.id
+    );
     const reviewList = await firstValueFrom(
-      this._reviewService.addReview(
-        new SaveParkingGarageReview(
-          this.reviewText,
-          this.garageStarsComponent.rating.toString(),
-          userId,
-          this.garage.id
-        )
-      )
+      this._reviewService.addReview(newReview)
     );
     this.reviews = reviewList.reverse();
     const ratingSum = reviewList.reduce((acc, obj) => acc + obj.starRating, 0);
     const averageRating = ratingSum / reviewList.length;
     this.garageStarsComponent.setRating(averageRating);
+    this.reviewStarsComponent.setRating(0); // Reset component
     this.reviewText = '';
     this.currentCharacterCount = 0;
   }
