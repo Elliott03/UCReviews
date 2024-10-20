@@ -24,18 +24,36 @@ public class ReviewService : IReviewService
     {
         return await _repository.GetReviewsByDormId(dormId);
     }
-    public async Task<List<Review>> SaveReview(SaveReviewViewModel reviewViewModel)
+
+    public async Task<List<Review>> GetReviewsByParkingGarageId(int garageId)
+    {
+        return await _repository.GetReviewsByParkingGarageId(garageId);
+    }
+
+    public async Task<List<Review>> SaveReview(SaveReviewViewModel model)
     {
         var review = new Review
         {
-            ReviewText = reviewViewModel.ReviewText,
-            StarRating = reviewViewModel.Rating,
-            TimeCreated = DateTime.Now,
-            UserId = reviewViewModel.UserId,
-            DormId = reviewViewModel.DormId
+            ReviewText = model.ReviewText,
+            StarRating = model.Rating,
+            UserId = model.UserId,
+            TimeCreated = DateTime.UtcNow,
+            DormId = model.DormId,
+            ParkingGarageId = model.ParkingGarageId
         };
         await _repository.SaveReview(review);
-        return await _repository.GetReviewsByDormId(reviewViewModel.DormId);
+        if (model.DormId is not null)
+        {
+            return await _repository.GetReviewsByDormId((int)model.DormId);
+        }
+        else if (model.ParkingGarageId is not null)
+        {
+            return await _repository.GetReviewsByParkingGarageId((int)model.ParkingGarageId);
+        }
+        else
+        {
+            throw new Exception("There must be a foreign key association");
+        }
     }
 
 

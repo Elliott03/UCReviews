@@ -13,4 +13,8 @@ export interface IParkingGarage {
   reviews: IReview[];
 }
 
+export interface IParkingGarageWithRating extends IParkingGarage {
+  averageRating: number;
+}
+
 export type ParkingGarage = IParkingGarage;

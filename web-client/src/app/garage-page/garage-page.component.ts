@@ -4,12 +4,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ReviewService } from '../core/services/review.service';
 import { GarageService } from '../core/services/garage.service';
 import { firstValueFrom } from 'rxjs';
-import { IParkingGarage, ParkingGarage } from '../Models/ParkingGarage';
+import { IParkingGarage } from '../Models/ParkingGarage';
 import { NgxStarsComponent } from 'ngx-stars';
 import { emailToUsername as _emailToUsername } from '../core/helpers/emailToUsername';
 import { convertDateToReadable as _convertDateToReadable } from '../core/helpers/convertDateToReadable';
 import { IUser } from '../Models/User';
-import { IReview, SaveParkingGarageReview, SaveReview } from '../Models/Review';
+import { IReview, SaveParkingGarageReview } from '../Models/Review';
 
 @Component({
   selector: 'garage-page',
@@ -70,7 +70,8 @@ export class GaragePageComponent implements OnInit {
       );
     }
 
-    this.garage.reviews = this.garage.reviews.reverse(); // Recent reviews first
+    // this.garage.reviews = this.garage.reviews.reverse(); // Recent reviews first
+    this.reviews = this.garage.reviews.reverse(); // Recent reviews first
   }
 
   async sendReview() {
@@ -80,7 +81,7 @@ export class GaragePageComponent implements OnInit {
       this._reviewService.addReview(
         new SaveParkingGarageReview(
           this.reviewText,
-          this.reviewStarsComponent.rating.toString(),
+          this.garageStarsComponent.rating.toString(),
           userId,
           this.garage.id
         )
