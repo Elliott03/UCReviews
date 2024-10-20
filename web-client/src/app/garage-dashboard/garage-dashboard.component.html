@@ -1,1 +1,26 @@
-<p>garage-dashboard works!</p>
+<div id="dashboard-page" class="dashboard-page">
+  @for (garage of garages; track garage) {
+  <div class="inline-card">
+    <mat-card class="card" (click)="garageClick(garage)">
+      <img
+        src="api/Images/Garages/{{ garage.nameQueryParameter }}.jpg"
+        class="hero-image"
+      />
+      <div class="info">
+        <h2 class="name">{{ garage.name }}</h2>
+        <ngx-stars
+          [size]="2"
+          [readonly]="true"
+          [initialStars]="garage.averageRating"
+        ></ngx-stars>
+        <div class="attributes">
+          <h2 class="permit-required">
+            Permit Required - {{ garage.permitRequired }}
+          </h2>
+        </div>
+        <button mat-flat-button>Review</button>
+      </div>
+    </mat-card>
+  </div>
+  }
+</div>

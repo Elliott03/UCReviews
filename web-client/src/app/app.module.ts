@@ -34,6 +34,7 @@ import { GarageDashboardComponent } from './garage-dashboard/garage-dashboard.co
         NavbarComponent,
         DormDashboardComponent,
         DormPageComponent,
+        GarageDashboardComponent,
         GaragePageComponent,
     ],
     bootstrap: [AppComponent],

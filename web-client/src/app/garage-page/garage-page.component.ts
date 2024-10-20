@@ -4,7 +4,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ReviewService } from '../core/services/review.service';
 import { GarageService } from '../core/services/garage.service';
 import { firstValueFrom } from 'rxjs';
-import { IParkingGarage } from '../Models/ParkingGarage';
+import {
+  IParkingGarage,
+  IParkingGarageWithRating,
+} from '../Models/ParkingGarage';
 import { NgxStarsComponent } from 'ngx-stars';
 import { emailToUsername as _emailToUsername } from '../core/helpers/emailToUsername';
 import { convertDateToReadable as _convertDateToReadable } from '../core/helpers/convertDateToReadable';
@@ -17,7 +20,7 @@ import { IReview, SaveParkingGarageReview } from '../Models/Review';
   styleUrl: './garage-page.component.scss',
 })
 export class GaragePageComponent implements OnInit {
-  garage?: IParkingGarage;
+  garage?: IParkingGarageWithRating;
   reviews: IReview[] | undefined;
   JSON: any;
   user: IUser | undefined;
@@ -70,8 +73,16 @@ export class GaragePageComponent implements OnInit {
       );
     }
 
+    console.log(this.garage, 'garage');
+
     // this.garage.reviews = this.garage.reviews.reverse(); // Recent reviews first
     this.reviews = this.garage.reviews.reverse(); // Recent reviews first
+  }
+
+  ngAfterViewInit() {
+    if (this.garage) {
+      this.garageStarsComponent.setRating(this.garage.averageRating);
+    }
   }
 
   async sendReview() {

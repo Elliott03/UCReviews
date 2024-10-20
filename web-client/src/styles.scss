@@ -11,19 +11,16 @@ html {
   @include mat.core-theme($web-client-theme);
 }
 
-
-
-
-$shades-of-red: 
+$shades-of-red:
 #610316,
-#8A041A, 
-#AB091E, 
-#E00122, 
-#E12D39, 
-#EF4E4E, 
-#F86A6A, 
-#FF9B9B, 
-#FFBDBD, 
+#8A041A,
+#AB091E,
+#E00122,
+#E12D39,
+#EF4E4E,
+#F86A6A,
+#FF9B9B,
+#FFBDBD,
 #FFE3E3;
 
 // Secondary Colors
@@ -39,7 +36,7 @@ $shades-of-yellow:
 #FFFBEA;
 
 // Neutral Colors
-$shades-of-blue-grey: 
+$shades-of-blue-grey:
 #102A43,
 #243B53,
 #334E68,
@@ -52,7 +49,7 @@ $shades-of-blue-grey:
 #F0F4F8;
 
 // Supporting Colors
-$shades-of-cyan: 
+$shades-of-cyan:
 #044E54,
 #0A6C74,
 #0E7C86,
@@ -65,7 +62,7 @@ $shades-of-cyan:
 #E0FCFF;
 
 // Supporting Colors
-$shades-of-green: 
+$shades-of-green:
 #2B4005,
 #42600C,
 #507712,
