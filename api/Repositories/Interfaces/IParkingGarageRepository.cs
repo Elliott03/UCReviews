@@ -5,7 +5,7 @@ namespace api.Repositories.Interfaces;
 
 public interface IParkingGarageRepository
 {
-    public Task<IEnumerable<ParkingGarage>> GetAllParkingGarages();
+    public Task<IEnumerable<ParkingGarage>> GetAllParkingGarages(bool includeReviews);
     public Task<ParkingGarage> GetParkingGarage(string slug, bool includeReviews);
     public Task<ParkingGarage> GetParkingGarage(int id, bool includeReviews);
 }

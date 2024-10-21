@@ -23,9 +23,9 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ParkingGarage>>> GetParkingGarages()
+        public async Task<ActionResult<List<ParkingGarage>>> GetParkingGarages([FromQuery] bool includeReviews = false)
         {
-            return Ok(await _service.GetParkingGarages());
+            return Ok(await _service.GetParkingGarages(includeReviews));
         }
 
         [HttpGet("{slug}")]

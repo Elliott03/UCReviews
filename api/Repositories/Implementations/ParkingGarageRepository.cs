@@ -15,9 +15,16 @@ public class ParkingGarageRepository : IParkingGarageRepository
         _dbContext = dbContext;
     }
 
-    public async Task<IEnumerable<ParkingGarage>> GetAllParkingGarages()
+    public async Task<IEnumerable<ParkingGarage>> GetAllParkingGarages(bool includeReviews)
     {
-        return await _dbContext.ParkingGarage.ToListAsync();
+        var query = _dbContext.ParkingGarage.AsQueryable();
+
+        if (includeReviews)
+        {
+            query = query.Include(g => g.Reviews).ThenInclude(r => r.User);
+        }
+
+        return await query.ToListAsync();
     }
 
     public async Task<ParkingGarage> GetParkingGarage(string slug, bool includeReviews)
