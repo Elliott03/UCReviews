@@ -1,7 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { IParkingGarage, IParkingGarageWithRating } from 'src/app/Models/ParkingGarage';
+import {
+  IParkingGarage,
+  IParkingGarageWithRating,
+} from 'src/app/Models/ParkingGarage';
 import { IReview } from 'src/app/Models/Review';
 import { getAvgRating } from '../helpers/getAvgRating';
 
@@ -28,8 +31,12 @@ export class GarageService {
     );
   }
 
-  getParkingGarages(): Observable<IParkingGarageWithRating[]> {
-    const garages = this._http.get<IParkingGarage[]>(`/api/ParkingGarage`);
+  getParkingGarages(
+    includeReviews: boolean = false
+  ): Observable<IParkingGarageWithRating[]> {
+    const garages = this._http.get<IParkingGarage[]>(
+      `/api/ParkingGarage?includeReviews=${includeReviews}`
+    );
     return garages.pipe(
       map((garages) =>
         garages.map((garage) => {

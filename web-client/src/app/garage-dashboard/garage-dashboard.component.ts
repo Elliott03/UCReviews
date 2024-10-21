@@ -21,15 +21,11 @@ export class GarageDashboardComponent {
   ) {}
   ngOnInit(): void {
     if (this._authService.isLoggedIn()) {
-      this._garageService.getParkingGarages().subscribe((garages) => {
+      this._garageService.getParkingGarages(true).subscribe((garages) => {
         this.garages = garages;
       });
     } else {
       this._router.navigate(['/signup']);
     }
-  }
-
-  garageClick(garage: IParkingGarage) {
-    this._router.navigate(['/dashboard/housing', garage.nameQueryParameter]);
   }
 }

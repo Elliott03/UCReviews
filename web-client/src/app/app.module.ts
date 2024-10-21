@@ -7,7 +7,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { SignupPageComponent } from './signup-page/signup-page.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { DormDashboardComponent } from './dorm-dashboard/dorm-dashboard.component';
-import { RouterModule } from '@angular/router';
+import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
@@ -49,6 +49,8 @@ import { GarageDashboardComponent } from './garage-dashboard/garage-dashboard.co
         MatButtonModule,
         BrowserAnimationsModule,
         TextFieldModule,
+        RouterLink,
+        RouterOutlet,
         RouterModule.forRoot([
             { path: 'signup', component: SignupPageComponent },
             { path: 'login', component: LoginPageComponent },

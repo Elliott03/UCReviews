@@ -1,7 +1,7 @@
 <div id="dashboard-page" class="dashboard-page">
   @for (garage of garages; track garage) {
-  <div class="inline-card">
-    <mat-card class="card" (click)="garageClick(garage)">
+  <a class="inline-card" [routerLink]="'/dashboard/garages/' + garage.slug">
+    <mat-card class="card">
       <mat-card-content>
         <img
           src="api/Images/Garages/{{ garage.nameQueryParameter }}.jpg"
@@ -25,6 +25,6 @@
         </div>
       </mat-card-content>
     </mat-card>
-  </div>
+  </a>
   }
 </div>

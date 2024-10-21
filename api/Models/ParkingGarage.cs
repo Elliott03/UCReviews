@@ -7,7 +7,7 @@ public class ParkingGarage : ReviewableEntity
     public string Name { get; set; }
 
     [Required]
-    public string Slug;
+    public string Slug { get; set; }
 
     public string NameQueryParameter { get; set; }
     public double Latitude { get; set; }
