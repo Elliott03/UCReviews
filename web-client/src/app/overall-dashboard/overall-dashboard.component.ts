@@ -27,10 +27,10 @@ export class OverallDashboardComponent implements OnInit{
     console.log(`${category.name} clicked!`);
 
     switch (category.name) {
-      case 'Housing':
+      case 'Residence Halls':
         this._router.navigate(['/dashboard/housing']);
         break;
-      case 'Parking':
+      case 'Parking Garages':
         this._router.navigate(['/dashboard/parking']);
         break;
       case 'Dining Halls':
