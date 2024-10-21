@@ -1,1 +1,15 @@
-<p>overall-dashboard works!</p>
+<div id="overall-dashboard-page" class="dashboard-page">
+    <div class="inline-card" *ngFor="let category of categories">
+      <mat-card class="card" (click)="categoryClick(category)">
+        <img src="assets/overall-dashboard-images/{{category.image}}" class="image" />
+        <div class="info">
+          <h2 class="name">{{category.name}}</h2>
+          <div class="style-cost">
+            <h3 class="description">{{category.description}}</h3>
+          </div>
+          <button mat-flat-button>View</button>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+  

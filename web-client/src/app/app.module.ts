@@ -31,7 +31,9 @@ import { ParkingDashboardComponent } from './parking-dashboard/parking-dashboard
         SignupPageComponent,
         NavbarComponent,
         DormDashboardComponent,
-        DormPageComponent
+        DormPageComponent,
+        OverallDashboardComponent
+
     ],
     bootstrap: [AppComponent], 
     imports: [BrowserModule,
