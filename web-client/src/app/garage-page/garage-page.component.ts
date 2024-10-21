@@ -12,7 +12,7 @@ import { NgxStarsComponent } from 'ngx-stars';
 import { emailToUsername as _emailToUsername } from '../core/helpers/emailToUsername';
 import { convertDateToReadable as _convertDateToReadable } from '../core/helpers/convertDateToReadable';
 import { IUser } from '../Models/User';
-import { IReview, SaveParkingGarageReview } from '../Models/Review';
+import { IReview, SaveReview } from '../Models/Review';
 
 @Component({
   selector: 'garage-page',
@@ -73,9 +73,6 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
       );
     }
 
-    console.log(this.garage, 'garage');
-
-    // this.garage.reviews = this.garage.reviews.reverse(); // Recent reviews first
     this.reviews = this.garage.reviews.reverse(); // Recent reviews first
   }
 
@@ -104,12 +101,12 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
   async sendReview() {
     const userId = this._authService.getUserId();
     if (!this.reviewText || userId === -1 || !this.garage) return;
-    const newReview = new SaveParkingGarageReview(
-      this.reviewText,
-      this.reviewStarsComponent.rating.toString(),
+    const newReview = new SaveReview({
+      reviewText: this.reviewText,
+      rating: this.reviewStarsComponent.rating.toString(),
       userId,
-      this.garage.id
-    );
+      parkingGarageId: this.garage.id,
+    });
     const reviewList = await firstValueFrom(
       this._reviewService.addReview(newReview)
     );

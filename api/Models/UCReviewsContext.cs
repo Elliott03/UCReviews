@@ -181,14 +181,12 @@ public class UCReviewsContext : DbContext
         }
         );
 
-        var offset = 15;
-
         builder.Entity<ParkingGarage>()
         .HasData
         (
             new ParkingGarage
             {
-                Id = offset + 1,
+                Id = 1,
                 Name = "CCM Garage",
                 Slug = "ccm",
                 NameQueryParameter = "CCM",
@@ -200,7 +198,7 @@ public class UCReviewsContext : DbContext
             },
             new ParkingGarage
             {
-                Id = offset + 2,
+                Id = 2,
                 Name = "Calhoun Garage",
                 Slug = "calhoun",
                 NameQueryParameter = "Calhoun",
@@ -212,7 +210,7 @@ public class UCReviewsContext : DbContext
             },
             new ParkingGarage
             {
-                Id = offset + 3,
+                Id = 3,
                 Name = "Campus Green Garage",
                 Slug = "campus-green",
                 NameQueryParameter = "Campus_Green",
@@ -224,7 +222,7 @@ public class UCReviewsContext : DbContext
             },
             new ParkingGarage
             {
-                Id = offset + 4,
+                Id = 4,
                 Name = "Clifton Court Garage",
                 Slug = "clifton-court",
                 NameQueryParameter = "Clifton_Court",
@@ -236,7 +234,7 @@ public class UCReviewsContext : DbContext
             },
             new ParkingGarage
             {
-                Id = offset + 5,
+                Id = 5,
                 Name = "Clifton Lots",
                 Slug = "clifton-lots",
                 NameQueryParameter = "Clifton_Lots",
@@ -248,7 +246,7 @@ public class UCReviewsContext : DbContext
             },
             new ParkingGarage
             {
-                Id = offset + 6,
+                Id = 6,
                 Name = "Corry Garage",
                 Slug = "corry",
                 NameQueryParameter = "Corry",
@@ -260,7 +258,7 @@ public class UCReviewsContext : DbContext
             },
             new ParkingGarage
             {
-                Id = offset + 7,
+                Id = 7,
                 Name = "Digital Futures",
                 Slug = "digital-futures",
                 NameQueryParameter = "Digital_Futures",
@@ -272,7 +270,7 @@ public class UCReviewsContext : DbContext
             },
             new ParkingGarage
             {
-                Id = offset + 8,
+                Id = 8,
                 Name = "Stratford Heights Garage",
                 Slug = "stratford-heights",
                 NameQueryParameter = "Stratford_Heights",
@@ -284,7 +282,7 @@ public class UCReviewsContext : DbContext
             },
             new ParkingGarage
             {
-                Id = offset + 9,
+                Id = 9,
                 Name = "University Avenue Garage",
                 Slug = "university-avenue",
                 NameQueryParameter = "University_Avenue",
@@ -296,7 +294,7 @@ public class UCReviewsContext : DbContext
             },
             new ParkingGarage
             {
-                Id = offset + 10,
+                Id = 10,
                 Name = "Varsity Village Garage",
                 Slug = "varsity-village",
                 NameQueryParameter = "Varsity_Village",
@@ -308,7 +306,7 @@ public class UCReviewsContext : DbContext
             },
             new ParkingGarage
             {
-                Id = offset + 11,
+                Id = 11,
                 Name = "Woodside Avenue Garage",
                 Slug = "woodside-avenue",
                 NameQueryParameter = "Woodside_Avenue",
@@ -320,7 +318,7 @@ public class UCReviewsContext : DbContext
             },
             new ParkingGarage
             {
-                Id = offset + 12,
+                Id = 12,
                 Name = "Blood Cancer Healing Center",
                 Slug = "blood-cancer-healing-center",
                 NameQueryParameter = "Blood_Cancer_Healing_Center",
@@ -332,7 +330,7 @@ public class UCReviewsContext : DbContext
             },
             new ParkingGarage
             {
-                Id = offset + 13,
+                Id = 13,
                 Name = "Eden Garage",
                 Slug = "eden",
                 NameQueryParameter = "Eden",
@@ -344,7 +342,7 @@ public class UCReviewsContext : DbContext
             },
             new ParkingGarage
             {
-                Id = offset + 14,
+                Id = 14,
                 Name = "Kingsgate Garage",
                 Slug = "kingsgate",
                 NameQueryParameter = "Kingsgate",

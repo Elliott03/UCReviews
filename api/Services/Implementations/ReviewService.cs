@@ -39,7 +39,7 @@ public class ReviewService : IReviewService
             UserId = model.UserId,
             TimeCreated = DateTime.UtcNow,
             DormId = model.DormId,
-            ParkingGarageId = model.ParkingGarageId
+            ParkingGarageId = model.ParkingGarageId,
         };
         await _repository.SaveReview(review);
         if (model.DormId is not null)

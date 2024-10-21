@@ -4,7 +4,7 @@ import { Dorm, ILargeDorm } from '../Models/Dorm';
 import { DormService } from '../core/services/dorm.service';
 import { NgxStarsComponent } from 'ngx-stars';
 import { IUser } from '../Models/User';
-import { IReview, SaveDormReview, SaveReview } from '../Models/Review';
+import { IReview, SaveReview } from '../Models/Review';
 import { AuthService } from '../core/services/auth.service';
 import { ReviewService } from '../core/services/review.service';
 import { emailToUsername as _emailToUsername } from '../core/helpers/emailToUsername';
@@ -70,12 +70,12 @@ export class DormPageComponent implements OnInit {
     if (this.reviewText && userId != -1 && this.dorm) {
       this._reviewService
         .addReview(
-          new SaveDormReview(
-            this.reviewText,
-            this.reviewStarsComponent.rating.toString(),
+          new SaveReview({
+            reviewText: this.reviewText,
+            rating: this.reviewStarsComponent.rating.toString(),
             userId,
-            this.dorm.id
-          )
+            dormId: this.dorm.id,
+          })
         )
         .subscribe((reviewList) => {
           this.reviews = this.reverseReviewList(reviewList);

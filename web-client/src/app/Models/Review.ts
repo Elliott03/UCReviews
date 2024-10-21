@@ -17,36 +17,13 @@ export interface IReview {
 export type Reviewable = Dorm | ParkingGarage;
 
 export class SaveReview {
-  constructor(
-    private reviewText: string,
-    private rating: string,
-    private userId: number
-  ) {}
-}
-
-export class SaveDormReview extends SaveReview {
-  private dormId: Number;
-
-  constructor(
-    reviewText: string,
-    rating: string,
-    userId: number,
-    dormId: Number
-  ) {
-    super(reviewText, rating, userId);
-    this.dormId = dormId;
-  }
-}
-
-export class SaveParkingGarageReview extends SaveReview {
-  private parkingGarageId: Number;
-  constructor(
-    reviewText: string,
-    rating: string,
-    userId: number,
-    parkingGarageId: Number
-  ) {
-    super(reviewText, rating, userId);
-    this.parkingGarageId = parkingGarageId;
+  constructor(props: {
+    reviewText: string;
+    rating: string;
+    userId: number;
+    parkingGarageId?: Number;
+    dormId?: Number;
+  }) {
+    Object.assign(this, props);
   }
 }

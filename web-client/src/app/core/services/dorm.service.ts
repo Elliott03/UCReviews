@@ -21,7 +21,6 @@ export class DormService {
     return dorms.pipe(
       map((dorms) =>
         dorms.map((dorm) => {
-          console.log({ dorm });
           return {
             ...dorm,
             averageRating: getAvgRating(dorm.reviews),
