@@ -15,17 +15,20 @@ export class OverallDashboardComponent implements OnInit {
     {
       name: 'Residence Halls',
       description: 'View and review residence halls on campus.',
-      image: 'housing.jpg'
+      image: 'housing.jpg',
+      id: 1
     },
     {
       name: 'Parking Garages',
       description: 'View and review parking garages on campus.',
-      image: 'parking.jpg'
+      image: 'parking.jpg',
+      id: 2
     },
     {
       name: 'Dining Halls',
       description: 'Rate and review all dining locations.',
-      image: 'dining-halls.jpg'
+      image: 'dining-halls.jpg',
+      id: 3
     }
   ];
 
@@ -52,7 +55,11 @@ export class OverallDashboardComponent implements OnInit {
         this._router.navigate(['/dashboard/']);
         break;
       default:
-        this._router.navigate(['/dashboard/']); // Fallback route
+        this._router.navigate(['/dashboard/']);
     }
+  }
+
+  trackByCategoryId(index: number, category: Category): number {
+    return category.id;
   }
 }
