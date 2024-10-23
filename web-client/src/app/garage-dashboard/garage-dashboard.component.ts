@@ -28,4 +28,10 @@ export class GarageDashboardComponent {
       this._router.navigate(['/signup']);
     }
   }
+  getGarageRatingTitle(garage: IParkingGarageWithRating) {
+    if(!garage.averageRating) {
+      return "Not yet rated";
+    }
+    return `${garage.averageRating} stars`;
+  }
 }

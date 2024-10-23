@@ -4,9 +4,8 @@
     <mat-card class="card">
       <mat-card-content>
         <img
-          src="api/Images/Garages/{{ garage.nameQueryParameter }}.jpg"
+          src="api/Images/Garages/{{ garage.slug }}.jpg"
           class="hero-image"
-          onerror="this.style.display='none'"
           alt="Image of {{ garage.name }}"
         />
         <div class="info">
@@ -15,6 +14,7 @@
             [size]="2"
             [readonly]="true"
             [initialStars]="garage.averageRating"
+            [title]="getGarageRatingTitle(garage)"
           ></ngx-stars>
           <div class="attributes">
             <h2 class="permit-required">
