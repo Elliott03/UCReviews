@@ -15,14 +15,20 @@ public class ReviewRepository : IReviewRepository
     {
         return await _dbContext.Review.ToListAsync();
     }
-    public async Task<List<Review>> GetReviewsByDormId(int dormId)
+
+    public async Task<List<Review>> GetReviewsByDiningHallId(int diningHallId)
+    {
+        return await _dbContext.Review.Include(r => r.User).Where(r => r.DiningHallId == diningHallId).ToListAsync();
+    }
+
+    public async Task<List<Review>> GetReviewsByDormId(int dormId) 
     {
         return await _dbContext.Review.Include(r => r.User).Where(r => r.DormId == dormId).ToListAsync();
     }
 
-    public async Task<List<Review>> GetReviewsByParkingGarageId(int parkinGarageId)
+    public async Task<List<Review>> GetReviewsByParkingGarageId(int parkingGarageId)
     {
-        return await _dbContext.Review.Include(r => r.User).Where(r => r.ParkingGarageId == parkinGarageId).ToListAsync();
+        return await _dbContext.Review.Include(r => r.User).Where(r => r.ParkingGarageId == parkingGarageId).ToListAsync();
     }
 
     public async Task SaveReview(Review review)

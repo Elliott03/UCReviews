@@ -36,6 +36,7 @@ import { GarageDashboardComponent } from './garage-dashboard/garage-dashboard.co
         DormPageComponent,
         GarageDashboardComponent,
         GaragePageComponent,
+        OverallDashboardComponent,
     ],
     bootstrap: [AppComponent],
     imports: [BrowserModule,

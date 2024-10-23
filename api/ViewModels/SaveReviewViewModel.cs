@@ -7,4 +7,5 @@ public class SaveReviewViewModel
     public int UserId { get; set; }
     public int? DormId { get; set; }
     public int? ParkingGarageId { get; set; }
+    public int? DiningHallId { get; set; }
 }

@@ -40,6 +40,7 @@ public class ReviewService : IReviewService
             TimeCreated = DateTime.UtcNow,
             DormId = model.DormId,
             ParkingGarageId = model.ParkingGarageId,
+            DiningHallId = model.DiningHallId,
         };
         await _repository.SaveReview(review);
         if (model.DormId is not null)
@@ -49,6 +50,10 @@ public class ReviewService : IReviewService
         else if (model.ParkingGarageId is not null)
         {
             return await _repository.GetReviewsByParkingGarageId((int)model.ParkingGarageId);
+        }
+        else if (model.DiningHallId is not null)
+        {
+            return await _repository.GetReviewsByDiningHallId((int)model.DiningHallId);
         }
         else
         {

@@ -24,4 +24,8 @@ public class Review
     [ForeignKey("ParkingGarage")]
     public int? ParkingGarageId { get; set; }
     public ParkingGarage? ParkingGarage { get; set; }
+
+    [ForeignKey("DiningHall")]
+    public int? DiningHallId { get; set; }
+    public DiningHall? DiningHall { get; set; }
 }
