@@ -18,9 +18,8 @@
       Permit Required - {{ garage.permitRequired }}
     </h2>
   </div>
-  <!-- <h3 class="description">{{ garage?.description }}</h3> -->
   <hr class="horizontal-line" />
-  <mat-card class="create-review p-2">
+  <mat-card class="create-review p-2 card">
     <mat-card-content>
       <h2 class="username">{{ username }}</h2>
       <ngx-stars
@@ -53,7 +52,7 @@
   <hr class="horizontal-line" />
   <div class="review-container">
     @for (review of reviews; track review) {
-    <mat-card class="single-review">
+    <mat-card class="single-review card">
       <mat-card-content>
         <h2 class="username">{{ emailToUsername(review.user.email) }}</h2>
         <ngx-stars

@@ -5,7 +5,6 @@ import { ReviewService } from '../core/services/review.service';
 import { GarageService } from '../core/services/garage.service';
 import { firstValueFrom } from 'rxjs';
 import {
-  IParkingGarage,
   IParkingGarageWithRating,
 } from '../Models/ParkingGarage';
 import { NgxStarsComponent } from 'ngx-stars';

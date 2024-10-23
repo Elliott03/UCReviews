@@ -1,3 +1,5 @@
+@import '../../styles.scss';
+
 .hero-image {
   width: 100%;
 }
@@ -25,4 +27,8 @@
 .character-counter {
   display: block;
   margin: 0.5rem 0;
+}
+
+.card {
+  background-color: get-color($shades-of-blue-grey, 8);
 }
