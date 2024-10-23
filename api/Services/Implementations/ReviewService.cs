@@ -24,33 +24,41 @@ public class ReviewService : IReviewService
     {
         return await _repository.GetReviewsByDormId(dormId);
     }
-    public async Task<List<Review>> SaveReview(SaveReviewViewModel reviewViewModel)
+
+    public async Task<List<Review>> GetReviewsByParkingGarageId(int garageId)
+    {
+        return await _repository.GetReviewsByParkingGarageId(garageId);
+    }
+
+    public async Task<List<Review>> SaveReview(SaveReviewViewModel model)
     {
         var review = new Review
         {
-            ReviewText = reviewViewModel.ReviewText,
-            StarRating = reviewViewModel.Rating,
-            TimeCreated = DateTime.Now,
-            UserId = reviewViewModel.UserId,
-            DormId = reviewViewModel.DormId,
-            ParkingGarageId = reviewViewModel.ParkingGarageId,
-            DiningHallId = reviewViewModel.DiningHallId
+            ReviewText = model.ReviewText,
+            StarRating = model.Rating,
+            UserId = model.UserId,
+            TimeCreated = DateTime.UtcNow,
+            DormId = model.DormId,
+            ParkingGarageId = model.ParkingGarageId,
+            DiningHallId = model.DiningHallId,
         };
         await _repository.SaveReview(review);
-        if (review.DormId != null)
+        if (model.DormId is not null)
         {
-            return await _repository.GetReviewsByDormId(reviewViewModel.DormId.Value);
-        } 
-        else if (review.ParkingGarageId != null)
-        {
-            return await _repository.GetReviewsByParkingGarageId(reviewViewModel.ParkingGarageId.Value);
+            return await _repository.GetReviewsByDormId((int)model.DormId);
         }
-        else if (review.DiningHallId != null)
+        else if (model.ParkingGarageId is not null)
         {
-            return await _repository.GetReviewsByDiningHallId(reviewViewModel.DiningHallId.Value);
+            return await _repository.GetReviewsByParkingGarageId((int)model.ParkingGarageId);
         }
-        return null;
-        
+        else if (model.DiningHallId is not null)
+        {
+            return await _repository.GetReviewsByDiningHallId((int)model.DiningHallId);
+        }
+        else
+        {
+            throw new Exception("There must be a foreign key association");
+        }
     }
 
 

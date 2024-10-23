@@ -8,7 +8,7 @@ import { IReview, SaveReview } from "src/app/Models/Review";
 })
 
 export class ReviewService {
-    constructor(private _http: HttpClient) 
+    constructor(private _http: HttpClient)
     {}
     getReviewsByDormId(dormId: number): Observable<IReview[]> {
         return this._http.get<IReview[]>(`/api/Review/${dormId}`);

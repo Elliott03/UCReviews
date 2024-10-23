@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api.Models;
 
@@ -11,9 +12,11 @@ using api.Models;
 namespace api.Migrations
 {
     [DbContext(typeof(UCReviewsContext))]
-    partial class UCReviewsContextModelSnapshot : ModelSnapshot
+    [Migration("20241018023820_GarageSlugs")]
+    partial class GarageSlugs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,7 +50,7 @@ namespace api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Dorm", (string)null);
+                    b.ToTable("Dorm");
 
                     b.HasData(
                         new
@@ -196,7 +199,6 @@ namespace api.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Campus")
@@ -209,7 +211,9 @@ namespace api.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("Name")
-                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NameQueryParameter")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("PermitRequired")
@@ -224,7 +228,7 @@ namespace api.Migrations
                     b.HasIndex("Slug")
                         .IsUnique();
 
-                    b.ToTable("ParkingGarage", (string)null);
+                    b.ToTable("ParkingGarage");
 
                     b.HasData(
                         new
@@ -235,6 +239,7 @@ namespace api.Migrations
                             Latitude = 39.129894,
                             Longitude = -84.516852,
                             Name = "CCM Garage",
+                            NameQueryParameter = "CCM",
                             PermitRequired = false,
                             Slug = "ccm"
                         },
@@ -246,6 +251,7 @@ namespace api.Migrations
                             Latitude = 39.128439,
                             Longitude = -84.516615999999999,
                             Name = "Calhoun Garage",
+                            NameQueryParameter = "Calhoun",
                             PermitRequired = false,
                             Slug = "calhoun"
                         },
@@ -257,6 +263,7 @@ namespace api.Migrations
                             Latitude = 39.135716000000002,
                             Longitude = -84.515223000000006,
                             Name = "Campus Green Garage",
+                            NameQueryParameter = "Campus_Green",
                             PermitRequired = false,
                             Slug = "campus-green"
                         },
@@ -268,6 +275,7 @@ namespace api.Migrations
                             Latitude = 39.134303000000003,
                             Longitude = -84.517270999999994,
                             Name = "Clifton Court Garage",
+                            NameQueryParameter = "Clifton_Court",
                             PermitRequired = false,
                             Slug = "clifton-court"
                         },
@@ -279,6 +287,7 @@ namespace api.Migrations
                             Latitude = 39.134689999999999,
                             Longitude = -84.520307000000003,
                             Name = "Clifton Lots",
+                            NameQueryParameter = "Clifton_Lots",
                             PermitRequired = true,
                             Slug = "clifton-lots"
                         },
@@ -290,6 +299,7 @@ namespace api.Migrations
                             Latitude = 39.129001000000002,
                             Longitude = -84.512904000000006,
                             Name = "Corry Garage",
+                            NameQueryParameter = "Corry",
                             PermitRequired = false,
                             Slug = "corry"
                         },
@@ -301,6 +311,7 @@ namespace api.Migrations
                             Latitude = 39.134089000000003,
                             Longitude = -84.494940999999997,
                             Name = "Digital Futures",
+                            NameQueryParameter = "Digital_Futures",
                             PermitRequired = false,
                             Slug = "digital-futures"
                         },
@@ -312,6 +323,7 @@ namespace api.Migrations
                             Latitude = 39.130840999999997,
                             Longitude = -84.521377000000001,
                             Name = "Stratford Heights Garage",
+                            NameQueryParameter = "Stratford_Heights",
                             PermitRequired = true,
                             Slug = "stratford-heights"
                         },
@@ -323,6 +335,7 @@ namespace api.Migrations
                             Latitude = 39.134614999999997,
                             Longitude = -84.510986000000003,
                             Name = "University Avenue Garage",
+                            NameQueryParameter = "University_Avenue",
                             PermitRequired = false,
                             Slug = "university-avenue"
                         },
@@ -334,6 +347,7 @@ namespace api.Migrations
                             Latitude = 39.130166000000003,
                             Longitude = -84.515963999999997,
                             Name = "Varsity Village Garage",
+                            NameQueryParameter = "Varsity_Village",
                             PermitRequired = false,
                             Slug = "varsity-village"
                         },
@@ -345,6 +359,7 @@ namespace api.Migrations
                             Latitude = 39.135024999999999,
                             Longitude = -84.515180000000001,
                             Name = "Woodside Avenue Garage",
+                            NameQueryParameter = "Woodside_Avenue",
                             PermitRequired = false,
                             Slug = "woodside-avenue"
                         },
@@ -356,6 +371,7 @@ namespace api.Migrations
                             Latitude = 39.138082474177075,
                             Longitude = -84.501192464167943,
                             Name = "Blood Cancer Healing Center",
+                            NameQueryParameter = "Blood_Cancer_Healing_Center",
                             PermitRequired = false,
                             Slug = "blood-cancer-healing-center"
                         },
@@ -367,6 +383,7 @@ namespace api.Migrations
                             Latitude = 39.137669000000002,
                             Longitude = -84.505159000000006,
                             Name = "Eden Garage",
+                            NameQueryParameter = "Eden",
                             PermitRequired = false,
                             Slug = "eden"
                         },
@@ -378,6 +395,7 @@ namespace api.Migrations
                             Latitude = 39.138082474177075,
                             Longitude = -84.501192464167943,
                             Name = "Kingsgate Garage",
+                            NameQueryParameter = "Kingsgate",
                             PermitRequired = false,
                             Slug = "kingsgate"
                         });
@@ -402,8 +420,7 @@ namespace api.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("StarRating")
-                        .HasPrecision(2, 1)
-                        .HasColumnType("decimal(2,1)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("TimeCreated")
                         .HasColumnType("datetime2");
@@ -419,7 +436,7 @@ namespace api.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Review", (string)null);
+                    b.ToTable("Review");
                 });
 
             modelBuilder.Entity("api.Models.User", b =>
@@ -447,7 +464,7 @@ namespace api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User", (string)null);
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("api.Models.Review", b =>

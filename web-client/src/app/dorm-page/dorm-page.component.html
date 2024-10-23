@@ -22,7 +22,7 @@
     <mat-card class="single-review">
       <h2 class="username">{{emailToUsername(review.user.email)}}</h2>
       <h3 class="review-text">{{review.reviewText}}</h3>
-      <ngx-stars class="review-stars" #reviewRating [readonly]="true" [initialStars]="review.starRating" [size]="2"></ngx-stars>
+      <ngx-stars class="review-stars" [readonly]="true" [initialStars]="review.starRating" [size]="2"></ngx-stars>
       <h3 class="time-created">{{convertDateToReadable(review.timeCreated)}}</h3>
     </mat-card>
   }

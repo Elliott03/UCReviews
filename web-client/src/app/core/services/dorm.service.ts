@@ -8,6 +8,7 @@ import {
   ISmallDormWithRating,
 } from 'src/app/Models/Dorm';
 import { IReview } from 'src/app/Models/Review';
+import { getAvgRating } from '../helpers/getAvgRating';
 
 @Injectable({
   providedIn: 'root',
@@ -15,20 +16,14 @@ import { IReview } from 'src/app/Models/Review';
 export class DormService {
   constructor(private _http: HttpClient) {}
 
-  getAvgRating(reviews: IReview[]): number {
-    const sum = reviews.reduce((sum, review) => sum + review.starRating, 0);
-    return sum / reviews.length;
-  }
-
   getDorms(): Observable<ISmallDormWithRating[]> {
     const dorms = this._http.get<ISmallDorm[]>('/api/Dorm');
     return dorms.pipe(
       map((dorms) =>
         dorms.map((dorm) => {
-          console.log({dorm})
           return {
             ...dorm,
-            averageRating: this.getAvgRating(dorm.reviews),
+            averageRating: getAvgRating(dorm.reviews),
           };
         })
       )
@@ -41,7 +36,7 @@ export class DormService {
       map((dorm) => {
         return {
           ...dorm,
-          averageRating: this.getAvgRating(dorm.reviews),
+          averageRating: getAvgRating(dorm.reviews),
         };
       })
     );

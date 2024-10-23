@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api.Models;
 
@@ -11,9 +12,11 @@ using api.Models;
 namespace api.Migrations
 {
     [DbContext(typeof(UCReviewsContext))]
-    partial class UCReviewsContextModelSnapshot : ModelSnapshot
+    [Migration("20241020010105_ReviewRefactoring")]
+    partial class ReviewRefactoring
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -196,7 +199,6 @@ namespace api.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Campus")
@@ -209,7 +211,9 @@ namespace api.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("Name")
-                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NameQueryParameter")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("PermitRequired")
@@ -229,155 +233,169 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            Id = 16,
                             Address = "CCM Blvd, Cincinnati, OH 45219",
                             Campus = "Uptown Campus",
                             Latitude = 39.129894,
                             Longitude = -84.516852,
                             Name = "CCM Garage",
+                            NameQueryParameter = "CCM",
                             PermitRequired = false,
                             Slug = "ccm"
                         },
                         new
                         {
-                            Id = 2,
+                            Id = 17,
                             Address = "230 Calhoun St, Cincinnati, OH 45219",
                             Campus = "Uptown Campus",
                             Latitude = 39.128439,
                             Longitude = -84.516615999999999,
                             Name = "Calhoun Garage",
+                            NameQueryParameter = "Calhoun",
                             PermitRequired = false,
                             Slug = "calhoun"
                         },
                         new
                         {
-                            Id = 3,
+                            Id = 18,
                             Address = "2935 Campus Green Dr, Cincinnati, OH 45221",
                             Campus = "Uptown Campus",
                             Latitude = 39.135716000000002,
                             Longitude = -84.515223000000006,
                             Name = "Campus Green Garage",
+                            NameQueryParameter = "Campus_Green",
                             PermitRequired = false,
                             Slug = "campus-green"
                         },
                         new
                         {
-                            Id = 4,
+                            Id = 19,
                             Address = "CCM Blvd, Cincinnati, OH 45219",
                             Campus = "Uptown Campus",
                             Latitude = 39.134303000000003,
                             Longitude = -84.517270999999994,
                             Name = "Clifton Court Garage",
+                            NameQueryParameter = "Clifton_Court",
                             PermitRequired = false,
                             Slug = "clifton-court"
                         },
                         new
                         {
-                            Id = 5,
+                            Id = 20,
                             Address = "2915 Clifton Ave, Cincinnati, OH 45220",
                             Campus = "Uptown Campus",
                             Latitude = 39.134689999999999,
                             Longitude = -84.520307000000003,
                             Name = "Clifton Lots",
+                            NameQueryParameter = "Clifton_Lots",
                             PermitRequired = true,
                             Slug = "clifton-lots"
                         },
                         new
                         {
-                            Id = 6,
+                            Id = 21,
                             Address = "2529 Scioto Ln, Cincinnati, OH 45219",
                             Campus = "Uptown Campus",
                             Latitude = 39.129001000000002,
                             Longitude = -84.512904000000006,
                             Name = "Corry Garage",
+                            NameQueryParameter = "Corry",
                             PermitRequired = false,
                             Slug = "corry"
                         },
                         new
                         {
-                            Id = 7,
+                            Id = 22,
                             Address = "3080 Exploration Ave, Cincinnati, OH 45206",
                             Campus = "Uptown Campus",
                             Latitude = 39.134089000000003,
                             Longitude = -84.494940999999997,
                             Name = "Digital Futures",
+                            NameQueryParameter = "Digital_Futures",
                             PermitRequired = false,
                             Slug = "digital-futures"
                         },
                         new
                         {
-                            Id = 8,
+                            Id = 23,
                             Address = "2630 Stratford Ave, Cincinnati, OH 45220",
                             Campus = "Uptown Campus",
                             Latitude = 39.130840999999997,
                             Longitude = -84.521377000000001,
                             Name = "Stratford Heights Garage",
+                            NameQueryParameter = "Stratford_Heights",
                             PermitRequired = true,
                             Slug = "stratford-heights"
                         },
                         new
                         {
-                            Id = 9,
+                            Id = 24,
                             Address = "40 W University Ave, Cincinnati, OH 45221",
                             Campus = "Uptown Campus",
                             Latitude = 39.134614999999997,
                             Longitude = -84.510986000000003,
                             Name = "University Avenue Garage",
+                            NameQueryParameter = "University_Avenue",
                             PermitRequired = false,
                             Slug = "university-avenue"
                         },
                         new
                         {
-                            Id = 10,
+                            Id = 25,
                             Address = "200 Varsity Village Drive, Cincinnati, OH 45221",
                             Campus = "Uptown Campus",
                             Latitude = 39.130166000000003,
                             Longitude = -84.515963999999997,
                             Name = "Varsity Village Garage",
+                            NameQueryParameter = "Varsity_Village",
                             PermitRequired = false,
                             Slug = "varsity-village"
                         },
                         new
                         {
-                            Id = 11,
+                            Id = 26,
                             Address = "2913 Woodside Drive, Cincinnati, OH 45219",
                             Campus = "Uptown Campus",
                             Latitude = 39.135024999999999,
                             Longitude = -84.515180000000001,
                             Name = "Woodside Avenue Garage",
+                            NameQueryParameter = "Woodside_Avenue",
                             PermitRequired = false,
                             Slug = "woodside-avenue"
                         },
                         new
                         {
-                            Id = 12,
+                            Id = 27,
                             Address = "3232 Healing Way, Cincinnati, OH 45229",
                             Campus = "Medical Campus",
                             Latitude = 39.138082474177075,
                             Longitude = -84.501192464167943,
                             Name = "Blood Cancer Healing Center",
+                            NameQueryParameter = "Blood_Cancer_Healing_Center",
                             PermitRequired = false,
                             Slug = "blood-cancer-healing-center"
                         },
                         new
                         {
-                            Id = 13,
+                            Id = 28,
                             Address = "3223 Eden Ave, Cincinnati, OH 45220",
                             Campus = "Medical Campus",
                             Latitude = 39.137669000000002,
                             Longitude = -84.505159000000006,
                             Name = "Eden Garage",
+                            NameQueryParameter = "Eden",
                             PermitRequired = false,
                             Slug = "eden"
                         },
                         new
                         {
-                            Id = 14,
+                            Id = 29,
                             Address = "151 Goodman Dr, Cincinnati, OH 45219",
                             Campus = "Medical Campus",
                             Latitude = 39.138082474177075,
                             Longitude = -84.501192464167943,
                             Name = "Kingsgate Garage",
+                            NameQueryParameter = "Kingsgate",
                             PermitRequired = false,
                             Slug = "kingsgate"
                         });
@@ -398,7 +416,6 @@ namespace api.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ReviewText")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("StarRating")
@@ -419,7 +436,7 @@ namespace api.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Review", (string)null);
+                    b.ToTable("Review");
                 });
 
             modelBuilder.Entity("api.Models.User", b =>
@@ -447,7 +464,7 @@ namespace api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User", (string)null);
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("api.Models.Review", b =>

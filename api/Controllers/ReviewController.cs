@@ -33,7 +33,6 @@ public class ReviewController : ControllerBase
     public async Task<ActionResult<List<Review>>> GetReviewByDormId(int dormId)
     {
             return await _service.GetReviewsByDormId(dormId);
-
     }
 
     [HttpPost]

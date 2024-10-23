@@ -9,7 +9,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<UCReviewsContext>(options => 
+builder.Services.AddDbContext<UCReviewsContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("UCReviewsDatabase")));
 // Contact Elliott for necessary JWT config and DB access info
 
@@ -19,6 +19,7 @@ builder.Services.AddTransient<IAuthenticationService, AuthenticationService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IDormService, DormService>();
 builder.Services.AddTransient<IReviewService, ReviewService>();
+builder.Services.AddTransient<IParkingGarageService, ParkingGarageService>();
 builder.Services.AddTransient<IMailService, MailService>();
 builder.Services.AddTransient<IDiningHallService, DiningHallService>();
 
@@ -27,21 +28,20 @@ builder.Services.AddTransient<IDiningHallService, DiningHallService>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IDormRepository, DormRepository>();
 builder.Services.AddTransient<IReviewRepository, ReviewRepository>();
+builder.Services.AddTransient<IParkingGarageRepository, ParkingGarageRepository>();
 builder.Services.AddTransient<IDiningHallRepository, DiningHallRepository>();
 
 
-
-
-
 builder.Services.AddAutoMapper(typeof(Program));
-builder.Services.AddControllers().AddJsonOptions(options => {
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddAuthentication("Bearer")
-    .AddJwtBearer(options => 
+    .AddJwtBearer(options =>
     {
         options.TokenValidationParameters = new()
         {

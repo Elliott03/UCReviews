@@ -9,6 +9,7 @@ public class UCReviewsContext : DbContext
     public DbSet<Dorm> Dorm { get; set; }
     public DbSet<ParkingGarage> ParkingGarage { get; set; }
     public DbSet<DiningHall> DiningHall { get; set; }
+    
     public UCReviewsContext(DbContextOptions<UCReviewsContext> options)
         : base(options)
     {
@@ -16,21 +17,31 @@ public class UCReviewsContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
-
         builder.Entity<User>()
         .HasMany(u => u.Reviews)
         .WithOne(r => r.User)
         .HasForeignKey(r => r.UserId);
 
+        builder.Entity<Review>()
+        .Property(r => r.StarRating)
+        .HasPrecision(2, 1);
+
         builder.Entity<Dorm>()
-        .HasMany(b => b.Reviews)
-        .WithOne(r => r.Dorm)
-        .HasForeignKey(r => r.DormId);
+            .ToTable("Dorm")
+            .HasMany(d => d.Reviews)
+            .WithOne(r => r.Dorm)
+            .HasForeignKey(r => r.DormId)
+            .IsRequired(false);
 
         builder.Entity<ParkingGarage>()
-        .HasMany(g => g.Reviews)
-        .WithOne(r => r.ParkingGarage)
-        .HasForeignKey(r => r.ParkingGarageId);
+            .ToTable("ParkingGarage")
+            .HasMany(p => p.Reviews)
+            .WithOne(r => r.ParkingGarage)
+            .HasForeignKey(r => r.ParkingGarageId)
+            .IsRequired(false);
+
+        builder.Entity<ParkingGarage>()
+        .HasIndex(g => g.Slug).IsUnique();
 
         builder.Entity<DiningHall>()
         .HasMany(d => d.Reviews)
@@ -183,7 +194,7 @@ public class UCReviewsContext : DbContext
             {
                 Id = 1,
                 Name = "CCM Garage",
-                NameQueryParameter = "CCM",
+                Slug = "ccm",
                 Latitude = 39.129894,
                 Longitude = -84.516852,
                 Campus = "Uptown Campus",
@@ -194,7 +205,7 @@ public class UCReviewsContext : DbContext
             {
                 Id = 2,
                 Name = "Calhoun Garage",
-                NameQueryParameter = "Calhoun",
+                Slug = "calhoun",
                 Latitude = 39.128439,
                 Longitude = -84.516616,
                 Campus = "Uptown Campus",
@@ -205,7 +216,7 @@ public class UCReviewsContext : DbContext
             {
                 Id = 3,
                 Name = "Campus Green Garage",
-                NameQueryParameter = "Campus_Green",
+                Slug = "campus-green",
                 Latitude = 39.135716,
                 Longitude = -84.515223,
                 Campus = "Uptown Campus",
@@ -216,7 +227,7 @@ public class UCReviewsContext : DbContext
             {
                 Id = 4,
                 Name = "Clifton Court Garage",
-                NameQueryParameter = "Clifton_Court",
+                Slug = "clifton-court",
                 Latitude = 39.134303,
                 Longitude = -84.517271,
                 Campus = "Uptown Campus",
@@ -227,7 +238,7 @@ public class UCReviewsContext : DbContext
             {
                 Id = 5,
                 Name = "Clifton Lots",
-                NameQueryParameter = "Clifton_Lots",
+                Slug = "clifton-lots",
                 Latitude = 39.134690,
                 Longitude = -84.520307,
                 Campus = "Uptown Campus",
@@ -238,7 +249,7 @@ public class UCReviewsContext : DbContext
             {
                 Id = 6,
                 Name = "Corry Garage",
-                NameQueryParameter = "Corry",
+                Slug = "corry",
                 Latitude = 39.129001,
                 Longitude = -84.512904,
                 Campus = "Uptown Campus",
@@ -249,7 +260,7 @@ public class UCReviewsContext : DbContext
             {
                 Id = 7,
                 Name = "Digital Futures",
-                NameQueryParameter = "Digital_Futures",
+                Slug = "digital-futures",
                 Latitude = 39.134089,
                 Longitude = -84.494941,
                 Campus = "Uptown Campus",
@@ -260,7 +271,7 @@ public class UCReviewsContext : DbContext
             {
                 Id = 8,
                 Name = "Stratford Heights Garage",
-                NameQueryParameter = "Stratford_Heights",
+                Slug = "stratford-heights",
                 Latitude = 39.130841,
                 Longitude = -84.521377,
                 Campus = "Uptown Campus",
@@ -271,7 +282,7 @@ public class UCReviewsContext : DbContext
             {
                 Id = 9,
                 Name = "University Avenue Garage",
-                NameQueryParameter = "University_Avenue",
+                Slug = "university-avenue",
                 Latitude = 39.134615,
                 Longitude = -84.510986,
                 Campus = "Uptown Campus",
@@ -282,7 +293,7 @@ public class UCReviewsContext : DbContext
             {
                 Id = 10,
                 Name = "Varsity Village Garage",
-                NameQueryParameter = "Varsity_Village",
+                Slug = "varsity-village",
                 Latitude = 39.130166,
                 Longitude = -84.515964,
                 Campus = "Uptown Campus",
@@ -293,7 +304,7 @@ public class UCReviewsContext : DbContext
             {
                 Id = 11,
                 Name = "Woodside Avenue Garage",
-                NameQueryParameter = "Woodside_Avenue",
+                Slug = "woodside-avenue",
                 Latitude = 39.135025,
                 Longitude = -84.515180,
                 Campus = "Uptown Campus",
@@ -304,7 +315,7 @@ public class UCReviewsContext : DbContext
             {
                 Id = 12,
                 Name = "Blood Cancer Healing Center",
-                NameQueryParameter = "Blood_Cancer_Healing_Center",
+                Slug = "blood-cancer-healing-center",
                 Latitude = 39.138082474177075,
                 Longitude = -84.50119246416794,
                 Campus = "Medical Campus",
@@ -315,7 +326,7 @@ public class UCReviewsContext : DbContext
             {
                 Id = 13,
                 Name = "Eden Garage",
-                NameQueryParameter = "Eden",
+                Slug = "eden",
                 Latitude = 39.137669,
                 Longitude = -84.505159,
                 Campus = "Medical Campus",
@@ -326,7 +337,7 @@ public class UCReviewsContext : DbContext
             {
                 Id = 14,
                 Name = "Kingsgate Garage",
-                NameQueryParameter = "Kingsgate",
+                Slug = "kingsgate",
                 Latitude = 39.138082474177075,
                 Longitude = -84.50119246416794,
                 Campus = "Medical Campus",
