@@ -4,7 +4,6 @@ export interface IParkingGarage {
   id: number;
   name: string;
   slug: string;
-  nameQueryParameter: string;
   latitude: number;
   longitude: number;
   campus: string;
