@@ -12,10 +12,6 @@ namespace api.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "AverageRating",
-                table: "Dorm");
-
             migrationBuilder.AddColumn<int>(
                 name: "DiningHallId",
                 table: "Review",
@@ -95,118 +91,6 @@ namespace api.Migrations
             migrationBuilder.DropColumn(
                 name: "DiningHallId",
                 table: "Review");
-
-            migrationBuilder.AddColumn<decimal>(
-                name: "AverageRating",
-                table: "Dorm",
-                type: "decimal(18,2)",
-                nullable: false,
-                defaultValue: 0m);
-
-            migrationBuilder.UpdateData(
-                table: "Dorm",
-                keyColumn: "Id",
-                keyValue: 1,
-                column: "AverageRating",
-                value: 3m);
-
-            migrationBuilder.UpdateData(
-                table: "Dorm",
-                keyColumn: "Id",
-                keyValue: 2,
-                column: "AverageRating",
-                value: 4m);
-
-            migrationBuilder.UpdateData(
-                table: "Dorm",
-                keyColumn: "Id",
-                keyValue: 3,
-                column: "AverageRating",
-                value: 2.9m);
-
-            migrationBuilder.UpdateData(
-                table: "Dorm",
-                keyColumn: "Id",
-                keyValue: 4,
-                column: "AverageRating",
-                value: 3m);
-
-            migrationBuilder.UpdateData(
-                table: "Dorm",
-                keyColumn: "Id",
-                keyValue: 5,
-                column: "AverageRating",
-                value: 4.5m);
-
-            migrationBuilder.UpdateData(
-                table: "Dorm",
-                keyColumn: "Id",
-                keyValue: 6,
-                column: "AverageRating",
-                value: 0m);
-
-            migrationBuilder.UpdateData(
-                table: "Dorm",
-                keyColumn: "Id",
-                keyValue: 7,
-                column: "AverageRating",
-                value: 0m);
-
-            migrationBuilder.UpdateData(
-                table: "Dorm",
-                keyColumn: "Id",
-                keyValue: 8,
-                column: "AverageRating",
-                value: 0m);
-
-            migrationBuilder.UpdateData(
-                table: "Dorm",
-                keyColumn: "Id",
-                keyValue: 9,
-                column: "AverageRating",
-                value: 0m);
-
-            migrationBuilder.UpdateData(
-                table: "Dorm",
-                keyColumn: "Id",
-                keyValue: 10,
-                column: "AverageRating",
-                value: 0m);
-
-            migrationBuilder.UpdateData(
-                table: "Dorm",
-                keyColumn: "Id",
-                keyValue: 11,
-                column: "AverageRating",
-                value: 0m);
-
-            migrationBuilder.UpdateData(
-                table: "Dorm",
-                keyColumn: "Id",
-                keyValue: 12,
-                column: "AverageRating",
-                value: 0m);
-
-            migrationBuilder.UpdateData(
-                table: "Dorm",
-                keyColumn: "Id",
-                keyValue: 13,
-                column: "AverageRating",
-                value: 3.5m);
-
-            migrationBuilder.UpdateData(
-                table: "Dorm",
-                keyColumn: "Id",
-                keyValue: 14,
-                column: "AverageRating",
-                value: 1m);
-
-            migrationBuilder.UpdateData(
-                table: "Dorm",
-                keyColumn: "Id",
-                keyValue: 15,
-                column: "AverageRating",
-                value: 3.8m);
         }
     }
 }
