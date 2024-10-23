@@ -2,8 +2,12 @@ namespace api.Models;
 
 using System.ComponentModel.DataAnnotations;
 
-public class Dorm : ReviewableEntity
+public class Dorm
 {
+    [Key]
+    public int Id { get; set; }
+    public List<Review> Reviews { get; set; } = [];
+
     public string Name { get; set; }
     public string Style { get; set; }
     public string Cost { get; set; }
