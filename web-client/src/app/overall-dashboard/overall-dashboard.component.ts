@@ -52,7 +52,7 @@ export class OverallDashboardComponent implements OnInit {
         this._router.navigate(['/dashboard/garages']);
         break;
       case 'Dining Halls':
-        this._router.navigate(['/dashboard/']);
+        this._router.navigate(['/dashboard/dining']);
         break;
       default:
         this._router.navigate(['/dashboard/']);

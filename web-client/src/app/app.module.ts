@@ -23,6 +23,7 @@ import { TextFieldModule} from '@angular/cdk/text-field';
 import { OverallDashboardComponent } from './overall-dashboard/overall-dashboard.component';
 import { GaragePageComponent } from './garage-page/garage-page.component';
 import { GarageDashboardComponent } from './garage-dashboard/garage-dashboard.component';
+import { DiningDashboardComponent } from './dining-dashboard/dining-dashboard.component';
 
 @NgModule({ declarations: [
         AppComponent,
@@ -34,6 +35,7 @@ import { GarageDashboardComponent } from './garage-dashboard/garage-dashboard.co
         GarageDashboardComponent,
         GaragePageComponent,
         OverallDashboardComponent,
+        DiningDashboardComponent,
     ],
     bootstrap: [AppComponent],
     imports: [BrowserModule,
@@ -57,6 +59,8 @@ import { GarageDashboardComponent } from './garage-dashboard/garage-dashboard.co
             { path: 'dashboard/housing/:dorm', component: DormPageComponent, canActivate: [AuthGuard]},
             { path: 'dashboard/garages', component: GarageDashboardComponent, canActivate: [AuthGuard]},
             { path: 'dashboard/garages/:slug', component: GaragePageComponent, canActivate: [AuthGuard]},
+            { path: 'dashboard/dining', component: DiningDashboardComponent, canActivate: [AuthGuard]},
+            // { path: 'dashboard/dining/:slug', component: GaragePageComponent, canActivate: [AuthGuard]},
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
             { path: '**', redirectTo: 'dashboard', pathMatch: 'full' }
         ])], providers: [

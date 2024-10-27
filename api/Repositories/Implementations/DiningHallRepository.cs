@@ -11,7 +11,7 @@ public class DiningHallRepository : IDiningHallRepository
     }
     public async Task<IEnumerable<DiningHall>> GetAllDiningHalls()
     {
-        return await _dbContext.DiningHall.ToListAsync();
+        return await _dbContext.DiningHall.Include(d => d.Reviews).ThenInclude(r => r.User).ToListAsync();
     }
 
     public async Task<DiningHall> GetDiningHall(string queryParam)
