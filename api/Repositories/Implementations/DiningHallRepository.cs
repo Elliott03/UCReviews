@@ -16,6 +16,6 @@ public class DiningHallRepository : IDiningHallRepository
 
     public async Task<DiningHall> GetDiningHall(string queryParam)
     {
-        return await _dbContext.DiningHall.Where(d => d.NameQueryParameter == queryParam).FirstOrDefaultAsync();
+        return await _dbContext.DiningHall.Include(b => b.Reviews).ThenInclude(r => r.User).Where(d => d.NameQueryParameter == queryParam).FirstOrDefaultAsync();
     }
 }

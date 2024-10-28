@@ -1,0 +1,82 @@
+@if(diningHall) {
+
+    <div class="dining-page">
+      <!-- <p>{{ JSON.stringify(diningHall) }}</p> -->
+      <img
+        src="api/Images/DiningHalls/{{ diningHall.nameQueryParameter }}.png"
+        class="hero-image"
+      />
+      <h1>{{ diningHall.name }}</h1>
+      <ngx-stars
+        #diningHallRating
+        [readonly]="true"
+        [initialStars]="0"
+        [size]="4"
+      ></ngx-stars>
+      <div class="attributes">
+        <h2 class="category">{{ diningHall.category }}</h2>
+      </div>
+      <div class="attributes">
+        <h2 class="included-in-meal-plan">In Meal Plan? - {{ diningHall.includedInMealPlan }}</h2>
+      </div>
+      <div class="attributes">
+        <p class="description">{{ diningHall.description }}</p>
+      </div>
+      <div class="attributes">
+        <p class="location">{{ diningHall.location }}</p>
+      </div>
+      <hr class="horizontal-line" />
+      <mat-card class="create-review p-2 card">
+        <mat-card-content>
+          <h2 class="username">{{ username }}</h2>
+          <ngx-stars
+            #reviewRating
+            class="rating-stars"
+            [readonly]="false"
+            [initialStars]="0"
+            [size]="3"
+          ></ngx-stars>
+          <textarea
+            matInput
+            [maxLength]="1000"
+            (input)="updateCharacterCount($event)"
+            [(ngModel)]="reviewText"
+            class="create-review-text"
+            placeholder="Review text here"
+          ></textarea>
+          <span class="character-counter">
+            {{ currentCharacterCount }} / {{ maxCharacterCount }}
+          </span>
+          <button
+            mat-flat-button
+            (click)="sendReview()"
+            class="secondary review-button"
+          >
+            Review
+          </button>
+        </mat-card-content>
+      </mat-card>
+      <hr class="horizontal-line" />
+      <div class="review-container">
+        @for (review of reviews; track review) {
+        <mat-card class="single-review card">
+          <mat-card-content>
+            <h2 class="username">{{ emailToUsername(review.user.email) }}</h2>
+            <ngx-stars
+              class="review-stars"
+              [readonly]="true"
+              [initialStars]="review.starRating"
+              [size]="2"
+            ></ngx-stars>
+            <h3 class="review-text">{{ review.reviewText }}</h3>
+            <h3 class="time-created">
+              {{ convertDateToReadable(review.timeCreated) }}
+            </h3>
+          </mat-card-content>
+        </mat-card>
+        }
+      </div>
+    </div>
+    
+    }
+    

@@ -24,6 +24,7 @@ import { OverallDashboardComponent } from './overall-dashboard/overall-dashboard
 import { GaragePageComponent } from './garage-page/garage-page.component';
 import { GarageDashboardComponent } from './garage-dashboard/garage-dashboard.component';
 import { DiningDashboardComponent } from './dining-dashboard/dining-dashboard.component';
+import { DiningPageComponent } from './dining-page/dining-page.component';
 
 @NgModule({ declarations: [
         AppComponent,
@@ -36,6 +37,7 @@ import { DiningDashboardComponent } from './dining-dashboard/dining-dashboard.co
         GaragePageComponent,
         OverallDashboardComponent,
         DiningDashboardComponent,
+        DiningPageComponent,
     ],
     bootstrap: [AppComponent],
     imports: [BrowserModule,
@@ -60,7 +62,7 @@ import { DiningDashboardComponent } from './dining-dashboard/dining-dashboard.co
             { path: 'dashboard/garages', component: GarageDashboardComponent, canActivate: [AuthGuard]},
             { path: 'dashboard/garages/:slug', component: GaragePageComponent, canActivate: [AuthGuard]},
             { path: 'dashboard/dining', component: DiningDashboardComponent, canActivate: [AuthGuard]},
-            // { path: 'dashboard/dining/:slug', component: GaragePageComponent, canActivate: [AuthGuard]},
+            { path: 'dashboard/dining/:nameQueryParameter', component: DiningPageComponent, canActivate: [AuthGuard]},
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
             { path: '**', redirectTo: 'dashboard', pathMatch: 'full' }
         ])], providers: [

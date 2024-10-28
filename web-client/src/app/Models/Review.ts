@@ -23,6 +23,7 @@ export class SaveReview {
     userId: number;
     parkingGarageId?: Number;
     dormId?: Number;
+    diningHallId?: Number;
   }) {
     Object.assign(this, props);
   }

@@ -1,6 +1,6 @@
 <div id="dashboard-page" class="dashboard-page">
   @for (diningHall of diningHalls; track diningHall) {
-  <a class="inline-card" [routerLink]="'/dashboard/diningHalls/' + diningHall.nameQueryParameter">
+  <a class="inline-card" [routerLink]="'/dashboard/dining/' + diningHall.nameQueryParameter">
     <mat-card class="card">
       <mat-card-content>
         <img
@@ -17,9 +17,9 @@
             [title]="getDiningRatingTitle(diningHall)"
           ></ngx-stars>
           <div class="attributes">
-            <h2 class="included-in-meal-plan">
-              Meal Plan - {{ diningHall.includedInMealPlan }}
-            </h2>
+            <h3 class="category">
+              {{ diningHall.category }}
+            </h3>
           </div>
           <button mat-flat-button>Review</button>
         </div>
