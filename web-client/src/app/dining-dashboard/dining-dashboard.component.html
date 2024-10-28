@@ -1,0 +1,30 @@
+<div id="dashboard-page" class="dashboard-page">
+  @for (diningHall of diningHalls; track diningHall) {
+  <a class="inline-card" [routerLink]="'/dashboard/dining/' + diningHall.nameQueryParameter">
+    <mat-card class="card">
+      <mat-card-content>
+        <img
+          src="api/Images/DiningHalls/{{ diningHall.nameQueryParameter }}.png"
+          class="hero-image"
+          alt="Image of {{ diningHall.name }}"
+        />
+        <div class="info">
+          <h2 class="name">{{ diningHall.name }}</h2>
+          <ngx-stars
+            [size]="2"
+            [readonly]="true"
+            [initialStars]="diningHall.averageRating"
+            [title]="getDiningRatingTitle(diningHall)"
+          ></ngx-stars>
+          <div class="attributes">
+            <h3 class="category">
+              {{ diningHall.category }}
+            </h3>
+          </div>
+          <button mat-flat-button>Review</button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </a>
+  }
+</div>
