@@ -21,7 +21,7 @@ import { IReview, SaveReview } from '../Models/Review';
 export class GaragePageComponent implements OnInit, AfterViewInit {
   garage?: IParkingGarageWithRating;
   reviews: IReview[] | undefined;
-  JSON: any;
+  // JSON: any;
   user: IUser | undefined;
   username: string | undefined;
   reviewText: string = '';
@@ -51,7 +51,7 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
       return;
     }
     const slug = this.route.snapshot.params['slug'];
-    this.JSON = JSON;
+    // this.JSON = JSON;
     this.garage = await firstValueFrom(
       this._garageService.getParkingGarage(slug, true)
     );

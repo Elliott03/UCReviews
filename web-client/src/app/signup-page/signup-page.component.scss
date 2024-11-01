@@ -1,11 +1,11 @@
-@import '../../styles.scss';
+@import "../../styles/main.scss";
 
 .signup-layout {
     background-color: get-color($shades-of-blue-grey, 10);
     width: 35em;
     height: 35em;
     margin: auto;
-    border-radius: 5px; 
+    border-radius: 5px;
     display: flex;
     flex-direction: column;
     margin-top: 30px;
