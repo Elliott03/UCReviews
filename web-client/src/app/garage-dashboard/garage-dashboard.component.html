@@ -1,6 +1,6 @@
 <div id="dashboard-page" class="dashboard-page">
   @for (garage of garages; track garage) {
-  <a class="inline-card" [routerLink]="'/dashboard/garages/' + garage.slug">
+  <a class="inline-card reset" [routerLink]="'/dashboard/garages/' + garage.slug">
     <mat-card class="card">
       <mat-card-content>
         <img

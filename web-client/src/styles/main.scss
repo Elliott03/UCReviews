@@ -1,14 +1,12 @@
 @use "@angular/material" as mat;
-@use "../m3-theme.scss" as light;
+@use "../../m3-theme.scss" as light;
 
 @include mat.core();
 
 $web-client-theme: light.$light-theme;
+
 :root {
   @include mat.all-component-themes($web-client-theme);
-}
-html {
-  @include mat.core-theme($web-client-theme);
 }
 
 $shades-of-red: #610316, #8a041a, #ab091e, #e00122, #e12d39, #ef4e4e, #f86a6a,

@@ -1,16 +1,21 @@
 <div id="overall-dashboard-page" class="dashboard-page">
-    @for(category of categories; track category.id) {
-      <div class="inline-card">
-        <mat-card class="card" (click)="categoryClick(category)">
-          <img src="/api/Images/overall-dashboard-images/{{category.image}}" class="image" />
-          <div class="info">
-            <h2 class="name">{{category.name}}</h2>
-            <div class="style-cost">
-              <h3 class="description">{{category.description}}</h3>
-            </div>
-            <button mat-flat-button>View</button>
+  @for(category of categories; track category.id) {
+  <div class="inline-card">
+    <a [routerLink]="category.path" class="reset">
+      <mat-card class="card">
+        <img
+          src="/api/Images/overall-dashboard-images/{{ category.image }}"
+          class="image"
+        />
+        <div class="info">
+          <h2 class="name">{{ category.name }}</h2>
+          <div class="style-cost">
+            <h3 class="description">{{ category.description }}</h3>
           </div>
-        </mat-card>
-      </div>
-    }
+          <button mat-flat-button>View</button>
+        </div>
+      </mat-card>
+    </a>
   </div>
+  }
+</div>

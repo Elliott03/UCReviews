@@ -26,8 +26,4 @@ export class DormDashboardComponent implements OnInit{
       this._router.navigate(['/signup']);
     }
   }
-
-  dormClick(dorm: ISmallDorm) {
-    this._router.navigate(['/dashboard/housing', dorm.nameQueryParameter]);
-  }
 }

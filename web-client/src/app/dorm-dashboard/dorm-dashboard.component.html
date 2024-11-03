@@ -1,18 +1,27 @@
 <div id="dashboard-page" class="dashboard-page">
   @for (dorm of dorms; track dorm) {
-    <div class="inline-card">
-      <mat-card class="card" (click)="dormClick(dorm)">
-        <img src="api/Images/Small_Dorms/{{dorm.nameQueryParameter}}.jpg" class="image" />
+  <div class="inline-card">
+    <a [routerLink]="['/dashboard/housing', dorm.nameQueryParameter]" class="reset">
+      <mat-card class="card">
+        <img
+          src="api/Images/Small_Dorms/{{ dorm.nameQueryParameter }}.jpg"
+          class="image"
+        />
         <div class="info">
-          <h2 class="name">{{dorm.name}}</h2>
-          <ngx-stars [size]="2" [readonly]="true" [initialStars]="dorm.averageRating" ></ngx-stars>
+          <h2 class="name">{{ dorm.name }}</h2>
+          <ngx-stars
+            [size]="2"
+            [readonly]="true"
+            [initialStars]="dorm.averageRating"
+          ></ngx-stars>
           <div class="style-cost">
-            <h3 class="style">{{dorm.style}}</h3>
-            <h3 class="cost">{{dorm.cost}}</h3>
+            <h3 class="style">{{ dorm.style }}</h3>
+            <h3 class="cost">{{ dorm.cost }}</h3>
           </div>
           <button mat-flat-button>Review</button>
         </div>
-      </mat-card> 
-    </div>
+      </mat-card>
+    </a>
+  </div>
   }
 </div>

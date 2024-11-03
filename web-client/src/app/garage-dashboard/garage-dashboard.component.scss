@@ -1,4 +1,5 @@
-@import "../../styles.scss";
+@import "main.scss";
+@import "resets/link.scss";
 
 .dashboard-page {
   padding: 1rem;
@@ -19,21 +20,4 @@
   &:hover {
     background-color: get-color($shades-of-blue-grey, 7);
   }
-}
-
-a {
-  text-decoration: none;
-  color: inherit; /* Inherits the color of the parent element */
-}
-
-a:visited {
-  color: inherit; /* Inherits color for visited links as well */
-}
-
-a:hover,
-a:focus,
-a:active {
-  text-decoration: none; /* No underline on hover/focus/active */
-  color: inherit; /* Keeps the same color */
-  outline: none; /* Removes default focus outline */
 }
