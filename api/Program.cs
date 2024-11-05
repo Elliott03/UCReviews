@@ -7,12 +7,15 @@ using api.Repositories.Implementations;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Text.Json.Serialization;
+using api.Settings;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<UCReviewsContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("UCReviewsDatabase")));
 // Contact Elliott for necessary JWT config and DB access info
 
+// Add configuration related
+builder.Services.Configure<PaginationSettings>(builder.Configuration.GetSection("Pagination"));
 
 // Add service layer dependencies to the container
 builder.Services.AddTransient<IAuthenticationService, AuthenticationService>();
@@ -30,7 +33,6 @@ builder.Services.AddTransient<IDormRepository, DormRepository>();
 builder.Services.AddTransient<IReviewRepository, ReviewRepository>();
 builder.Services.AddTransient<IParkingGarageRepository, ParkingGarageRepository>();
 builder.Services.AddTransient<IDiningHallRepository, DiningHallRepository>();
-
 
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddControllers().AddJsonOptions(options =>
