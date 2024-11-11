@@ -4,9 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ReviewService } from '../core/services/review.service';
 import { GarageService } from '../core/services/garage.service';
 import { firstValueFrom } from 'rxjs';
-import {
-  IParkingGarageWithRating,
-} from '../Models/ParkingGarage';
+import { IParkingGarageWithRating } from '../Models/ParkingGarage';
 import { NgxStarsComponent } from 'ngx-stars';
 import { emailToUsername as _emailToUsername } from '../core/helpers/emailToUsername';
 import { convertDateToReadable as _convertDateToReadable } from '../core/helpers/convertDateToReadable';
@@ -53,7 +51,11 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
     const slug = this.route.snapshot.params['slug'];
     // this.JSON = JSON;
     this.garage = await firstValueFrom(
-      this._garageService.getParkingGarage(slug, true)
+      this._garageService.getParkingGarage(slug, {
+        includeReviews: true,
+        perPage: 10,
+        prev: 0,
+      })
     );
 
     if (!this.garage) {
@@ -84,7 +86,11 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
       this.route.params.subscribe(async (params) => {
         const slug = params['slug'];
         this.garage = await firstValueFrom(
-          this._garageService.getParkingGarage(slug, true)
+          this._garageService.getParkingGarage(slug, {
+            includeReviews: true,
+            perPage: 10,
+            prev: 0,
+          })
         );
         this.setGarageRating();
       });

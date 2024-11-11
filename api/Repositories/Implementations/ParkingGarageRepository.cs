@@ -29,7 +29,7 @@ public class ParkingGarageRepository : IParkingGarageRepository
             query = query.Include(g => g.Reviews).ThenInclude(r => r.User);
         }
 
-        perPage = int.Max(perPage, _paginationSettings.MaxPerPage);
+        perPage = int.Min(perPage, _paginationSettings.MaxPerPage);
 
         query = query.Where(g => g.Id > prev).Take(perPage);
 

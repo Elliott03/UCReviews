@@ -5,8 +5,8 @@ import {
   IParkingGarage,
   IParkingGarageWithRating,
 } from 'src/app/Models/ParkingGarage';
-import { IReview } from 'src/app/Models/Review';
 import { getAvgRating } from '../helpers/getAvgRating';
+import { QueryParams } from '../types/QueryParams';
 
 @Injectable({
   providedIn: 'root',
@@ -16,10 +16,10 @@ export class GarageService {
 
   getParkingGarage(
     slug_or_id: string,
-    includeReviews: boolean = false
+    { includeReviews, perPage, prev }: QueryParams
   ): Observable<IParkingGarageWithRating> {
     const garage = this._http.get<IParkingGarage>(
-      `/api/ParkingGarage/${slug_or_id}?includeReviews=${includeReviews}`
+      `/api/ParkingGarage/${slug_or_id}?includeReviews=${includeReviews}&perPage=${perPage}&prev=${prev}`
     );
     return garage.pipe(
       map((garage) => {
@@ -31,11 +31,13 @@ export class GarageService {
     );
   }
 
-  getParkingGarages(
-    includeReviews: boolean = false
-  ): Observable<IParkingGarageWithRating[]> {
+  getParkingGarages({
+    includeReviews,
+    perPage,
+    prev,
+  }: QueryParams): Observable<IParkingGarageWithRating[]> {
     const garages = this._http.get<IParkingGarage[]>(
-      `/api/ParkingGarage?includeReviews=${includeReviews}`
+      `/api/ParkingGarage?includeReviews=${includeReviews}&perPage=${perPage}&prev=${prev}`
     );
     return garages.pipe(
       map((garages) =>

@@ -25,6 +25,7 @@ import { GaragePageComponent } from './garage-page/garage-page.component';
 import { GarageDashboardComponent } from './garage-dashboard/garage-dashboard.component';
 import { DiningDashboardComponent } from './dining-dashboard/dining-dashboard.component';
 import { DiningPageComponent } from './dining-page/dining-page.component';
+import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 
 @NgModule({ declarations: [
         AppComponent,
@@ -52,6 +53,7 @@ import { DiningPageComponent } from './dining-page/dining-page.component';
         BrowserAnimationsModule,
         TextFieldModule,
         RouterLink,
+        InfiniteScrollDirective,
         RouterOutlet,
         RouterModule.forRoot([
             { path: 'signup', component: SignupPageComponent },
