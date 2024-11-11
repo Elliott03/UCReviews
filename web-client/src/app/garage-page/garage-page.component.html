@@ -2,10 +2,7 @@
 
 <div class="garage-page">
   <!-- <p>{{ JSON.stringify(garage) }}</p> -->
-  <img
-    src="api/Images/Garages/{{ garage.slug }}.jpg"
-    class="hero-image"
-  />
+  <img src="api/Images/Garages/{{ garage.slug }}.jpg" class="hero-image" />
   <h1>{{ garage.name }} - {{ garage.campus }}</h1>
   <ngx-stars
     #garageRating
@@ -13,6 +10,14 @@
     [initialStars]="0"
     [size]="4"
   ></ngx-stars>
+  <iframe
+    width="600"
+    height="450"
+    style="border: 0"
+    loading="lazy"
+    allowfullscreen
+    [src]="mapUrl"
+  ></iframe>
   <div class="attributes">
     <h2 class="permit-required">
       Permit Required - {{ garage.permitRequired }}

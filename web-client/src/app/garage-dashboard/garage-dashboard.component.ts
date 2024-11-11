@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
-import {
-  IParkingGarage,
-  IParkingGarageWithRating,
-} from '../Models/ParkingGarage';
+import { IParkingGarageWithRating } from '../Models/ParkingGarage';
 import { GarageService } from '../core/services/garage.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../core/services/auth.service';
@@ -29,8 +26,8 @@ export class GarageDashboardComponent {
     }
   }
   getGarageRatingTitle(garage: IParkingGarageWithRating) {
-    if(!garage.averageRating) {
-      return "Not yet rated";
+    if (!garage.averageRating) {
+      return 'Not yet rated';
     }
     return `${garage.averageRating} stars`;
   }

@@ -4,14 +4,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ReviewService } from '../core/services/review.service';
 import { GarageService } from '../core/services/garage.service';
 import { firstValueFrom } from 'rxjs';
-import {
-  IParkingGarageWithRating,
-} from '../Models/ParkingGarage';
+import { IParkingGarageWithRating } from '../Models/ParkingGarage';
 import { NgxStarsComponent } from 'ngx-stars';
 import { emailToUsername as _emailToUsername } from '../core/helpers/emailToUsername';
 import { convertDateToReadable as _convertDateToReadable } from '../core/helpers/convertDateToReadable';
 import { IUser } from '../Models/User';
 import { IReview, SaveReview } from '../Models/Review';
+import { environment } from '../../environments/environment';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'garage-page',
@@ -27,6 +27,8 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
   reviewText: string = '';
   maxCharacterCount: number = 1000;
   currentCharacterCount: number = 0;
+  gmaps_key: string = environment.google_maps_key;
+  mapUrl: SafeResourceUrl|undefined;
 
   emailToUsername = _emailToUsername;
   convertDateToReadable = _convertDateToReadable;
@@ -42,7 +44,8 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
     private _garageService: GarageService,
     private _reviewService: ReviewService,
     private _authService: AuthService,
-    private _router: Router
+    private _router: Router,
+    private sanitizer: DomSanitizer
   ) {}
 
   async ngOnInit() {
@@ -54,6 +57,12 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
     // this.JSON = JSON;
     this.garage = await firstValueFrom(
       this._garageService.getParkingGarage(slug, true)
+    );
+
+    const { latitude, longitude } = this.garage;
+
+    this.mapUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+      `https://www.google.com/maps/embed/v1/view?zoom=17&center=${latitude}%2C${longitude}&key=${this.gmaps_key}`
     );
 
     if (!this.garage) {
