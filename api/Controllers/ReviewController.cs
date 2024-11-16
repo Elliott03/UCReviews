@@ -46,6 +46,13 @@ public class ReviewController : ControllerBase
         return await _service.GetReviewsByParkingGarageId(garageId, prev, (int)perPage);
     }
 
+    [HttpGet("DiningHall/{garageId}")]
+    public async Task<ActionResult<List<Review>>> GetReviewByDiningHallId(int garageId, [FromQuery] int prev = 0, [FromQuery] int? perPage = null)
+    {
+        perPage ??= _paginationSettings.DefaultPerPage;
+        return await _service.GetReviewsByDiningHallId(garageId, prev, (int)perPage);
+    }
+
     [HttpPost]
     public async Task<ActionResult<List<Review>>> SaveReview(SaveReviewViewModel review)
     {

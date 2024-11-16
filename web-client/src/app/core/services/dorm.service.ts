@@ -7,8 +7,9 @@ import {
   ISmallDorm,
   ISmallDormWithRating,
 } from 'src/app/Models/Dorm';
-import { IReview } from 'src/app/Models/Review';
 import { getAvgRating } from '../helpers/getAvgRating';
+import { QueryParams, ReviewableQueryParam } from '../types/QueryParams';
+import { buildQueryParams } from '../helpers/buildQueryParams';
 
 @Injectable({
   providedIn: 'root',
@@ -16,8 +17,17 @@ import { getAvgRating } from '../helpers/getAvgRating';
 export class DormService {
   constructor(private _http: HttpClient) {}
 
-  getDorms(): Observable<ISmallDormWithRating[]> {
-    const dorms = this._http.get<ISmallDorm[]>('/api/Dorm');
+  getDorms({
+    includeReviews,
+    perPage,
+    prev,
+  }: QueryParams): Observable<ISmallDormWithRating[]> {
+    const queryParams = buildQueryParams<QueryParams>({
+      includeReviews: includeReviews,
+      perPage: perPage,
+      prev: prev,
+    });
+    const dorms = this._http.get<ISmallDorm[]>(`/api/Dorm?${queryParams}`);
     return dorms.pipe(
       map((dorms) =>
         dorms.map((dorm) => {
@@ -30,8 +40,11 @@ export class DormService {
     );
   }
 
-  getDorm(queryParam: string): Observable<ILargeDormWithRating> {
-    const dorm = this._http.get<ILargeDorm>(`/api/Dorm/${queryParam}`);
+  getDorm(slug: string): Observable<ILargeDormWithRating> {
+    const queryParams = buildQueryParams<ReviewableQueryParam>({
+      includeReviews: true,
+    });
+    const dorm = this._http.get<ILargeDorm>(`/api/Dorm/${slug}?${queryParams}`);
     return dorm.pipe(
       map((dorm) => {
         return {

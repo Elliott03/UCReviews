@@ -53,8 +53,6 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
     this.garage = await firstValueFrom(
       this._garageService.getParkingGarage(slug, {
         includeReviews: true,
-        perPage: 10,
-        prev: 0,
       })
     );
 
@@ -88,8 +86,6 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
         this.garage = await firstValueFrom(
           this._garageService.getParkingGarage(slug, {
             includeReviews: true,
-            perPage: 10,
-            prev: 0,
           })
         );
         this.setGarageRating();

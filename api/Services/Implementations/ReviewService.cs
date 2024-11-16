@@ -30,6 +30,12 @@ public class ReviewService : IReviewService
         return await _repository.GetReviewsByParkingGarageId(garageId, prev, perPage);
     }
 
+
+    public async Task<List<Review>> GetReviewsByDiningHallId(int diningHallId, int prev, int perPage)
+    {
+        return await _repository.GetReviewsByDiningHallId(diningHallId, prev, perPage);
+    }
+
     public async Task<List<Review>> SaveReview(SaveReviewViewModel model)
     {
         var review = new Review
