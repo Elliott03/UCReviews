@@ -24,9 +24,9 @@ public class DiningHallController : ControllerBase
         perPage ??= _paginationSettings.DefaultPerPage;
         return Ok(await _service.GetDiningHalls(prev, (int)perPage));
     }
-    [HttpGet("{queryParam}")]
-    public async Task<ActionResult<DiningHall>> GetDiningHall(string queryParam)
+    [HttpGet("{slug}")]
+    public async Task<ActionResult<DiningHall>> GetDiningHall(string slug)
     {
-        return Ok(await _service.GetDiningHall(queryParam));
+        return Ok(await _service.GetDiningHall(slug));
     }
 }

@@ -8,9 +8,9 @@ public class DiningHallService : IDiningHallService
     {
         _repository = repository;
     }
-    public async Task<DiningHall> GetDiningHall(string queryParam)
+    public async Task<DiningHall> GetDiningHall(string slug)
     {
-        return await _repository.GetDiningHall(queryParam);
+        return await _repository.GetDiningHall(slug);
     }
 
     public async Task<IEnumerable<DiningHall>> GetDiningHalls(int prev, int perPage)

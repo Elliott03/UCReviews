@@ -22,8 +22,8 @@ public class DiningHallRepository : IDiningHallRepository
         return await query.Include(d => d.Reviews).ThenInclude(r => r.User).ToListAsync();
     }
 
-    public async Task<DiningHall> GetDiningHall(string queryParam)
+    public async Task<DiningHall> GetDiningHall(string slug)
     {
-        return await _dbContext.DiningHall.Include(b => b.Reviews).ThenInclude(r => r.User).Where(d => d.NameQueryParameter == queryParam).FirstOrDefaultAsync();
+        return await _dbContext.DiningHall.Include(b => b.Reviews).ThenInclude(r => r.User).Where(d => d.NameQueryParameter == slug).FirstOrDefaultAsync();
     }
 }
