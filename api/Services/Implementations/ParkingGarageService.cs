@@ -26,6 +26,6 @@ public class ParkingGarageService : IParkingGarageService
 
     public async Task<IEnumerable<ParkingGarage>> GetParkingGarages(bool includeReviews, int prev, int perPage)
     {
-        return await _parkingGarageRepository.GetAllParkingGarages(includeReviews, prev, perPage);
+        return await _parkingGarageRepository.GetParkingGarages(includeReviews, prev, perPage);
     }
 }

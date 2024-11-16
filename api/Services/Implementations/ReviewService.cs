@@ -16,18 +16,18 @@ public class ReviewService : IReviewService
         _repository = repository;
         _dormService = dormService;
     }
-    public async Task<IEnumerable<Review>> GetReviews()
+    public async Task<IEnumerable<Review>> GetReviews(int prev, int perPage)
     {
-        return await _repository.GetAllReviews();
+        return await _repository.GetReviews(prev, perPage);
     }
-    public async Task<List<Review>> GetReviewsByDormId(int dormId)
+    public async Task<List<Review>> GetReviewsByDormId(int dormId, int prev, int perPage)
     {
-        return await _repository.GetReviewsByDormId(dormId);
+        return await _repository.GetReviewsByDormId(dormId, prev, perPage);
     }
 
-    public async Task<List<Review>> GetReviewsByParkingGarageId(int garageId)
+    public async Task<List<Review>> GetReviewsByParkingGarageId(int garageId, int prev, int perPage)
     {
-        return await _repository.GetReviewsByParkingGarageId(garageId);
+        return await _repository.GetReviewsByParkingGarageId(garageId, prev, perPage);
     }
 
     public async Task<List<Review>> SaveReview(SaveReviewViewModel model)
@@ -45,15 +45,15 @@ public class ReviewService : IReviewService
         await _repository.SaveReview(review);
         if (model.DormId is not null)
         {
-            return await _repository.GetReviewsByDormId((int)model.DormId);
+            return await _repository.GetReviewsByDormId((int)model.DormId, review.Id - 1, 1);
         }
         else if (model.ParkingGarageId is not null)
         {
-            return await _repository.GetReviewsByParkingGarageId((int)model.ParkingGarageId);
+            return await _repository.GetReviewsByParkingGarageId((int)model.ParkingGarageId, review.Id - 1, 1);
         }
         else if (model.DiningHallId is not null)
         {
-            return await _repository.GetReviewsByDiningHallId((int)model.DiningHallId);
+            return await _repository.GetReviewsByDiningHallId((int)model.DiningHallId, review.Id - 1, 1);
         }
         else
         {

@@ -13,8 +13,8 @@ public class DiningHallService : IDiningHallService
         return await _repository.GetDiningHall(queryParam);
     }
 
-    public async Task<IEnumerable<DiningHall>> GetAllDiningHalls()
+    public async Task<IEnumerable<DiningHall>> GetDiningHalls(int prev, int perPage)
     {
-        return await _repository.GetAllDiningHalls();
+        return await _repository.GetDiningHalls(prev, perPage);
     }
 }

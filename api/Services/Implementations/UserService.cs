@@ -41,9 +41,9 @@ public class UserService : IUserService
     {
         return await _repository.GetUserByEmail(email);
     }
-    public async Task<IEnumerable<User>> GetUsers()
+    public async Task<IEnumerable<User>> GetUsers(int prev, int perPage)
     {
-        return await _repository.GetAllUsers();
+        return await _repository.GetUsers(prev, perPage);
     }
     public async Task<User> GetUserById(int id)
     {

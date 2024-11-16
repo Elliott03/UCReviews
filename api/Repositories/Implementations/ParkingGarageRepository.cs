@@ -1,9 +1,7 @@
-using System;
 using api.Models;
 using api.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using Org.BouncyCastle.Crypto;
 using api.Settings;
 using Microsoft.Extensions.Options;
 
@@ -20,7 +18,7 @@ public class ParkingGarageRepository : IParkingGarageRepository
         _paginationSettings = paginationSettings.Value;
     }
 
-    public async Task<IEnumerable<ParkingGarage>> GetAllParkingGarages(bool includeReviews, int prev, int perPage)
+    public async Task<IEnumerable<ParkingGarage>> GetParkingGarages(bool includeReviews, int prev, int perPage)
     {
         var query = _dbContext.ParkingGarage.AsQueryable();
 
@@ -30,9 +28,7 @@ public class ParkingGarageRepository : IParkingGarageRepository
         }
 
         perPage = int.Min(perPage, _paginationSettings.MaxPerPage);
-
         query = query.Where(g => g.Id > prev).Take(perPage);
-
         return await query.ToListAsync();
     }
 

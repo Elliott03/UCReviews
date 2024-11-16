@@ -1,20 +1,27 @@
 using api.Models;
 using api.Repositories.Interfaces;
+using api.Settings;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace api.Repositories.Implementations;
 
 public class DormRepository : IDormRepository
 {
     private readonly UCReviewsContext _dbContext;
-    public DormRepository(UCReviewsContext dbContext)
+    private readonly PaginationSettings _paginationSettings;
+    public DormRepository(UCReviewsContext dbContext, IOptions<PaginationSettings> paginationSettings)
     {
         _dbContext = dbContext;
+        _paginationSettings = paginationSettings.Value;
     }
 
-    public async Task<IEnumerable<Dorm>> GetAllDorms()
+    public async Task<IEnumerable<Dorm>> GetDorms(int prev, int perPage)
     {
-        return await _dbContext.Dorm.Include(b => b.Reviews).ThenInclude(r => r.User).ToListAsync();
+        var query = _dbContext.Dorm.AsQueryable();
+        perPage = int.Min(perPage, _paginationSettings.MaxPerPage);
+        query = query.Where(g => g.Id > prev).Take(perPage);
+        return await query.Include(b => b.Reviews).ThenInclude(r => r.User).ToListAsync();
     }
 
     public async Task<Dorm> GetDorm(string queryParam)
