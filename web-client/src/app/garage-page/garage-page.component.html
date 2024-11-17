@@ -48,7 +48,10 @@
   </mat-card>
   <hr class="horizontal-line" />
   <div class="review-container">
-    <reviews [reviews]="reviews"></reviews>
+    <reviews
+      #reviewsComponent
+      [loadReviewsMethod]="getReviewsLoader()"
+    ></reviews>
   </div>
 </div>
 

@@ -10,6 +10,8 @@ import { emailToUsername as _emailToUsername } from '../core/helpers/emailToUser
 import { convertDateToReadable as _convertDateToReadable } from '../core/helpers/convertDateToReadable';
 import { IUser } from '../Models/User';
 import { IReview, SaveReview } from '../Models/Review';
+import { PageableQueryParam } from '../core/types/QueryParams';
+import { ReviewsComponent } from '../shared/reviews/reviews.component';
 
 @Component({
   selector: 'garage-page',
@@ -18,7 +20,6 @@ import { IReview, SaveReview } from '../Models/Review';
 })
 export class GaragePageComponent implements OnInit, AfterViewInit {
   garage?: IParkingGarageWithRating;
-  reviews: IReview[] | undefined;
   // JSON: any;
   user: IUser | undefined;
   username: string | undefined;
@@ -34,6 +35,11 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
 
   @ViewChild('reviewRating')
   reviewStarsComponent: NgxStarsComponent = new NgxStarsComponent();
+
+  @ViewChild('reviewsComponent')
+  reviewsComponent: ReviewsComponent = new ReviewsComponent(
+    this._reviewService
+  );
 
   constructor(
     private route: ActivatedRoute,
@@ -52,7 +58,7 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
     // this.JSON = JSON;
     this.garage = await firstValueFrom(
       this._garageService.getParkingGarage(slug, {
-        includeReviews: true,
+        includeReviews: false,
       })
     );
 
@@ -71,8 +77,6 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
         numberOfCharactersForEmailEnding
       );
     }
-
-    this.reviews = this.garage.reviews.reverse(); // Recent reviews first
   }
 
   ngAfterViewInit() {
@@ -111,10 +115,9 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
     const reviewList = await firstValueFrom(
       this._reviewService.addReview(newReview)
     );
-    this.reviews = reviewList.reverse();
-    const ratingSum = reviewList.reduce((acc, obj) => acc + obj.starRating, 0);
-    const averageRating = ratingSum / reviewList.length;
-    this.garageStarsComponent.setRating(averageRating);
+    this.reviewsComponent.addReviewToFront(reviewList[reviewList.length - 1]);
+    // Get average rating
+    // this.garageStarsComponent.setRating(averageRating);
     this.reviewStarsComponent.setRating(0); // Reset component
     this.reviewText = '';
     this.currentCharacterCount = 0;
@@ -123,5 +126,19 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
   updateCharacterCount(event: any) {
     const currentText: string = event.target.value;
     this.currentCharacterCount = currentText.length;
+  }
+
+  getReviewsLoader(): (params: PageableQueryParam) => Promise<IReview[]> {
+    return async ({ prev, perPage }: PageableQueryParam) => {
+      if (!this.garage) return [];
+      const reviews = await firstValueFrom(
+        this._reviewService.getReviewsByParkingGarageId({
+          perPage,
+          prev,
+          parkingGarageId: String(this.garage.id),
+        })
+      );
+      return reviews;
+    };
   }
 }

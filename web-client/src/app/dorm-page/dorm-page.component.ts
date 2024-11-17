@@ -9,6 +9,9 @@ import { AuthService } from '../core/services/auth.service';
 import { ReviewService } from '../core/services/review.service';
 import { emailToUsername as _emailToUsername } from '../core/helpers/emailToUsername';
 import { convertDateToReadable as _convertDateToReadable } from '../core/helpers/convertDateToReadable';
+import { PageableQueryParam } from '../core/types/QueryParams';
+import { firstValueFrom } from 'rxjs';
+import { ReviewsComponent } from '../shared/reviews/reviews.component';
 
 @Component({
   selector: 'dorm-page',
@@ -17,7 +20,6 @@ import { convertDateToReadable as _convertDateToReadable } from '../core/helpers
 })
 export class DormPageComponent implements OnInit {
   dorm: ILargeDorm | undefined;
-  reviews: IReview[] | undefined;
   user: IUser | undefined;
   username: string | undefined;
   reviewText: string = '';
@@ -32,6 +34,12 @@ export class DormPageComponent implements OnInit {
 
   @ViewChild('reviewRating')
   reviewStarsComponent: NgxStarsComponent = new NgxStarsComponent();
+
+  @ViewChild('reviewsComponent')
+  reviewsComponent: ReviewsComponent = new ReviewsComponent(
+    this._reviewService
+  );
+
   constructor(
     private route: ActivatedRoute,
     private _dormService: DormService,
@@ -46,7 +54,6 @@ export class DormPageComponent implements OnInit {
       this._dormService.getDorm(queryParam).subscribe((dorm) => {
         this.dorm = dorm;
         this.dormStarsComponent.setRating(dorm.averageRating);
-        this.reviews = this.reverseReviewList(this.dorm.reviews);
       });
       const stringUser = localStorage.getItem('user');
       if (stringUser) {
@@ -65,33 +72,37 @@ export class DormPageComponent implements OnInit {
     const currentText: string = event.target.value;
     this.currentCharacterCount = currentText.length;
   }
-  sendReview() {
+  async sendReview() {
     const userId = this._authService.getUserId();
-    if (this.reviewText && userId != -1 && this.dorm) {
-      this._reviewService
-        .addReview(
-          new SaveReview({
-            reviewText: this.reviewText,
-            rating: this.reviewStarsComponent.rating.toString(),
-            userId,
-            dormId: this.dorm.id,
-          })
-        )
-        .subscribe((reviewList) => {
-          this.reviews = this.reverseReviewList(reviewList);
-          const ratingSum = reviewList.reduce(
-            (acc, obj) => acc + obj.starRating,
-            0
-          );
-          const averageRating = ratingSum / reviewList.length;
-          this.dormStarsComponent.setRating(averageRating);
-          this.reviewText = '';
-          this.currentCharacterCount = 0;
-        });
-    }
+    if (!this.reviewText || userId === -1 || !this.dorm) return;
+    const newReview = new SaveReview({
+      reviewText: this.reviewText,
+      rating: this.reviewStarsComponent.rating.toString(),
+      userId,
+      dormId: this.dorm.id,
+    });
+    const reviewList = await firstValueFrom(
+      this._reviewService.addReview(newReview)
+    );
+    this.reviewsComponent.addReviewToFront(reviewList[reviewList.length - 1]);
+    // Get average rating
+    // this.garageStarsComponent.setRating(averageRating);
+    this.reviewStarsComponent.setRating(0); // Reset component
+    this.reviewText = '';
+    this.currentCharacterCount = 0;
   }
 
-  reverseReviewList(reviewList: IReview[]): IReview[] {
-    return reviewList.reverse();
+  getReviewsLoader(): (params: PageableQueryParam) => Promise<IReview[]> {
+    return async ({ prev, perPage }: PageableQueryParam) => {
+      if (!this.dorm) return [];
+      const reviews = await firstValueFrom(
+        this._reviewService.getReviewsByDormId({
+          perPage,
+          prev,
+          dormId: String(this.dorm.id),
+        })
+      );
+      return reviews;
+    };
   }
 }

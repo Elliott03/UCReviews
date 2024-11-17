@@ -29,7 +29,7 @@ public class ReviewRepository : IReviewRepository
     {
         var query = _dbContext.Review.AsQueryable();
         perPage = int.Min(perPage, _paginationSettings.MaxPerPage);
-        query = query.Where(r => r.Id > prev && r.DiningHallId == dormId).Take(perPage);
+        query = query.Where(r => r.Id > prev && r.DormId == dormId).Take(perPage);
         return await query.ToListAsync();
     }
 

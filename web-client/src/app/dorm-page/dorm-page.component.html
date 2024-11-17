@@ -1,22 +1,54 @@
 <div id="dorm-page" class="dorm-page">
   @if (dorm) {
-    <img src="api/Images/Large_Dorms/{{dorm.nameQueryParameter}}.jpg" class="image"/>
+  <img
+    src="api/Images/Large_Dorms/{{ dorm.nameQueryParameter }}.jpg"
+    class="image"
+  />
   }
-  <h1 class="name">{{dorm?.name}}</h1>
-  <ngx-stars #dormRating [readonly]="true" [initialStars]="0" [size]="4"></ngx-stars>
+  <h1 class="name">{{ dorm?.name }}</h1>
+  <ngx-stars
+    #dormRating
+    [readonly]="true"
+    [initialStars]="0"
+    [size]="4"
+  ></ngx-stars>
   <div class="style-cost">
-    <h2 class="style">{{dorm?.style}}</h2>
-    <h2 class="cost">{{dorm?.cost}}</h2>
+    <h2 class="style">{{ dorm?.style }}</h2>
+    <h2 class="cost">{{ dorm?.cost }}</h2>
   </div>
-  <h3 class="description">{{dorm?.description}}</h3>
-  <hr class="horizontal-line">
+  <h3 class="description">{{ dorm?.description }}</h3>
+  <hr class="horizontal-line" />
   <mat-card class="create-review">
-    <h2 class="username">{{username}}</h2>
-    <textarea matInput [maxLength]="1000" (input)="updateCharacterCount($event)" [(ngModel)]="reviewText" class="create-review-text" placeholder="Review text here"></textarea>
-    <h5 class="character-counter">{{currentCharacterCount}} / {{maxCharacterCount}}</h5>
-    <ngx-stars #reviewRating class="rating-stars" [readonly]="false" [initialStars]="0" [size]="3"></ngx-stars>
-    <button mat-flat-button (click)="sendReview()" class="secondary review-button" >Review</button>
+    <h2 class="username">{{ username }}</h2>
+    <textarea
+      matInput
+      [maxLength]="1000"
+      (input)="updateCharacterCount($event)"
+      [(ngModel)]="reviewText"
+      class="create-review-text"
+      placeholder="Review text here"
+    ></textarea>
+    <h5 class="character-counter">
+      {{ currentCharacterCount }} / {{ maxCharacterCount }}
+    </h5>
+    <ngx-stars
+      #reviewRating
+      class="rating-stars"
+      [readonly]="false"
+      [initialStars]="0"
+      [size]="3"
+    ></ngx-stars>
+    <button
+      mat-flat-button
+      (click)="sendReview()"
+      class="secondary review-button"
+    >
+      Review
+    </button>
   </mat-card>
-  <hr class="horizontal-line">
-  <reviews [reviews]="reviews"></reviews>
+  <hr class="horizontal-line" />
+  <reviews
+    #reviewsComponent
+    [loadReviewsMethod]="getReviewsLoader()"
+  ></reviews>
 </div>

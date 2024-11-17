@@ -1,8 +1,14 @@
-<div class="review-container">
-  @for (review of reviews; track review) {
+<div
+  class="review-container"
+  infiniteScroll
+  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="500"
+  (scrolled)="onScroll()"
+>
+  @for (review of reviews.values(); track review) {
   <mat-card class="single-review card">
     <mat-card-content>
-      <h2 class="username">{{ emailToUsername(review.user.email) }}</h2>
+      <!-- <h2 class="username">{{ emailToUsername(review.user.email) }}</h2> -->
       <ngx-stars
         class="review-stars"
         [readonly]="true"
