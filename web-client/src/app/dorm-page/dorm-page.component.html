@@ -18,12 +18,5 @@
     <button mat-flat-button (click)="sendReview()" class="secondary review-button" >Review</button>
   </mat-card>
   <hr class="horizontal-line">
-  @for (review of reviews; track review) {
-    <mat-card class="single-review">
-      <h2 class="username">{{emailToUsername(review.user.email)}}</h2>
-      <h3 class="review-text">{{review.reviewText}}</h3>
-      <ngx-stars class="review-stars" [readonly]="true" [initialStars]="review.starRating" [size]="2"></ngx-stars>
-      <h3 class="time-created">{{convertDateToReadable(review.timeCreated)}}</h3>
-    </mat-card>
-  }
+  <reviews [reviews]="reviews"></reviews>
 </div>

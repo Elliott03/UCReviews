@@ -57,26 +57,7 @@
         </mat-card-content>
       </mat-card>
       <hr class="horizontal-line" />
-      <div class="review-container">
-        @for (review of reviews; track review) {
-        <mat-card class="single-review card">
-          <mat-card-content>
-            <h2 class="username">{{ emailToUsername(review.user.email) }}</h2>
-            <ngx-stars
-              class="review-stars"
-              [readonly]="true"
-              [initialStars]="review.starRating"
-              [size]="2"
-            ></ngx-stars>
-            <h3 class="review-text">{{ review.reviewText }}</h3>
-            <h3 class="time-created">
-              {{ convertDateToReadable(review.timeCreated) }}
-            </h3>
-          </mat-card-content>
-        </mat-card>
-        }
-      </div>
+      <reviews [reviews]="reviews"></reviews>
     </div>
-    
+
     }
-    
