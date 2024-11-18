@@ -81,10 +81,10 @@ export class DormPageComponent implements OnInit {
       userId,
       dormId: this.dorm.id,
     });
-    const reviewList = await firstValueFrom(
+    const addedReview = await firstValueFrom(
       this._reviewService.addReview(newReview)
     );
-    this.reviewsComponent.addReviewToFront(reviewList[reviewList.length - 1]);
+    this.reviewsComponent.addReviewToFront(addedReview);
     // Get average rating
     // this.garageStarsComponent.setRating(averageRating);
     this.reviewStarsComponent.setRating(0); // Reset component

@@ -51,7 +51,7 @@ export class ReviewService {
     );
   }
 
-  addReview(review: SaveReview): Observable<IReview[]> {
-    return this._http.post<IReview[]>('/api/Review', review);
+  addReview(review: SaveReview): Observable<IReview> {
+    return this._http.post<IReview>('/api/Review', review);
   }
 }

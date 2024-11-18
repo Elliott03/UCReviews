@@ -50,9 +50,11 @@ public class ReviewRepository : IReviewRepository
         return await query.ToListAsync();
     }
 
-    public async Task SaveReview(Review review)
+    public async Task<Review> SaveReview(Review review)
     {
         await _dbContext.AddAsync(review);
         await _dbContext.SaveChangesAsync();
+
+        return review;
     }
 }
