@@ -1,5 +1,7 @@
 namespace api.Repositories.Implementations;
 
+using api.Dto;
+using api.Extensions;
 using api.Models;
 using api.Repositories.Interfaces;
 using api.Settings;
@@ -50,11 +52,26 @@ public class ReviewRepository : IReviewRepository
         return await query.ToListAsync();
     }
 
-    public async Task<Review> SaveReview(Review review)
+#nullable enable
+
+
+    public async Task<SaveReviewResponse> SaveReview(Review review)
     {
         await _dbContext.AddAsync(review);
         await _dbContext.SaveChangesAsync();
+        IReviewable? reviewable = await review.GetReviewableAsync(_dbContext);
 
-        return review;
+        if (reviewable == null)
+        {
+            return new SaveReviewResponse { Review = review, Reviewable = null, AverageRating = null };
+        }
+
+        var averageRating = await reviewable.CalculateAverageRatingAsync(_dbContext);
+        return new SaveReviewResponse
+        {
+            Review = review,
+            Reviewable = reviewable,
+            AverageRating = averageRating
+        };
     }
 }

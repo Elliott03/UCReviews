@@ -1,4 +1,7 @@
 
+using api.Models;
+using api.Repositories.Interfaces;
+
 public class DiningHallService : IDiningHallService
 {
 

@@ -1,5 +1,6 @@
 
 using api.Models;
+using api.Repositories.Interfaces;
 using api.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;

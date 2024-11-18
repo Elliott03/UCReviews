@@ -1,11 +1,11 @@
 namespace api.Services.Implementations;
 
 using System.Collections;
+using api.Dto;
 using api.Models;
 using api.Repositories.Interfaces;
 using api.Services.Interfaces;
 using api.ViewModels;
-using Microsoft.EntityFrameworkCore;
 
 public class ReviewService : IReviewService
 {
@@ -36,7 +36,7 @@ public class ReviewService : IReviewService
         return await _repository.GetReviewsByDiningHallId(diningHallId, prev, perPage);
     }
 
-    public async Task<Review> SaveReview(SaveReviewViewModel model)
+    public async Task<SaveReviewResponse> SaveReview(SaveReviewViewModel model)
     {
         var review = new Review
         {

@@ -115,9 +115,10 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
     const addedReview = await firstValueFrom(
       this._reviewService.addReview(newReview)
     );
-    this.reviewsComponent.addReviewToFront(addedReview);
+    this.reviewsComponent.addReviewToFront(addedReview.review);
     // Get average rating
-    // this.garageStarsComponent.setRating(averageRating);
+    addedReview.averageRating &&
+      this.garageStarsComponent.setRating(addedReview.averageRating);
     this.reviewStarsComponent.setRating(0); // Reset component
     this.reviewText = '';
     this.currentCharacterCount = 0;

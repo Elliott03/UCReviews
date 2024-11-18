@@ -84,9 +84,10 @@ export class DormPageComponent implements OnInit {
     const addedReview = await firstValueFrom(
       this._reviewService.addReview(newReview)
     );
-    this.reviewsComponent.addReviewToFront(addedReview);
+    this.reviewsComponent.addReviewToFront(addedReview.review);
     // Get average rating
-    // this.garageStarsComponent.setRating(averageRating);
+    addedReview.averageRating &&
+      this.dormStarsComponent.setRating(addedReview.averageRating);
     this.reviewStarsComponent.setRating(0); // Reset component
     this.reviewText = '';
     this.currentCharacterCount = 0;

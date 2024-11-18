@@ -1,4 +1,5 @@
-import { Dorm, ILargeDorm, ISmallDorm } from './Dorm';
+import { DiningHall } from './DiningHall';
+import { Dorm, ILargeDorm } from './Dorm';
 import { IParkingGarage, ParkingGarage } from './ParkingGarage';
 import { IUser } from './User';
 
@@ -14,7 +15,7 @@ export interface IReview {
   parkingGarage?: IParkingGarage;
 }
 
-export type Reviewable = Dorm | ParkingGarage;
+export type Reviewable = Dorm | ParkingGarage | DiningHall;
 
 export class SaveReview {
   constructor(props: {
@@ -28,3 +29,9 @@ export class SaveReview {
     Object.assign(this, props);
   }
 }
+
+export type SaveReviewResponse = {
+  review: IReview;
+  reviewable?: Reviewable;
+  averageRating?: number;
+};

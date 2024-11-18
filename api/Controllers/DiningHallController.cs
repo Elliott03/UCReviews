@@ -1,3 +1,4 @@
+using api.Models;
 using api.Settings;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

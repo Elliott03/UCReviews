@@ -7,6 +7,7 @@ using api.Models;
 using api.ViewModels;
 using Microsoft.Extensions.Options;
 using api.Settings;
+using api.Dto;
 
 [ApiController]
 [Route("[controller]")]
@@ -54,7 +55,7 @@ public class ReviewController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Review>> SaveReview(SaveReviewViewModel review)
+    public async Task<ActionResult<SaveReviewResponse>> SaveReview(SaveReviewViewModel review)
     {
         if (review.ReviewText.Length <= 1000)
             return await _service.SaveReview(review);

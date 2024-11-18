@@ -1,3 +1,5 @@
+using api.Models;
+
 public interface IDiningHallService
 {
     public Task<IEnumerable<DiningHall>> GetDiningHalls(int prev, int perPage);

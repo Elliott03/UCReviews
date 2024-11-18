@@ -1,5 +1,6 @@
 namespace api.Services.Interfaces;
 
+using api.Dto;
 using api.Models;
 using api.ViewModels;
 
@@ -9,5 +10,5 @@ public interface IReviewService
     public Task<List<Review>> GetReviewsByDormId(int dormId, int prev, int perPage);
     public Task<List<Review>> GetReviewsByParkingGarageId(int dormId, int prev, int perPage);
     public Task<List<Review>> GetReviewsByDiningHallId(int dormId, int prev, int perPage);
-    public Task<Review> SaveReview(SaveReviewViewModel review);
+    public Task<SaveReviewResponse> SaveReview(SaveReviewViewModel review);
 }

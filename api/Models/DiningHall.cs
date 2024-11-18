@@ -1,6 +1,6 @@
-using api.Models;
+namespace api.Models;
 
-public class DiningHall
+public class DiningHall : IReviewable
 {
     public int Id { get; set; }
     public string Name { get; set; }

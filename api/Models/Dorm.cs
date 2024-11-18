@@ -2,7 +2,7 @@ namespace api.Models;
 
 using System.ComponentModel.DataAnnotations;
 
-public class Dorm
+public class Dorm : IReviewable
 {
     [Key]
     public int Id { get; set; }
