@@ -55,7 +55,7 @@ public class ReviewController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<SaveReviewResponse>> SaveReview(SaveReviewViewModel review)
+    public async Task<ActionResult<ReviewWithSummary>> SaveReview(SaveReviewViewModel review)
     {
         if (review.ReviewText.Length <= 1000)
             return await _service.SaveReview(review);

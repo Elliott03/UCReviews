@@ -9,7 +9,9 @@ public class UCReviewsContext : DbContext
     public DbSet<Dorm> Dorm { get; set; }
     public DbSet<ParkingGarage> ParkingGarage { get; set; }
     public DbSet<DiningHall> DiningHall { get; set; }
-    
+
+    public DbSet<ReviewSummary> ReviewSummary { get; set; }
+
     public UCReviewsContext(DbContextOptions<UCReviewsContext> options)
         : base(options)
     {
@@ -18,19 +20,21 @@ public class UCReviewsContext : DbContext
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.Entity<User>()
-        .HasMany(u => u.Reviews)
-        .WithOne(r => r.User)
-        .HasForeignKey(r => r.UserId);
-
-        builder.Entity<Review>()
-        .Property(r => r.StarRating)
-        .HasPrecision(2, 1);
+            .HasMany(u => u.Reviews)
+            .WithOne(r => r.User)
+            .HasForeignKey(r => r.UserId);
 
         builder.Entity<Dorm>()
             .ToTable("Dorm")
             .HasMany(d => d.Reviews)
             .WithOne(r => r.Dorm)
             .HasForeignKey(r => r.DormId)
+            .IsRequired(false);
+
+        builder.Entity<Dorm>()
+            .HasOne(d => d.ReviewSummary)
+            .WithOne(r => r.Dorm)
+            .HasForeignKey<ReviewSummary>(rs => rs.DormId)
             .IsRequired(false);
 
         builder.Entity<ParkingGarage>()
@@ -41,12 +45,25 @@ public class UCReviewsContext : DbContext
             .IsRequired(false);
 
         builder.Entity<ParkingGarage>()
-        .HasIndex(g => g.Slug).IsUnique();
+            .HasOne(p => p.ReviewSummary)
+            .WithOne(r => r.ParkingGarage)
+            .HasForeignKey<ReviewSummary>(rs => rs.ParkingGarageId)
+            .IsRequired(false);
+
+        builder.Entity<ParkingGarage>()
+            .HasIndex(g => g.Slug)
+            .IsUnique();
 
         builder.Entity<DiningHall>()
-        .HasMany(d => d.Reviews)
-        .WithOne(r => r.DiningHall)
-        .HasForeignKey(r => r.DiningHallId);
+            .HasMany(d => d.Reviews)
+            .WithOne(r => r.DiningHall)
+            .HasForeignKey(r => r.DiningHallId);
+
+        builder.Entity<DiningHall>()
+            .HasOne(d => d.ReviewSummary)
+            .WithOne(r => r.DiningHall)
+            .HasForeignKey<ReviewSummary>(rs => rs.DiningHallId)
+            .IsRequired(false);
 
         builder.Entity<Dorm>()
         .HasData(
@@ -367,7 +384,7 @@ public class UCReviewsContext : DbContext
                 IncludedInMealPlan = "No",
                 Location = "Chick-Fil-A - Tangeman University Center, 2701 Bearcat Way",
                 NameQueryParameter = "ChickFilA"
-                
+
             },
             new DiningHall
             {
@@ -428,7 +445,7 @@ public class UCReviewsContext : DbContext
                 IncludedInMealPlan = "Meal Exchange after 2 P.M.",
                 Location = "The Halal Shack - Tangeman University Center, 2701 Bearcat Way",
                 NameQueryParameter = "HalalShack"
-                
+
             },
             new DiningHall
             {
@@ -478,7 +495,7 @@ public class UCReviewsContext : DbContext
                 Description = "Partnering with the local Pneuma Coffee Roasters, renowned for their commitment to quality, The 86 Coffee Bar offers an array of meticulously crafted brews, from rich espressos to velvety lattes. Moreover, the menu extends beyond traditional offerings, with specialty drinks inspired by the creativity of CCM's community.",
                 IncludedInMealPlan = "No",
                 Location = "College-Conservatory of Music, 2604 Backstage Drive",
-                NameQueryParameter="86Coffee"
+                NameQueryParameter = "86Coffee"
             },
             new DiningHall
             {
@@ -509,7 +526,7 @@ public class UCReviewsContext : DbContext
                 IncludedInMealPlan = "No",
                 Location = "Starbucks @ Langsam Library, 2911 Woodside Drive",
                 NameQueryParameter = "Starbucks_Langsam"
-            },  
+            },
             new DiningHall
             {
                 Id = 17,

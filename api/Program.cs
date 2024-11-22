@@ -25,6 +25,7 @@ builder.Services.AddTransient<IReviewService, ReviewService>();
 builder.Services.AddTransient<IParkingGarageService, ParkingGarageService>();
 builder.Services.AddTransient<IMailService, MailService>();
 builder.Services.AddTransient<IDiningHallService, DiningHallService>();
+builder.Services.AddTransient<IReviewSummaryService, ReviewSummaryService>();
 
 
 // Add repository layer dependencies to the container
@@ -33,6 +34,7 @@ builder.Services.AddTransient<IDormRepository, DormRepository>();
 builder.Services.AddTransient<IReviewRepository, ReviewRepository>();
 builder.Services.AddTransient<IParkingGarageRepository, ParkingGarageRepository>();
 builder.Services.AddTransient<IDiningHallRepository, DiningHallRepository>();
+builder.Services.AddTransient<IReviewSummaryRepository, ReviewSummaryRepository>();
 
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddControllers().AddJsonOptions(options =>

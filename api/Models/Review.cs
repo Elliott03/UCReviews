@@ -2,6 +2,7 @@ namespace api.Models;
 
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 #nullable enable
 
@@ -10,6 +11,8 @@ public class Review
     [Key]
     public int Id { get; set; }
     public required string ReviewText { get; set; }
+
+    [Precision(2, 1)]
     public decimal StarRating { get; set; }
     public DateTime TimeCreated { get; set; }
 

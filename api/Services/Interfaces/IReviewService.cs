@@ -10,5 +10,5 @@ public interface IReviewService
     public Task<List<Review>> GetReviewsByDormId(int dormId, int prev, int perPage);
     public Task<List<Review>> GetReviewsByParkingGarageId(int dormId, int prev, int perPage);
     public Task<List<Review>> GetReviewsByDiningHallId(int dormId, int prev, int perPage);
-    public Task<SaveReviewResponse> SaveReview(SaveReviewViewModel review);
+    public Task<ReviewWithSummary> SaveReview(SaveReviewViewModel review);
 }

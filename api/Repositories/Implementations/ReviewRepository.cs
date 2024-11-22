@@ -4,6 +4,7 @@ using api.Dto;
 using api.Extensions;
 using api.Models;
 using api.Repositories.Interfaces;
+using api.Services.Interfaces;
 using api.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -13,10 +14,17 @@ public class ReviewRepository : IReviewRepository
     private readonly UCReviewsContext _dbContext;
     private readonly PaginationSettings _paginationSettings;
 
-    public ReviewRepository(UCReviewsContext dbContext, IOptions<PaginationSettings> paginationSettings)
+    private readonly IReviewSummaryService _reviewSummaryService;
+
+    public ReviewRepository(
+        UCReviewsContext dbContext,
+        IReviewSummaryService reviewSummaryService,
+        IOptions<PaginationSettings> paginationSettings
+    )
     {
         _dbContext = dbContext;
         _paginationSettings = paginationSettings.Value;
+        _reviewSummaryService = reviewSummaryService;
     }
 
     public async Task<IEnumerable<Review>> GetReviews(int prev, int perPage)
@@ -55,23 +63,21 @@ public class ReviewRepository : IReviewRepository
 #nullable enable
 
 
-    public async Task<SaveReviewResponse> SaveReview(Review review)
+    public async Task<ReviewWithSummary> SaveReview(Review review)
     {
         await _dbContext.AddAsync(review);
         await _dbContext.SaveChangesAsync();
-        IReviewable? reviewable = await review.GetReviewableAsync(_dbContext);
 
-        if (reviewable == null)
-        {
-            return new SaveReviewResponse { Review = review, Reviewable = null, AverageRating = null };
-        }
+        IReviewable? reviewable = await review.GetReviewableAsync(_dbContext) ??
+            throw new Exception("A review must be associated with a reviewable");
 
-        var averageRating = await reviewable.CalculateAverageRatingAsync(_dbContext);
-        return new SaveReviewResponse
+        var reviewSummary = await _reviewSummaryService.UpdateReviewSummary(review, reviewable);
+
+        return new ReviewWithSummary
         {
             Review = review,
             Reviewable = reviewable,
-            AverageRating = averageRating
+            ReviewSummary = reviewSummary
         };
     }
 }

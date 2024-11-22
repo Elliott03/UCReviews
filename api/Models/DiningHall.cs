@@ -10,4 +10,5 @@ public class DiningHall : IReviewable
     public string IncludedInMealPlan { get; set; }
     public string NameQueryParameter { get; set; }
     public List<Review> Reviews { get; set; }
+    public ReviewSummary ReviewSummary { get; set; }
 }

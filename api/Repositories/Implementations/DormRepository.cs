@@ -21,16 +21,24 @@ public class DormRepository : IDormRepository
         var query = _dbContext.Dorm.AsQueryable();
         perPage = int.Min(perPage, _paginationSettings.MaxPerPage);
         query = query.Where(g => g.Id > prev).Take(perPage);
-        return await query.Include(b => b.Reviews).ThenInclude(r => r.User).ToListAsync();
+        query = query.Include(b => b.Reviews).ThenInclude(r => r.User);
+        query = query.Include(b => b.ReviewSummary);
+        return await query.ToListAsync();
     }
 
     public async Task<Dorm> GetDorm(string queryParam)
     {
-        return await _dbContext.Dorm.Include(b => b.Reviews).ThenInclude(r => r.User).Where(b => b.NameQueryParameter == queryParam).FirstOrDefaultAsync();
+        var query = _dbContext.Dorm.AsQueryable();
+        query = query.Include(b => b.Reviews).ThenInclude(r => r.User).Where(b => b.NameQueryParameter == queryParam);
+        query = query.Include(b => b.ReviewSummary);
+        return await query.FirstOrDefaultAsync();
     }
 
     public async Task<Dorm> GetDormById(int id)
     {
-        return await _dbContext.Dorm.Include(b => b.Reviews).Where(b => b.Id == id).FirstOrDefaultAsync();
+        var query = _dbContext.Dorm.AsQueryable();
+        query = query.Include(b => b.Reviews).Where(b => b.Id == id);
+        query = query.Include(b => b.ReviewSummary);
+        return await query.FirstOrDefaultAsync();
     }
 }

@@ -29,6 +29,7 @@ public class ParkingGarageRepository : IParkingGarageRepository
 
         perPage = int.Min(perPage, _paginationSettings.MaxPerPage);
         query = query.Where(g => g.Id > prev).Take(perPage);
+        query = query.Include(rs => rs.ReviewSummary);
         return await query.ToListAsync();
     }
 
@@ -52,6 +53,7 @@ public class ParkingGarageRepository : IParkingGarageRepository
             query = query.Include(g => g.Reviews).ThenInclude(r => r.User);
         }
 
+        query = query.Include(rs => rs.ReviewSummary);
         return await query.Where(predicate).FirstOrDefaultAsync();
     }
 }

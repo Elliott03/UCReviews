@@ -10,11 +10,10 @@ using api.ViewModels;
 public class ReviewService : IReviewService
 {
     private readonly IReviewRepository _repository;
-    private readonly IDormService _dormService;
-    public ReviewService(IReviewRepository repository, IDormService dormService)
+
+    public ReviewService(IReviewRepository repository)
     {
         _repository = repository;
-        _dormService = dormService;
     }
     public async Task<IEnumerable<Review>> GetReviews(int prev, int perPage)
     {
@@ -36,7 +35,7 @@ public class ReviewService : IReviewService
         return await _repository.GetReviewsByDiningHallId(diningHallId, prev, perPage);
     }
 
-    public async Task<SaveReviewResponse> SaveReview(SaveReviewViewModel model)
+    public async Task<ReviewWithSummary> SaveReview(SaveReviewViewModel model)
     {
         var review = new Review
         {
