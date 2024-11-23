@@ -23,7 +23,7 @@
           <ngx-stars
             [size]="2"
             [readonly]="true"
-            [initialStars]="garage.averageRating"
+            [initialStars]="garage.reviewSummary?.averageRating || 0"
             [title]="getGarageRatingTitle(garage)"
           ></ngx-stars>
           <div class="attributes">

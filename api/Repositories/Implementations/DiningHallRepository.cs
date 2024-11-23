@@ -20,7 +20,6 @@ public class DiningHallRepository : IDiningHallRepository
         var query = _dbContext.DiningHall.AsQueryable();
         perPage = int.Min(perPage, _paginationSettings.MaxPerPage);
         query = query.Where(d => d.Id > prev).Take(perPage);
-        query = query.Include(d => d.Reviews).ThenInclude(r => r.User);
         query = query.Include(d => d.ReviewSummary);
         return await query.ToListAsync();
     }
@@ -28,7 +27,7 @@ public class DiningHallRepository : IDiningHallRepository
     public async Task<DiningHall> GetDiningHall(string slug)
     {
         var query = _dbContext.DiningHall.AsQueryable();
-        query = query.Include(b => b.Reviews).ThenInclude(r => r.User).Where(d => d.NameQueryParameter == slug);
+        query = query.Include(b => b.ReviewSummary);
         return await query.FirstOrDefaultAsync();
     }
 }

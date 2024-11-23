@@ -53,7 +53,8 @@ export class DormPageComponent implements OnInit {
       const queryParam = this.route.snapshot.params['dorm'];
       this._dormService.getDorm(queryParam).subscribe((dorm) => {
         this.dorm = dorm;
-        this.dormStarsComponent.setRating(dorm.averageRating);
+        dorm.reviewSummary?.averageRating &&
+          this.dormStarsComponent.setRating(dorm.reviewSummary.averageRating);
       });
       const stringUser = localStorage.getItem('user');
       if (stringUser) {
@@ -85,9 +86,7 @@ export class DormPageComponent implements OnInit {
       this._reviewService.addReview(newReview)
     );
     this.reviewsComponent.addReviewToFront(addedReview.review);
-    // Get average rating
-    addedReview.averageRating &&
-      this.dormStarsComponent.setRating(addedReview.averageRating);
+    this.dormStarsComponent.setRating(addedReview.summary.averageRating);
     this.reviewStarsComponent.setRating(0); // Reset component
     this.reviewText = '';
     this.currentCharacterCount = 0;

@@ -28,23 +28,23 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ParkingGarage>>> GetParkingGarages([FromQuery] bool includeReviews = false, [FromQuery] int prev = 0, [FromQuery] int? perPage = null)
+        public async Task<ActionResult<List<ParkingGarage>>> GetParkingGarages([FromQuery] int prev = 0, [FromQuery] int? perPage = null)
         {
             perPage ??= _paginationSettings.DefaultPerPage;
-            return Ok(await _service.GetParkingGarages(includeReviews, prev, (int)perPage));
+            return Ok(await _service.GetParkingGarages(prev, (int)perPage));
         }
 
         [HttpGet("{slug}")]
-        public async Task<ActionResult<ParkingGarage>> GetParkingGarage(string slug, [FromQuery] bool includeReviews = false)
+        public async Task<ActionResult<ParkingGarage>> GetParkingGarage(string slug)
         {
-            var garage = await _service.GetParkingGarage(slug, includeReviews);
+            var garage = await _service.GetParkingGarage(slug);
             return ResolveGarage(garage);
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<ParkingGarage>> GetParkingGarage(int id, [FromQuery] bool includeReviews = false)
+        public async Task<ActionResult<ParkingGarage>> GetParkingGarage(int id)
         {
-            var garage = await _service.GetParkingGarage(id, includeReviews);
+            var garage = await _service.GetParkingGarage(id);
             return ResolveGarage(garage);
         }
 

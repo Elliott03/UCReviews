@@ -21,7 +21,6 @@ public class DormRepository : IDormRepository
         var query = _dbContext.Dorm.AsQueryable();
         perPage = int.Min(perPage, _paginationSettings.MaxPerPage);
         query = query.Where(g => g.Id > prev).Take(perPage);
-        query = query.Include(b => b.Reviews).ThenInclude(r => r.User);
         query = query.Include(b => b.ReviewSummary);
         return await query.ToListAsync();
     }
@@ -29,7 +28,6 @@ public class DormRepository : IDormRepository
     public async Task<Dorm> GetDorm(string queryParam)
     {
         var query = _dbContext.Dorm.AsQueryable();
-        query = query.Include(b => b.Reviews).ThenInclude(r => r.User).Where(b => b.NameQueryParameter == queryParam);
         query = query.Include(b => b.ReviewSummary);
         return await query.FirstOrDefaultAsync();
     }
@@ -37,7 +35,6 @@ public class DormRepository : IDormRepository
     public async Task<Dorm> GetDormById(int id)
     {
         var query = _dbContext.Dorm.AsQueryable();
-        query = query.Include(b => b.Reviews).Where(b => b.Id == id);
         query = query.Include(b => b.ReviewSummary);
         return await query.FirstOrDefaultAsync();
     }

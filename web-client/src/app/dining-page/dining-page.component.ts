@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ReviewService } from '../core/services/review.service';
 import { DiningService } from '../core/services/dining.service';
 import { firstValueFrom } from 'rxjs';
-import { IDiningHallWithRating } from '../Models/DiningHall';
+import { IDiningHall } from '../Models/DiningHall';
 import { NgxStarsComponent } from 'ngx-stars';
 import { emailToUsername as _emailToUsername } from '../core/helpers/emailToUsername';
 import { convertDateToReadable as _convertDateToReadable } from '../core/helpers/convertDateToReadable';
@@ -19,7 +19,7 @@ import { ReviewsComponent } from '../shared/reviews/reviews.component';
   styleUrl: './dining-page.component.scss',
 })
 export class DiningPageComponent implements OnInit, AfterViewInit {
-  diningHall?: IDiningHallWithRating;
+  diningHall?: IDiningHall;
   reviews: IReview[] | undefined;
   JSON: any;
   user: IUser | undefined;
@@ -97,7 +97,7 @@ export class DiningPageComponent implements OnInit, AfterViewInit {
   private setDiningHallRating() {
     if (this.diningHallStarsComponent && this.diningHall) {
       this.diningHallStarsComponent.setRating(
-        this.diningHall.averageRating || 0
+        this.diningHall.reviewSummary?.averageRating || 0
       );
     }
   }
@@ -115,9 +115,7 @@ export class DiningPageComponent implements OnInit, AfterViewInit {
       this._reviewService.addReview(newReview)
     );
     this.reviewsComponent.addReviewToFront(addedReview.review);
-    // Get average rating
-    addedReview.averageRating &&
-      this.diningHallStarsComponent.setRating(addedReview.averageRating);
+    this.diningHallStarsComponent.setRating(addedReview.summary.averageRating);
     this.reviewStarsComponent.setRating(0); // Reset component
     this.reviewText = '';
     this.currentCharacterCount = 0;

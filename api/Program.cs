@@ -13,7 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<UCReviewsContext>
     (options =>
         options
-            .UseLazyLoadingProxies()
+            // .UseLazyLoadingProxies()
             .UseSqlServer(
                 builder.Configuration.GetConnectionString("UCReviewsDatabase"
             )

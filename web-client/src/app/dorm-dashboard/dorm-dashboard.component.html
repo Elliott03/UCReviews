@@ -22,7 +22,7 @@
           <ngx-stars
             [size]="2"
             [readonly]="true"
-            [initialStars]="dorm.averageRating"
+            [initialStars]="dorm.reviewSummary?.averageRating || 0"
           ></ngx-stars>
           <div class="style-cost">
             <h3 class="style">{{ dorm.style }}</h3>

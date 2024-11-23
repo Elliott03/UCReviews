@@ -14,18 +14,18 @@ public class ParkingGarageService : IParkingGarageService
         _parkingGarageRepository = parkingGarageRepository;
     }
 
-    public async Task<ParkingGarage> GetParkingGarage(string slug, bool includeReviews)
+    public async Task<ParkingGarage> GetParkingGarage(string slug)
     {
-        return await _parkingGarageRepository.GetParkingGarage(slug, includeReviews);
+        return await _parkingGarageRepository.GetParkingGarage(slug);
     }
 
-    public async Task<ParkingGarage> GetParkingGarage(int id, bool includeReviews)
+    public async Task<ParkingGarage> GetParkingGarage(int id)
     {
-        return await _parkingGarageRepository.GetParkingGarage(id, includeReviews);
+        return await _parkingGarageRepository.GetParkingGarage(id);
     }
 
-    public async Task<IEnumerable<ParkingGarage>> GetParkingGarages(bool includeReviews, int prev, int perPage)
+    public async Task<IEnumerable<ParkingGarage>> GetParkingGarages(int prev, int perPage)
     {
-        return await _parkingGarageRepository.GetParkingGarages(includeReviews, prev, perPage);
+        return await _parkingGarageRepository.GetParkingGarages(prev, perPage);
     }
 }

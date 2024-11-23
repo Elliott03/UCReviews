@@ -1,8 +1,4 @@
-export type QueryParams = ReviewableQueryParam & PageableQueryParam;
-
-export type ReviewableQueryParam = {
-  includeReviews: boolean;
-};
+export type QueryParams = PageableQueryParam;
 
 export type PageableQueryParam = {
   prev: Number;

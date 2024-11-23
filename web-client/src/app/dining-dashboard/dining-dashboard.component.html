@@ -23,7 +23,7 @@
           <ngx-stars
             [size]="2"
             [readonly]="true"
-            [initialStars]="diningHall.averageRating"
+            [initialStars]="diningHall.reviewSummary?.averageRating || 0"
             [title]="getDiningRatingTitle(diningHall)"
           ></ngx-stars>
           <div class="attributes">

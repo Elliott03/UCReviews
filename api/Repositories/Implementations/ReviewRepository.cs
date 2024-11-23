@@ -73,11 +73,6 @@ public class ReviewRepository : IReviewRepository
 
         var reviewSummary = await _reviewSummaryService.UpdateReviewSummary(review, reviewable);
 
-        return new ReviewWithSummary
-        {
-            Review = review,
-            Reviewable = reviewable,
-            ReviewSummary = reviewSummary
-        };
+        return new ReviewWithSummary { review = review, summary = reviewSummary };
     }
 }

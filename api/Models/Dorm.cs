@@ -1,6 +1,7 @@
 namespace api.Models;
 
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 public class Dorm : IReviewable
 {
@@ -13,6 +14,7 @@ public class Dorm : IReviewable
     public string Description { get; set; }
     public string NameQueryParameter { get; set; }
 
+    [JsonIgnore]
     public virtual List<Review> Reviews { get; set; } = [];
     public virtual ReviewSummary ReviewSummary { get; set; }
 

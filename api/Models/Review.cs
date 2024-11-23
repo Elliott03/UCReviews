@@ -2,6 +2,7 @@ namespace api.Models;
 
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 
 #nullable enable
@@ -18,17 +19,25 @@ public class Review
 
     [ForeignKey("User")]
     public int UserId { get; set; }
+
+    [JsonIgnore]
     public virtual User User { get; set; }
 
     [ForeignKey("Dorm")]
     public int? DormId { get; set; }
+
+    [JsonIgnore]
     public virtual Dorm? Dorm { get; set; }
 
     [ForeignKey("ParkingGarage")]
     public int? ParkingGarageId { get; set; }
+
+    [JsonIgnore]
     public virtual ParkingGarage? ParkingGarage { get; set; }
 
     [ForeignKey("DiningHall")]
     public int? DiningHallId { get; set; }
+
+    [JsonIgnore]
     public virtual DiningHall? DiningHall { get; set; }
 }

@@ -1,6 +1,7 @@
 import { DiningHall } from './DiningHall';
 import { Dorm, ILargeDorm } from './Dorm';
 import { IParkingGarage, ParkingGarage } from './ParkingGarage';
+import { ReviewSummary } from './ReviewSummary';
 import { IUser } from './User';
 
 export interface IReview {
@@ -14,6 +15,8 @@ export interface IReview {
   dorm?: ILargeDorm;
   parkingGarage?: IParkingGarage;
 }
+
+export type Review = IReview;
 
 export type Reviewable = Dorm | ParkingGarage | DiningHall;
 
@@ -31,7 +34,6 @@ export class SaveReview {
 }
 
 export type SaveReviewResponse = {
-  review: IReview;
-  reviewable?: Reviewable;
-  averageRating?: number;
+  review: Review;
+  summary: ReviewSummary;
 };

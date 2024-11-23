@@ -5,6 +5,7 @@ using api.Extensions;
 using api.Models;
 using api.Repositories.Interfaces;
 using api.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 class ReviewSummaryService : IReviewSummaryService
 {
@@ -22,6 +23,7 @@ class ReviewSummaryService : IReviewSummaryService
     {
         var summary = await GenerateSummaryText(review);
         reviewable ??= await review.GetReviewableAsync(_dbContext);
+        bool isNewReviewSummary = false;
 
         if (reviewable == null)
         {
@@ -32,6 +34,7 @@ class ReviewSummaryService : IReviewSummaryService
         if (reviewable is Dorm)
         {
             reviewSummary = await _reviewSummaryRepository.GetReviewSummaryByDormId(reviewable.Id);
+            isNewReviewSummary = reviewSummary == null;
             reviewSummary ??= new ReviewSummary
             {
                 DormId = reviewable.Id,
@@ -41,11 +44,13 @@ class ReviewSummaryService : IReviewSummaryService
         else if (reviewable is ParkingGarage)
         {
             reviewSummary = await _reviewSummaryRepository.GetReviewSummaryByParkingGarageId(reviewable.Id);
+            isNewReviewSummary = reviewSummary == null;
             reviewSummary ??= new ReviewSummary { ParkingGarageId = reviewable.Id, AverageRating = review.StarRating };
         }
         else if (reviewable is DiningHall)
         {
             reviewSummary = await _reviewSummaryRepository.GetReviewSummaryByDiningHallId(reviewable.Id);
+            isNewReviewSummary = reviewSummary == null;
             reviewSummary ??= new ReviewSummary { DiningHallId = reviewable.Id, AverageRating = review.StarRating };
         }
         else
@@ -61,7 +66,20 @@ class ReviewSummaryService : IReviewSummaryService
             reviewSummary.AverageRating = CalculateNewAverage(reviewSummary, review);
         }
 
-        await _dbContext.ReviewSummary.AddAsync(reviewSummary);
+        if (isNewReviewSummary)
+        {
+            await _dbContext.ReviewSummary.AddAsync(reviewSummary);
+        }
+        else
+        {
+            await _dbContext.ReviewSummary.ExecuteUpdateAsync(setters =>
+                setters
+                    .SetProperty(rs => rs.SummaryText, summary)
+                    .SetProperty(rs => rs.TotalReviews, reviewSummary.TotalReviews + 1)
+                    .SetProperty(rs => rs.AverageRating, reviewSummary.AverageRating)
+            );
+        }
+
         await _dbContext.SaveChangesAsync();
         return reviewSummary;
     }

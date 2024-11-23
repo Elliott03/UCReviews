@@ -18,14 +18,9 @@ public class ParkingGarageRepository : IParkingGarageRepository
         _paginationSettings = paginationSettings.Value;
     }
 
-    public async Task<IEnumerable<ParkingGarage>> GetParkingGarages(bool includeReviews, int prev, int perPage)
+    public async Task<IEnumerable<ParkingGarage>> GetParkingGarages(int prev, int perPage)
     {
         var query = _dbContext.ParkingGarage.AsQueryable();
-
-        if (includeReviews)
-        {
-            query = query.Include(g => g.Reviews).ThenInclude(r => r.User);
-        }
 
         perPage = int.Min(perPage, _paginationSettings.MaxPerPage);
         query = query.Where(g => g.Id > prev).Take(perPage);
@@ -33,26 +28,20 @@ public class ParkingGarageRepository : IParkingGarageRepository
         return await query.ToListAsync();
     }
 
-    public async Task<ParkingGarage> GetParkingGarage(string slug, bool includeReviews)
+    public async Task<ParkingGarage> GetParkingGarage(string slug)
     {
-        return await HandleGetGarage(includeReviews, g => g.Slug == slug);
+        return await HandleGetGarage(g => g.Slug == slug);
     }
 
-    public async Task<ParkingGarage> GetParkingGarage(int id, bool includeReviews)
+    public async Task<ParkingGarage> GetParkingGarage(int id)
     {
-        return await HandleGetGarage(includeReviews, g => g.Id == id);
+        return await HandleGetGarage(g => g.Id == id);
     }
 
 
-    private async Task<ParkingGarage> HandleGetGarage(bool includeReviews, Expression<Func<ParkingGarage, bool>> predicate)
+    private async Task<ParkingGarage> HandleGetGarage(Expression<Func<ParkingGarage, bool>> predicate)
     {
         var query = _dbContext.ParkingGarage.AsQueryable();
-
-        if (includeReviews)
-        {
-            query = query.Include(g => g.Reviews).ThenInclude(r => r.User);
-        }
-
         query = query.Include(rs => rs.ReviewSummary);
         return await query.Where(predicate).FirstOrDefaultAsync();
     }

@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ReviewService } from '../core/services/review.service';
 import { GarageService } from '../core/services/garage.service';
 import { firstValueFrom } from 'rxjs';
-import { IParkingGarageWithRating } from '../Models/ParkingGarage';
 import { NgxStarsComponent } from 'ngx-stars';
 import { emailToUsername as _emailToUsername } from '../core/helpers/emailToUsername';
 import { convertDateToReadable as _convertDateToReadable } from '../core/helpers/convertDateToReadable';
@@ -12,6 +11,7 @@ import { IUser } from '../Models/User';
 import { IReview, SaveReview } from '../Models/Review';
 import { PageableQueryParam } from '../core/types/QueryParams';
 import { ReviewsComponent } from '../shared/reviews/reviews.component';
+import { IParkingGarage } from '../Models/ParkingGarage';
 
 @Component({
   selector: 'garage-page',
@@ -19,7 +19,7 @@ import { ReviewsComponent } from '../shared/reviews/reviews.component';
   styleUrl: './garage-page.component.scss',
 })
 export class GaragePageComponent implements OnInit, AfterViewInit {
-  garage?: IParkingGarageWithRating;
+  garage?: IParkingGarage;
   // JSON: any;
   user: IUser | undefined;
   username: string | undefined;
@@ -57,9 +57,7 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
     const slug = this.route.snapshot.params['slug'];
     // this.JSON = JSON;
     this.garage = await firstValueFrom(
-      this._garageService.getParkingGarage(slug, {
-        includeReviews: false,
-      })
+      this._garageService.getParkingGarage(slug)
     );
 
     if (!this.garage) {
@@ -88,9 +86,7 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
       this.route.params.subscribe(async (params) => {
         const slug = params['slug'];
         this.garage = await firstValueFrom(
-          this._garageService.getParkingGarage(slug, {
-            includeReviews: true,
-          })
+          this._garageService.getParkingGarage(slug)
         );
         this.setGarageRating();
       });
@@ -99,7 +95,9 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
 
   private setGarageRating() {
     if (this.garageStarsComponent && this.garage) {
-      this.garageStarsComponent.setRating(this.garage.averageRating || 0);
+      this.garageStarsComponent.setRating(
+        this.garage.reviewSummary?.averageRating || 0
+      );
     }
   }
 
@@ -116,9 +114,7 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
       this._reviewService.addReview(newReview)
     );
     this.reviewsComponent.addReviewToFront(addedReview.review);
-    // Get average rating
-    addedReview.averageRating &&
-      this.garageStarsComponent.setRating(addedReview.averageRating);
+    this.garageStarsComponent.setRating(addedReview.summary.averageRating);
     this.reviewStarsComponent.setRating(0); // Reset component
     this.reviewText = '';
     this.currentCharacterCount = 0;

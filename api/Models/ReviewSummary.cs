@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Models;
@@ -24,7 +25,10 @@ public class ReviewSummary
     public string SummaryText { get; set; } // For displaying an AI-generated summary of the reviews
 
 #nullable enable
+    [JsonIgnore]
     public virtual Dorm? Dorm { get; set; }
+    [JsonIgnore]
     public virtual ParkingGarage? ParkingGarage { get; set; }
+    [JsonIgnore]
     public virtual DiningHall? DiningHall { get; set; }
 }

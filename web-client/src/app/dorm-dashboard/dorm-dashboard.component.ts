@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DormService } from '../core/services/dorm.service';
-import { ISmallDormWithRating } from '../Models/Dorm';
+import { ISmallDorm } from '../Models/Dorm';
 import { Router } from '@angular/router';
 import { AuthService } from '../core/services/auth.service';
 
@@ -10,7 +10,7 @@ import { AuthService } from '../core/services/auth.service';
   styleUrls: ['./dorm-dashboard.component.scss'],
 })
 export class DormDashboardComponent implements OnInit {
-  dorms: ISmallDormWithRating[] = [];
+  dorms: ISmallDorm[] = [];
   prev = 0;
   perPage = 6;
   constructor(
@@ -28,7 +28,6 @@ export class DormDashboardComponent implements OnInit {
   loadDorms() {
     this._dormService
       .getDorms({
-        includeReviews: true,
         perPage: this.perPage,
         prev: this.prev,
       })
