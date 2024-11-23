@@ -10,8 +10,15 @@ using System.Text.Json.Serialization;
 using api.Settings;
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<UCReviewsContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("UCReviewsDatabase")));
+builder.Services.AddDbContext<UCReviewsContext>
+    (options =>
+        options
+            .UseLazyLoadingProxies()
+            .UseSqlServer(
+                builder.Configuration.GetConnectionString("UCReviewsDatabase"
+            )
+    )
+);
 // Contact Elliott for necessary JWT config and DB access info
 
 // Add configuration related

@@ -24,7 +24,7 @@ public class ReviewSummary
     public string SummaryText { get; set; } // For displaying an AI-generated summary of the reviews
 
 #nullable enable
-    public Dorm? Dorm { get; set; }
-    public ParkingGarage? ParkingGarage { get; set; }
-    public DiningHall? DiningHall { get; set; }
+    public virtual Dorm? Dorm { get; set; }
+    public virtual ParkingGarage? ParkingGarage { get; set; }
+    public virtual DiningHall? DiningHall { get; set; }
 }

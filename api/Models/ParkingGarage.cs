@@ -6,7 +6,7 @@ public class ParkingGarage : IReviewable
 {
     [Key]
     public int Id { get; set; }
-    public List<Review> Reviews { get; set; } = [];
+    public virtual List<Review> Reviews { get; set; } = [];
 
     [Required]
     public string Name { get; set; }
@@ -24,5 +24,5 @@ public class ParkingGarage : IReviewable
     [Required]
     public string Address { get; set; }
     public bool PermitRequired { get; set; }
-    public ReviewSummary ReviewSummary { get; set; }
+    public virtual ReviewSummary ReviewSummary { get; set; }
 }

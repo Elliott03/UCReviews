@@ -18,17 +18,17 @@ public class Review
 
     [ForeignKey("User")]
     public int UserId { get; set; }
-    public User User { get; set; }
+    public virtual User User { get; set; }
 
     [ForeignKey("Dorm")]
     public int? DormId { get; set; }
-    public Dorm? Dorm { get; set; }
+    public virtual Dorm? Dorm { get; set; }
 
     [ForeignKey("ParkingGarage")]
     public int? ParkingGarageId { get; set; }
-    public ParkingGarage? ParkingGarage { get; set; }
+    public virtual ParkingGarage? ParkingGarage { get; set; }
 
     [ForeignKey("DiningHall")]
     public int? DiningHallId { get; set; }
-    public DiningHall? DiningHall { get; set; }
+    public virtual DiningHall? DiningHall { get; set; }
 }

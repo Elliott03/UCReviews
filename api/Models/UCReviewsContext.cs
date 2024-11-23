@@ -65,6 +65,7 @@ public class UCReviewsContext : DbContext
             .HasForeignKey<ReviewSummary>(rs => rs.DiningHallId)
             .IsRequired(false);
 
+
         builder.Entity<Dorm>()
         .HasData(
         new Dorm

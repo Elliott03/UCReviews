@@ -13,7 +13,7 @@ public class Dorm : IReviewable
     public string Description { get; set; }
     public string NameQueryParameter { get; set; }
 
-    public List<Review> Reviews { get; set; } = [];
-    public ReviewSummary ReviewSummary { get; set; }
+    public virtual List<Review> Reviews { get; set; } = [];
+    public virtual ReviewSummary ReviewSummary { get; set; }
 
 }
