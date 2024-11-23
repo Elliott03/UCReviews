@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IParkingGarageWithRating } from '../Models/ParkingGarage';
+import { IParkingGarage } from '../Models/ParkingGarage';
 import { GarageService } from '../core/services/garage.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../core/services/auth.service';
@@ -10,7 +10,9 @@ import { AuthService } from '../core/services/auth.service';
   styleUrl: './garage-dashboard.component.scss',
 })
 export class GarageDashboardComponent {
-  garages: IParkingGarageWithRating[] = [];
+  garages: IParkingGarage[] = [];
+  prev = 0;
+  perPage = 6;
   constructor(
     private _garageService: GarageService,
     private _router: Router,
@@ -18,17 +20,29 @@ export class GarageDashboardComponent {
   ) {}
   ngOnInit(): void {
     if (this._authService.isLoggedIn()) {
-      this._garageService.getParkingGarages(true).subscribe((garages) => {
-        this.garages = garages;
-      });
+      this.loadGarages();
     } else {
       this._router.navigate(['/signup']);
     }
   }
-  getGarageRatingTitle(garage: IParkingGarageWithRating) {
-    if (!garage.averageRating) {
+  loadGarages() {
+    this._garageService
+      .getParkingGarages({
+        perPage: this.perPage,
+        prev: this.prev,
+      })
+      .subscribe((garages) => {
+        this.garages.push(...garages);
+      });
+  }
+  getGarageRatingTitle(garage: IParkingGarage) {
+    if (!garage.reviewSummary?.averageRating) {
       return 'Not yet rated';
     }
-    return `${garage.averageRating} stars`;
+    return `${garage.reviewSummary.averageRating} stars`;
+  }
+  onScroll(): void {
+    this.prev += this.perPage;
+    this.loadGarages();
   }
 }

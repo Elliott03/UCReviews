@@ -10,7 +10,7 @@ public class User
     public string Password { get; set; }
     public DateTime TimeCreated { get; set; }
     public byte[] Salt { get; set; }
-    public List<Review> Reviews { get; set; }
+    public virtual List<Review> Reviews { get; set; }
 
     public DateTime PasswordExpiration { get; set; }
 }

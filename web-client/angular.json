@@ -80,7 +80,7 @@
             },
             "development": {
               "proxyConfig": "src/proxy.conf.json",
-              "buildTarget": "web-client:build:development"
+              "buildTarget": "web-client:build:development",
             }
           },
           "defaultConfiguration": "development"

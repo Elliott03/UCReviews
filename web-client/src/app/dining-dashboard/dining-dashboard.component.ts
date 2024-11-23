@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
-import {
-  IDiningHall,
-  IDiningHallWithRating,
-} from '../Models/DiningHall';
+import { IDiningHall } from '../Models/DiningHall';
 import { DiningService } from '../core/services/dining.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../core/services/auth.service';
@@ -13,7 +10,9 @@ import { AuthService } from '../core/services/auth.service';
   styleUrl: './dining-dashboard.component.scss',
 })
 export class DiningDashboardComponent {
-  diningHalls: IDiningHallWithRating[] = [];
+  diningHalls: IDiningHall[] = [];
+  prev = 0;
+  perPage = 6;
   constructor(
     private _diningService: DiningService,
     private _router: Router,
@@ -21,20 +20,34 @@ export class DiningDashboardComponent {
   ) {}
   ngOnInit(): void {
     if (this._authService.isLoggedIn()) {
-      this._diningService.getDiningHalls().subscribe(diningHalls => {
-        this.diningHalls = diningHalls;
-    });
+      this.loadDiningHalls();
     } else {
       this._router.navigate(['/signup']);
     }
   }
-  getDiningRatingTitle(diningHall: IDiningHallWithRating) {
-    if(!diningHall.averageRating) {
-      return "Not yet rated";
+  loadDiningHalls() {
+    this._diningService
+      .getDiningHalls({
+        perPage: this.perPage,
+        prev: this.prev,
+      })
+      .subscribe((diningHalls) => {
+        this.diningHalls.push(...diningHalls);
+      });
+  }
+
+  getDiningRatingTitle(diningHall: IDiningHall) {
+    if (!diningHall.reviewSummary?.averageRating) {
+      return 'Not yet rated';
     }
-    return `${diningHall.averageRating} stars`;
+    return `${diningHall.reviewSummary.averageRating} stars`;
   }
   diningHallClick(diningHall: IDiningHall) {
     this._router.navigate(['/dashboard/dining', diningHall.nameQueryParameter]);
+  }
+
+  onScroll(): void {
+    this.prev += this.perPage;
+    this.loadDiningHalls();
   }
 }

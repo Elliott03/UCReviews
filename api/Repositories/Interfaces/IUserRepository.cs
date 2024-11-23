@@ -5,7 +5,7 @@ using api.Models;
 public interface IUserRepository
 {
     public Task AddUser(User user);
-    public Task<IEnumerable<User>> GetAllUsers();
+    public Task<IEnumerable<User>> GetUsers(int prev, int perPage);
     public Task<User> GetUserById(int id);
     public Task UpdateUser(User user);
     public Task DeleteUserById(int id);

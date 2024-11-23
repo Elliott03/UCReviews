@@ -1,7 +1,17 @@
-<div id="dashboard-page" class="dashboard-page">
+<div
+  id="dashboard-page"
+  class="dashboard-page"
+  infiniteScroll
+  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="50"
+  (scrolled)="onScroll()"
+>
   @for (dorm of dorms; track dorm) {
   <div class="inline-card">
-    <a [routerLink]="['/dashboard/housing', dorm.nameQueryParameter]" class="reset">
+    <a
+      [routerLink]="['/dashboard/housing', dorm.nameQueryParameter]"
+      class="reset"
+    >
       <mat-card class="card">
         <img
           src="api/Images/Small_Dorms/{{ dorm.nameQueryParameter }}.jpg"
@@ -12,7 +22,7 @@
           <ngx-stars
             [size]="2"
             [readonly]="true"
-            [initialStars]="dorm.averageRating"
+            [initialStars]="dorm.reviewSummary?.averageRating || 0"
           ></ngx-stars>
           <div class="style-cost">
             <h3 class="style">{{ dorm.style }}</h3>

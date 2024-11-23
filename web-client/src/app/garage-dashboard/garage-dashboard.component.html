@@ -1,6 +1,16 @@
-<div id="dashboard-page" class="dashboard-page">
+<div
+  id="dashboard-page"
+  class="dashboard-page"
+  infiniteScroll
+  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="50"
+  (scrolled)="onScroll()"
+>
   @for (garage of garages; track garage) {
-  <a class="inline-card reset" [routerLink]="'/dashboard/garages/' + garage.slug">
+  <a
+    class="inline-card reset"
+    [routerLink]="'/dashboard/garages/' + garage.slug"
+  >
     <mat-card class="card">
       <mat-card-content>
         <img
@@ -13,7 +23,7 @@
           <ngx-stars
             [size]="2"
             [readonly]="true"
-            [initialStars]="garage.averageRating"
+            [initialStars]="garage.reviewSummary?.averageRating || 0"
             [title]="getGarageRatingTitle(garage)"
           ></ngx-stars>
           <div class="attributes">

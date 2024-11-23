@@ -1,36 +1,41 @@
 namespace api.Services.Implementations;
 
 using System.Collections;
+using api.Dto;
 using api.Models;
 using api.Repositories.Interfaces;
 using api.Services.Interfaces;
 using api.ViewModels;
-using Microsoft.EntityFrameworkCore;
 
 public class ReviewService : IReviewService
 {
     private readonly IReviewRepository _repository;
-    private readonly IDormService _dormService;
-    public ReviewService(IReviewRepository repository, IDormService dormService)
+
+    public ReviewService(IReviewRepository repository)
     {
         _repository = repository;
-        _dormService = dormService;
     }
-    public async Task<IEnumerable<Review>> GetReviews()
+    public async Task<IEnumerable<Review>> GetReviews(int prev, int perPage)
     {
-        return await _repository.GetAllReviews();
+        return await _repository.GetReviews(prev, perPage);
     }
-    public async Task<List<Review>> GetReviewsByDormId(int dormId)
+    public async Task<List<Review>> GetReviewsByDormId(int dormId, int prev, int perPage)
     {
-        return await _repository.GetReviewsByDormId(dormId);
+        return await _repository.GetReviewsByDormId(dormId, prev, perPage);
     }
 
-    public async Task<List<Review>> GetReviewsByParkingGarageId(int garageId)
+    public async Task<List<Review>> GetReviewsByParkingGarageId(int garageId, int prev, int perPage)
     {
-        return await _repository.GetReviewsByParkingGarageId(garageId);
+        return await _repository.GetReviewsByParkingGarageId(garageId, prev, perPage);
     }
 
-    public async Task<List<Review>> SaveReview(SaveReviewViewModel model)
+
+    public async Task<List<Review>> GetReviewsByDiningHallId(int diningHallId, int prev, int perPage)
+    {
+        return await _repository.GetReviewsByDiningHallId(diningHallId, prev, perPage);
+    }
+
+    public async Task<ReviewWithSummary> SaveReview(SaveReviewViewModel model)
     {
         var review = new Review
         {
@@ -42,24 +47,7 @@ public class ReviewService : IReviewService
             ParkingGarageId = model.ParkingGarageId,
             DiningHallId = model.DiningHallId,
         };
-        await _repository.SaveReview(review);
-        if (model.DormId is not null)
-        {
-            return await _repository.GetReviewsByDormId((int)model.DormId);
-        }
-        else if (model.ParkingGarageId is not null)
-        {
-            return await _repository.GetReviewsByParkingGarageId((int)model.ParkingGarageId);
-        }
-        else if (model.DiningHallId is not null)
-        {
-            return await _repository.GetReviewsByDiningHallId((int)model.DiningHallId);
-        }
-        else
-        {
-            throw new Exception("There must be a foreign key association");
-        }
+        return await _repository.SaveReview(review);
     }
-
 
 }

@@ -1,4 +1,7 @@
 
+using api.Models;
+using api.Repositories.Interfaces;
+
 public class DiningHallService : IDiningHallService
 {
 
@@ -8,13 +11,13 @@ public class DiningHallService : IDiningHallService
     {
         _repository = repository;
     }
-    public async Task<DiningHall> GetDiningHall(string queryParam)
+    public async Task<DiningHall> GetDiningHall(string slug)
     {
-        return await _repository.GetDiningHall(queryParam);
+        return await _repository.GetDiningHall(slug);
     }
 
-    public async Task<IEnumerable<DiningHall>> GetAllDiningHalls()
+    public async Task<IEnumerable<DiningHall>> GetDiningHalls(int prev, int perPage)
     {
-        return await _repository.GetAllDiningHalls();
+        return await _repository.GetDiningHalls(prev, perPage);
     }
 }
