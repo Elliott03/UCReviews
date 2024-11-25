@@ -65,13 +65,13 @@ public class ReviewRepository : IReviewRepository
 
     public async Task<ReviewWithSummary> SaveReview(Review review)
     {
-        await _dbContext.AddAsync(review);
-        await _dbContext.SaveChangesAsync();
-
-        IReviewable? reviewable = await review.GetReviewableAsync(_dbContext) ??
+        IReviewable reviewable = await review.GetReviewableAsync(_dbContext) ??
             throw new Exception("A review must be associated with a reviewable");
 
         var reviewSummary = await _reviewSummaryService.UpdateReviewSummary(review, reviewable);
+
+        await _dbContext.AddAsync(review);
+        await _dbContext.SaveChangesAsync();
 
         return new ReviewWithSummary { review = review, summary = reviewSummary };
     }
