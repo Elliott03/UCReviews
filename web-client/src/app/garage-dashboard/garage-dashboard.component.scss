@@ -1,14 +1,6 @@
 @import "main.scss";
 @import "resets/link.scss";
 
-.dashboard-page {
-  padding: 1rem;
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(3, 1fr);
-  max-width: 100%;
-}
-
 .hero-image {
   max-width: 100%;
   aspect-ratio: 16/9;

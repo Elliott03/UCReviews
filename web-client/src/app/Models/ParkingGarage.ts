@@ -1,4 +1,4 @@
-import { IReview } from './Review';
+import { ReviewSummary } from './ReviewSummary';
 
 export interface IParkingGarage {
   id: number;
@@ -9,11 +9,7 @@ export interface IParkingGarage {
   campus: string;
   address: string;
   permitRequired: boolean;
-  reviews: IReview[];
-}
-
-export interface IParkingGarageWithRating extends IParkingGarage {
-  averageRating: number;
+  reviewSummary: ReviewSummary | null;
 }
 
 export type ParkingGarage = IParkingGarage;

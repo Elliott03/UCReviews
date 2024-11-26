@@ -4,14 +4,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ReviewService } from '../core/services/review.service';
 import { DiningService } from '../core/services/dining.service';
 import { firstValueFrom } from 'rxjs';
-import {
-  IDiningHallWithRating,
-} from '../Models/DiningHall';
+import { IDiningHall } from '../Models/DiningHall';
 import { NgxStarsComponent } from 'ngx-stars';
 import { emailToUsername as _emailToUsername } from '../core/helpers/emailToUsername';
 import { convertDateToReadable as _convertDateToReadable } from '../core/helpers/convertDateToReadable';
 import { IUser } from '../Models/User';
 import { IReview, SaveReview } from '../Models/Review';
+import { PageableQueryParam } from '../core/types/QueryParams';
+import { ReviewsComponent } from '../shared/reviews/reviews.component';
 
 @Component({
   selector: 'dining-page',
@@ -19,7 +19,7 @@ import { IReview, SaveReview } from '../Models/Review';
   styleUrl: './dining-page.component.scss',
 })
 export class DiningPageComponent implements OnInit, AfterViewInit {
-  diningHall?: IDiningHallWithRating;
+  diningHall?: IDiningHall;
   reviews: IReview[] | undefined;
   JSON: any;
   user: IUser | undefined;
@@ -36,6 +36,11 @@ export class DiningPageComponent implements OnInit, AfterViewInit {
 
   @ViewChild('reviewRating')
   reviewStarsComponent: NgxStarsComponent = new NgxStarsComponent();
+
+  @ViewChild('reviewsComponent')
+  reviewsComponent: ReviewsComponent = new ReviewsComponent(
+    this._reviewService
+  );
 
   constructor(
     private route: ActivatedRoute,
@@ -71,8 +76,6 @@ export class DiningPageComponent implements OnInit, AfterViewInit {
         numberOfCharactersForEmailEnding
       );
     }
-
-    this.reviews = this.diningHall.reviews.reverse(); // Recent reviews first
   }
 
   ngAfterViewInit() {
@@ -93,7 +96,9 @@ export class DiningPageComponent implements OnInit, AfterViewInit {
 
   private setDiningHallRating() {
     if (this.diningHallStarsComponent && this.diningHall) {
-      this.diningHallStarsComponent.setRating(this.diningHall.averageRating || 0);
+      this.diningHallStarsComponent.setRating(
+        this.diningHall.reviewSummary?.averageRating || 0
+      );
     }
   }
 
@@ -106,13 +111,11 @@ export class DiningPageComponent implements OnInit, AfterViewInit {
       userId,
       diningHallId: this.diningHall.id,
     });
-    const reviewList = await firstValueFrom(
+    const addedReview = await firstValueFrom(
       this._reviewService.addReview(newReview)
     );
-    this.reviews = reviewList.reverse();
-    const ratingSum = reviewList.reduce((acc, obj) => acc + obj.starRating, 0);
-    const averageRating = ratingSum / reviewList.length;
-    this.diningHallStarsComponent.setRating(averageRating);
+    this.reviewsComponent.addReviewToFront(addedReview.review);
+    this.diningHallStarsComponent.setRating(addedReview.summary.averageRating);
     this.reviewStarsComponent.setRating(0); // Reset component
     this.reviewText = '';
     this.currentCharacterCount = 0;
@@ -121,5 +124,19 @@ export class DiningPageComponent implements OnInit, AfterViewInit {
   updateCharacterCount(event: any) {
     const currentText: string = event.target.value;
     this.currentCharacterCount = currentText.length;
+  }
+
+  getReviewsLoader(): (params: PageableQueryParam) => Promise<IReview[]> {
+    return async ({ prev, perPage }: PageableQueryParam) => {
+      if (!this.diningHall) return [];
+      const reviews = await firstValueFrom(
+        this._reviewService.getReviewsByDiningHallId({
+          perPage,
+          prev,
+          diningHallId: String(this.diningHall.id),
+        })
+      );
+      return reviews;
+    };
   }
 }

@@ -44,7 +44,7 @@ export class AuthService  {
     public isLoggedIn() {
         return localStorage.getItem('id_token') ? true : false;
     }
-    
+
     getDecodedJwt(token: string): IDecodedJwt | null {
         try {
           return jwt_decode.jwtDecode<IDecodedJwt>(token);

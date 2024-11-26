@@ -22,7 +22,7 @@ namespace api.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("DiningHall", b =>
+            modelBuilder.Entity("api.Models.DiningHall", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -640,6 +640,50 @@ namespace api.Migrations
                     b.ToTable("Review");
                 });
 
+            modelBuilder.Entity("api.Models.ReviewSummary", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("AverageRating")
+                        .HasPrecision(10, 9)
+                        .HasColumnType("decimal(10,9)");
+
+                    b.Property<int?>("DiningHallId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DormId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ParkingGarageId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SummaryText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TotalReviews")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DiningHallId")
+                        .IsUnique()
+                        .HasFilter("[DiningHallId] IS NOT NULL");
+
+                    b.HasIndex("DormId")
+                        .IsUnique()
+                        .HasFilter("[DormId] IS NOT NULL");
+
+                    b.HasIndex("ParkingGarageId")
+                        .IsUnique()
+                        .HasFilter("[ParkingGarageId] IS NOT NULL");
+
+                    b.ToTable("ReviewSummary");
+                });
+
             modelBuilder.Entity("api.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -670,7 +714,7 @@ namespace api.Migrations
 
             modelBuilder.Entity("api.Models.Review", b =>
                 {
-                    b.HasOne("DiningHall", "DiningHall")
+                    b.HasOne("api.Models.DiningHall", "DiningHall")
                         .WithMany("Reviews")
                         .HasForeignKey("DiningHallId");
 
@@ -697,18 +741,45 @@ namespace api.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("DiningHall", b =>
+            modelBuilder.Entity("api.Models.ReviewSummary", b =>
                 {
+                    b.HasOne("api.Models.DiningHall", "DiningHall")
+                        .WithOne("ReviewSummary")
+                        .HasForeignKey("api.Models.ReviewSummary", "DiningHallId");
+
+                    b.HasOne("api.Models.Dorm", "Dorm")
+                        .WithOne("ReviewSummary")
+                        .HasForeignKey("api.Models.ReviewSummary", "DormId");
+
+                    b.HasOne("api.Models.ParkingGarage", "ParkingGarage")
+                        .WithOne("ReviewSummary")
+                        .HasForeignKey("api.Models.ReviewSummary", "ParkingGarageId");
+
+                    b.Navigation("DiningHall");
+
+                    b.Navigation("Dorm");
+
+                    b.Navigation("ParkingGarage");
+                });
+
+            modelBuilder.Entity("api.Models.DiningHall", b =>
+                {
+                    b.Navigation("ReviewSummary");
+
                     b.Navigation("Reviews");
                 });
 
             modelBuilder.Entity("api.Models.Dorm", b =>
                 {
+                    b.Navigation("ReviewSummary");
+
                     b.Navigation("Reviews");
                 });
 
             modelBuilder.Entity("api.Models.ParkingGarage", b =>
                 {
+                    b.Navigation("ReviewSummary");
+
                     b.Navigation("Reviews");
                 });
 

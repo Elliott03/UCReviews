@@ -1,4 +1,5 @@
 import { IReview } from './Review';
+import { ReviewSummary } from './ReviewSummary';
 
 interface IBaseDorm {
   id: number;
@@ -6,6 +7,7 @@ interface IBaseDorm {
   style: string;
   cost: string;
   reviews: IReview[];
+  reviewSummary: ReviewSummary | null;
 }
 
 export interface ILargeDorm extends IBaseDorm {
@@ -16,14 +18,6 @@ export interface ILargeDorm extends IBaseDorm {
 export interface ISmallDorm extends IBaseDorm {
   nameQueryParameter: string;
   image: string;
-}
-
-export interface ILargeDormWithRating extends ILargeDorm {
-  averageRating: number;
-}
-
-export interface ISmallDormWithRating extends ISmallDorm {
-  averageRating: number;
 }
 
 export type Dorm = IBaseDorm;

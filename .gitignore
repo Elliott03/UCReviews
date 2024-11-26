@@ -268,3 +268,5 @@ web-client/pnpm-lock.yaml
 api/appsettings.json
 
 scripts/
+
+environment.development.ts

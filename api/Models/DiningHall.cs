@@ -1,6 +1,6 @@
-using api.Models;
+namespace api.Models;
 
-public class DiningHall
+public class DiningHall : IReviewable
 {
     public int Id { get; set; }
     public string Name { get; set; }
@@ -9,5 +9,6 @@ public class DiningHall
     public string Location { get; set; }
     public string IncludedInMealPlan { get; set; }
     public string NameQueryParameter { get; set; }
-    public List<Review> Reviews { get; set; }
+    public virtual List<Review> Reviews { get; set; }
+    public virtual ReviewSummary ReviewSummary { get; set; }
 }

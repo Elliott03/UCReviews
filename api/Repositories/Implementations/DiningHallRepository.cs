@@ -1,21 +1,33 @@
 
 using api.Models;
+using api.Repositories.Interfaces;
+using api.Settings;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 public class DiningHallRepository : IDiningHallRepository
 {
     private readonly UCReviewsContext _dbContext;
-    public DiningHallRepository(UCReviewsContext dbContext)
+    private readonly PaginationSettings _paginationSettings;
+
+    public DiningHallRepository(UCReviewsContext dbContext, IOptions<PaginationSettings> paginationSettings)
     {
         _dbContext = dbContext;
+        _paginationSettings = paginationSettings.Value;
     }
-    public async Task<IEnumerable<DiningHall>> GetAllDiningHalls()
+    public async Task<IEnumerable<DiningHall>> GetDiningHalls(int prev, int perPage)
     {
-        return await _dbContext.DiningHall.Include(d => d.Reviews).ThenInclude(r => r.User).ToListAsync();
+        var query = _dbContext.DiningHall.AsQueryable();
+        perPage = int.Min(perPage, _paginationSettings.MaxPerPage);
+        query = query.Where(d => d.Id > prev).Take(perPage);
+        query = query.Include(d => d.ReviewSummary);
+        return await query.ToListAsync();
     }
 
-    public async Task<DiningHall> GetDiningHall(string queryParam)
+    public async Task<DiningHall> GetDiningHall(string slug)
     {
-        return await _dbContext.DiningHall.Include(b => b.Reviews).ThenInclude(r => r.User).Where(d => d.NameQueryParameter == queryParam).FirstOrDefaultAsync();
+        var query = _dbContext.DiningHall.AsQueryable();
+        query = query.Include(b => b.ReviewSummary);
+        return await query.FirstOrDefaultAsync();
     }
 }

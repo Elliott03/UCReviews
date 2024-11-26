@@ -1,4 +1,5 @@
 import { IReview } from './Review';
+import { ReviewSummary } from './ReviewSummary';
 
 export interface IDiningHall {
   id: number;
@@ -8,11 +9,7 @@ export interface IDiningHall {
   location: string;
   includedInMealPlan: string;
   nameQueryParameter: string;
-  reviews: IReview[];
-}
-
-export interface IDiningHallWithRating extends IDiningHall {
-  averageRating: number;
+  reviewSummary: ReviewSummary | null;
 }
 
 export type DiningHall = IDiningHall;

@@ -1,6 +1,16 @@
-<div id="dashboard-page" class="dashboard-page">
+<div
+  id="dashboard-page"
+  class="dashboard-page"
+  infiniteScroll
+  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="50"
+  (scrolled)="onScroll()"
+>
   @for (diningHall of diningHalls; track diningHall) {
-  <a class="inline-card" [routerLink]="'/dashboard/dining/' + diningHall.nameQueryParameter">
+  <a
+    class="inline-card reset"
+    [routerLink]="'/dashboard/dining/' + diningHall.nameQueryParameter"
+  >
     <mat-card class="card">
       <mat-card-content>
         <img
@@ -13,7 +23,7 @@
           <ngx-stars
             [size]="2"
             [readonly]="true"
-            [initialStars]="diningHall.averageRating"
+            [initialStars]="diningHall.reviewSummary?.averageRating || 0"
             [title]="getDiningRatingTitle(diningHall)"
           ></ngx-stars>
           <div class="attributes">

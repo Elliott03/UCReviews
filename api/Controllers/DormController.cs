@@ -1,62 +1,62 @@
-namespace api.Controllers;
-
-using api.Services.Interfaces;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-
 using api.Models;
+using api.Services.Interfaces;
+using api.Settings;
 using AutoMapper;
-using api.Dto;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
-[ApiController]
-[Route("[controller]")]
-[Authorize]
-public class DormController : ControllerBase
+namespace api.Controllers
 {
-    private readonly IDormService _service;
-    private readonly ILogger<DormController> _logger;
-    private readonly IMapper _mapper;
-    private readonly IWebHostEnvironment _environment;
-    public DormController(IDormService service, ILogger<DormController> logger, IMapper mapper, IWebHostEnvironment environment)
+    [Route("api/[controller]")]
+    [ApiController]
+    public class DormController : ControllerBase
     {
-        _service = service;
-        _logger = logger;
-        _mapper = mapper;
-        _environment = environment;
-    }
+        private readonly IDormService _service;
+        private readonly ILogger<DormController> _logger;
+        private readonly IMapper _mapper;
+        private readonly IWebHostEnvironment _environment;
 
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<SmallDormDto>>> GetSmallDorms()
-    {
+        private readonly PaginationSettings _paginationSettings;
 
-        var dorms = await _service.GetDorms();
-        var smallDorms = AttachImages(dorms);
-        return smallDorms.Count() > 0 ? Ok(smallDorms) : NoContent();
-
-    }
-    [HttpGet("{queryParam}")]
-    public async Task<ActionResult<LargeDormDto>> GetLargeDorm(string queryParam)
-    {
-        var dorm = await _service.GetDorm(queryParam);
-        var largeDorm = _mapper.Map<LargeDormDto>(dorm);
-        return largeDorm != null ? Ok(largeDorm) : NoContent();
-
-    }
-    private IEnumerable<SmallDormDto> AttachImages(IEnumerable<Dorm> dorms)
-    {
-        var smallDorms = _mapper.Map<IEnumerable<SmallDormDto>>(dorms);
-        foreach(var dorm in smallDorms)
+        public DormController(IDormService service, ILogger<DormController> logger, IMapper mapper, IWebHostEnvironment environment, IOptions<PaginationSettings> paginationSettings)
         {
-            var imagePath = Path.Combine(_environment.WebRootPath, "Images", "Small_Dorms","CalhounLarge.jpg");
-            if (System.IO.File.Exists(imagePath))
-            {
-
-                var fileStream = System.IO.File.OpenRead(imagePath);
-                dorm.Image = File(fileStream, "image/jpeg");
-            }
-            
+            _service = service;
+            _logger = logger;
+            _mapper = mapper;
+            _environment = environment;
+            _paginationSettings = paginationSettings.Value;
         }
 
-        return smallDorms;
+        [HttpGet]
+        public async Task<ActionResult<List<Dorm>>> GetDorms([FromQuery] int prev = 0, [FromQuery] int? perPage = null)
+        {
+            perPage ??= _paginationSettings.DefaultPerPage;
+            return Ok(await _service.GetDorms(prev, (int)perPage));
+        }
+
+        [HttpGet("{slug}")]
+        public async Task<ActionResult<Dorm>> GetDorm(string slug)
+        {
+            var dorm = await _service.GetDorm(slug);
+            return ResolveDorm(dorm);
+        }
+
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<Dorm>> GetDorm(int id)
+        {
+            var dorm = await _service.GetDorm(id);
+            return ResolveDorm(dorm);
+        }
+
+        private ActionResult<Dorm> ResolveDorm(Dorm dorm)
+        {
+            if (dorm is not null)
+            {
+                return Ok(dorm);
+            }
+
+            return NotFound();
+        }
+
     }
 }
