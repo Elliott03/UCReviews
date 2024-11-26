@@ -14,6 +14,7 @@ public class DormService : IDormService
     {
         _repository = repository;
     }
+
     public async Task<IEnumerable<Dorm>> GetDorms(int prev, int perPage)
     {
         var dorms = await _repository.GetDorms(prev, perPage);
@@ -26,4 +27,8 @@ public class DormService : IDormService
         return dorm;
     }
 
+    public Task<Dorm> GetDorm(int id)
+    {
+        return _repository.GetDorm(id);
+    }
 }

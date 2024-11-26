@@ -29,13 +29,14 @@ public class DormRepository : IDormRepository
     {
         var query = _dbContext.Dorm.AsQueryable();
         query = query.Include(b => b.ReviewSummary);
-        return await query.FirstOrDefaultAsync();
+        return await query.Where(g => g.NameQueryParameter == queryParam).FirstOrDefaultAsync();
     }
 
-    public async Task<Dorm> GetDormById(int id)
+    public async Task<Dorm> GetDorm(int id)
     {
         var query = _dbContext.Dorm.AsQueryable();
         query = query.Include(b => b.ReviewSummary);
-        return await query.FirstOrDefaultAsync();
+        return await query.Where(g => g.Id == id).FirstOrDefaultAsync();
     }
+
 }
