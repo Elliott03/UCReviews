@@ -1,8 +1,6 @@
-<mat-card class="signup-layout">
-    <h1 class="signup-text">Sign Up</h1>
+<mat-card class="auth-layout">
     <img src="../../assets/ucreviews-logo.png" class="logo"/>
-    <div class="signup-form">
-
+    <div class="auth-form">
         <mat-form-field appearance="outline">
             <mat-label>UC Email</mat-label>
             <input
@@ -14,7 +12,7 @@
         @if (email.invalid) {
             <mat-error>{{errorMessage()}}</mat-error>
         }
-        <button mat-flat-button class="secondary-button" (click)="signup()" >Sign Up</button>
+        <button mat-flat-button class="secondary-button" (click)="signup()" >Log in</button>
     </div>
 </mat-card>
 

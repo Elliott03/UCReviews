@@ -1,25 +1,13 @@
-
-<mat-card class="login-layout">
-    <h1 class="login-text">Login</h1>
-    <img src="../../assets/ucreviews-logo.png" class="logo"/>
-    <div class="login-form">
-
-        <mat-form-field appearance="outline">
-            <mat-label>Password</mat-label>
-            <input
-                type="password"
-                required 
-                matInput 
-                [formControl]="password"
-                placeholder="******"> 
-        </mat-form-field>
-        @if (password.invalid) {
-            <mat-error>{{validationErrorMessage()}}</mat-error>
-        }
-        <button mat-flat-button (click)="login()" >Login</button>
-        @if (authenticationError) {
-            <mat-error>{{authenticationErrorMessage()}}</mat-error>
-        }
-    </div>
-    <h3 class="footer-text">We are not affiliated with University of Cincinnati</h3>
+<mat-card class="auth-layout">
+  <img src="../../assets/ucreviews-logo.png" class="logo" />
+  <div class="auth-form">
+    <mat-label>2-Factor Auth Code</mat-label>
+    <ng-otp-input [formControl]="password" [config]="otpConfig"></ng-otp-input>
+    <mat-error *ngIf="password.invalid">{{
+      validationErrorMessage()
+    }}</mat-error>
+    <mat-error *ngIf="!password.invalid && authenticationError">
+      {{ authenticationErrorMessage() }}
+    </mat-error>
+  </div>
 </mat-card>

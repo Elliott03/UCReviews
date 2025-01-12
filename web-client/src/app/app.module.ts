@@ -32,6 +32,7 @@ import { DiningPageComponent } from './dining-page/dining-page.component';
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 import { ReviewsComponent } from './shared/reviews/reviews.component';
 import { FooterComponent } from './shared/footer/footer.component';
+import { NgOtpInputModule } from 'ng-otp-input';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { FooterComponent } from './shared/footer/footer.component';
     TextFieldModule,
     RouterLink,
     InfiniteScrollDirective,
+    NgOtpInputModule,
     ReviewsComponent,
     RouterOutlet,
     RouterModule.forRoot([
