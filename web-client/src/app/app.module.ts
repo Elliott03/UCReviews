@@ -31,6 +31,7 @@ import { DiningDashboardComponent } from './dining-dashboard/dining-dashboard.co
 import { DiningPageComponent } from './dining-page/dining-page.component';
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 import { ReviewsComponent } from './shared/reviews/reviews.component';
+import { FooterComponent } from './shared/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { ReviewsComponent } from './shared/reviews/reviews.component';
     LoginPageComponent,
     SignupPageComponent,
     NavbarComponent,
+    FooterComponent,
     DormDashboardComponent,
     DormPageComponent,
     GarageDashboardComponent,
