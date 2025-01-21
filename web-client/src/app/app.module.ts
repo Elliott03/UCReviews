@@ -33,6 +33,9 @@ import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 import { ReviewsComponent } from './shared/reviews/reviews.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { NgOtpInputModule } from 'ng-otp-input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { DormStyleIconComponent } from './shared/dorm-style-icon/dorm-style-icon.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +67,9 @@ import { NgOtpInputModule } from 'ng-otp-input';
     TextFieldModule,
     RouterLink,
     InfiniteScrollDirective,
+    MatIconModule,
+    DormStyleIconComponent,
+    MatTooltipModule,
     NgOtpInputModule,
     ReviewsComponent,
     RouterOutlet,

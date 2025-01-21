@@ -1,6 +1,5 @@
 <div
-  id="dashboard-page"
-  class="dashboard-page"
+  class="dashboard garage"
   infiniteScroll
   [infiniteScrollDistance]="2"
   [infiniteScrollThrottle]="50"
@@ -12,25 +11,29 @@
     [routerLink]="'/dashboard/garages/' + garage.slug"
   >
     <mat-card class="card">
-      <mat-card-content>
+      <div class="img-wrapper">
         <img
           src="api/Images/Garages/{{ garage.slug }}.jpg"
           class="hero-image"
           alt="Image of {{ garage.name }}"
         />
+      </div>
+      <mat-card-content>
         <div class="info">
           <h2 class="name">{{ garage.name }}</h2>
           <ngx-stars
             [size]="2"
             [readonly]="true"
             [initialStars]="garage.reviewSummary?.averageRating || 0"
-            [title]="getGarageRatingTitle(garage)"
+            [matTooltip]="getGarageRatingTitle(garage)"
           ></ngx-stars>
-          <div class="attributes">
-            <h2 class="permit-required">
-              Permit Required - {{ garage.permitRequired }}
-            </h2>
-          </div>
+          <ul class="attributes">
+            @if (garage.permitRequired) {
+            <li class="attribute">
+              <mat-icon matTooltip="Requires Permit">card_membership</mat-icon>
+            </li>
+            }
+          </ul>
           <button mat-flat-button>Review</button>
         </div>
       </mat-card-content>
