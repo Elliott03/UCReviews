@@ -35,6 +35,12 @@ export class DormDashboardComponent implements OnInit {
         this.dorms.push(...dorms);
       });
   }
+  getDormRatingTitle(dorm: ISmallDorm) {
+    if (!dorm.reviewSummary?.averageRating) {
+      return 'Not yet rated';
+    }
+    return `${dorm.reviewSummary.averageRating} stars`;
+  }
   onScroll(): void {
     this.prev += this.perPage;
     this.loadDorms();

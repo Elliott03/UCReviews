@@ -1,2 +1,8 @@
 @import "main.scss";
 @import "single.scss";
+
+.location {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}

@@ -36,6 +36,8 @@ import { NgOtpInputModule } from 'ng-otp-input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { DormStyleIconComponent } from './shared/dorm-style-icon/dorm-style-icon.component';
+import { DiningCategoryIconComponent } from './shared/dining-category-icon/dining-category-icon.component';
+import { MealPlanIconComponent } from './shared/meal-plan-icon/meal-plan-icon.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +71,8 @@ import { DormStyleIconComponent } from './shared/dorm-style-icon/dorm-style-icon
     InfiniteScrollDirective,
     MatIconModule,
     DormStyleIconComponent,
+    DiningCategoryIconComponent,
+    MealPlanIconComponent,
     MatTooltipModule,
     NgOtpInputModule,
     ReviewsComponent,

@@ -25,6 +25,7 @@
             [size]="2"
             [readonly]="true"
             [initialStars]="dorm.reviewSummary?.averageRating || 0"
+            [matTooltip]="getDormRatingTitle(dorm)"
           ></ngx-stars>
           <ul class="attributes">
             <li class="attribute">
