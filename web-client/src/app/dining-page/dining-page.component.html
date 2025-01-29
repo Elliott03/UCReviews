@@ -46,17 +46,23 @@
         [initialStars]="0"
         [size]="3"
       ></ngx-stars>
-      <textarea
-        matInput
-        [maxLength]="1000"
-        (input)="updateCharacterCount($event)"
-        [(ngModel)]="reviewText"
-        class="create-review-text"
-        placeholder="Review text here"
-      ></textarea>
+      <mat-form-field
+        class="create-review-text-field"
+      >
+        <textarea
+          matInput
+          [maxLength]="1000"
+          (input)="updateCharacterCount($event)"
+          [(ngModel)]="reviewText"
+          class="create-review-text"
+        ></textarea>
+      </mat-form-field>
       <span class="character-counter">
         {{ currentCharacterCount }} / {{ maxCharacterCount }}
       </span>
+      <div class="review-options">
+        <mat-checkbox checked>Anonymous</mat-checkbox>
+      </div>
       <button
         mat-flat-button
         (click)="sendReview()"

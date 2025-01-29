@@ -15,9 +15,12 @@
 }
 
 .review-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  margin-top: 15px;
+}
+
+.create-review-text-field {
+  width: 100%;
+  margin-top: 10px;
 }
 
 .create-review-text {
@@ -29,6 +32,13 @@
 .character-counter {
   display: block;
   margin: 0.5rem 0;
+}
+
+.review-options {
+  margin-left: calc(
+    ((var(--mdc-checkbox-state-layer-size, 40px) - 18px) / 2) * -1
+  );
+  margin-bottom: 4px;
 }
 
 .card {

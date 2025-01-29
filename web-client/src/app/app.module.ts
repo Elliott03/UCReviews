@@ -38,6 +38,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { DormStyleIconComponent } from './shared/dorm-style-icon/dorm-style-icon.component';
 import { DiningCategoryIconComponent } from './shared/dining-category-icon/dining-category-icon.component';
 import { MealPlanIconComponent } from './shared/meal-plan-icon/meal-plan-icon.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -77,6 +78,8 @@ import { MealPlanIconComponent } from './shared/meal-plan-icon/meal-plan-icon.co
     NgOtpInputModule,
     ReviewsComponent,
     RouterOutlet,
+    MatCheckboxModule,
+    TextFieldModule,
     RouterModule.forRoot([
       { path: 'signup', component: SignupPageComponent },
       { path: 'login', component: LoginPageComponent },
