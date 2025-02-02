@@ -1,5 +1,6 @@
-@import "main.scss";
-@import "resets/link.scss";
+@use "main.scss";
+@use "resets/link.scss";
+@use "util" as *;
 
 .dashboard-page {
   display: flex;
@@ -42,7 +43,7 @@
 
 .name {
   margin: 5px 0;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   text-align: center;
   color: get-color($shades-of-blue-grey, 3);
   font-weight: 600;
@@ -50,7 +51,7 @@
 
 .description {
   margin: 5px 0;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-weight: 400;
   text-align: center;
   padding: 0 10px;

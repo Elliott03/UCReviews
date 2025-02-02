@@ -1,3 +1,5 @@
+@use "util" as *;
+
 .auth-layout {
   background-color: get-color($shades-of-blue-grey, 10);
   width: min(35em, 100vw);

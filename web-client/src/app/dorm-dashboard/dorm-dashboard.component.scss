@@ -1,6 +1,6 @@
-@import "main.scss";
-@import "dashboard.scss";
-@import "resets/link.scss";
+@use "main.scss";
+@use "dashboard.scss";
+@use "resets/link.scss";
 
 .cost-icon {
   margin-right: -0.75rem;

@@ -1,5 +1,6 @@
 @use "@angular/material" as mat;
 @use "../../m3-theme.scss" as light;
+@use "util" as *;
 
 @include mat.core();
 
@@ -7,37 +8,6 @@ $web-client-theme: light.$light-theme;
 
 :root {
   @include mat.all-component-themes($web-client-theme);
-}
-
-$shades-of-red: #610316, #8a041a, #ab091e, #e00122, #e12d39, #ef4e4e, #f86a6a,
-  #ff9b9b, #ffbdbd, #ffe3e3;
-
-// Secondary Colors
-$shades-of-yellow: #b44d12, #cb6e17, #de911d, #f0b429, #f7c948, #fadb5f, #fce588,
-  #fff3c4, #fffbea;
-
-// Neutral Colors
-$shades-of-blue-grey: #102a43, #243b53, #334e68, #486581, #627d98, #829ab1,
-  #9fb3c8, #bcccdc, #d9e2ec, #f0f4f8;
-
-// Supporting Colors
-$shades-of-cyan: #044e54, #0a6c74, #0e7c86, #14919b, #2cb1bc, #38bec9, #54d1db,
-  #87eaf2, #bef8fd, #e0fcff;
-
-// Supporting Colors
-$shades-of-green: #2b4005, #42600c, #507712, #63921a, #7bb026, #94c843, #abdb5e,
-  #c7ea8f, #e2f7c2, #f2fde0;
-
-// Given the list and index, return the color
-@function get-color($color-list, $index) {
-  @return nth($color-list, $index);
-}
-$primary-color: get-color($shades-of-red, 4);
-
-$pixel-sizes: 12px, 14px, 16px, 18px, 20px, 24px, 32px, 48px;
-
-@function get-size($index) {
-  @return nth($pixel-sizes, $index);
 }
 
 body,
@@ -99,4 +69,3 @@ h6,
   font-weight: bold;
   margin: 2.33em 0;
 }
-

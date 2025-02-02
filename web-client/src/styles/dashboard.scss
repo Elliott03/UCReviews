@@ -1,8 +1,18 @@
+@use "util" as *;
+@use "mixins" as *;
+@use "functions" as *;
+
 .dashboard {
   padding: 1rem;
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(1, 1fr);
+  @include breakpoint($bp-medium) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @include breakpoint($bp-large) {
+    grid-template-columns: repeat(3, 1fr);
+  }
   max-width: 100%;
   min-height: 100vh;
 }

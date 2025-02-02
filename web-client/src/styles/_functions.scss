@@ -1,0 +1,8 @@
+@function get-color($color-list, $index) {
+  @return nth($color-list, $index);
+}
+
+$pixel-sizes: 12px, 14px, 16px, 18px, 20px, 24px, 32px, 48px;
+@function get-size($index) {
+  @return nth($pixel-sizes, $index);
+}
