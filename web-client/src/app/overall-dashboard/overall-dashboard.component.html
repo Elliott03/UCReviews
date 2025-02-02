@@ -1,12 +1,15 @@
-<div id="overall-dashboard-page" class="dashboard-page">
+<div id="overall-dashboard-page" class="dashboard">
   @for(category of categories; track category.id) {
-  <div class="inline-card">
-    <a [routerLink]="category.path" class="reset">
-      <mat-card class="card">
+  <a class="inline-card reset" [routerLink]="category.path">
+    <mat-card class="card">
+      <div class="img-wrapper">
         <img
           src="/api/Images/overall-dashboard-images/{{ category.image }}"
-          class="image"
+          class="hero-image"
+          alt="Image of {{ category.name }}"
         />
+      </div>
+      <mat-card-content>
         <div class="info">
           <h2 class="name">{{ category.name }}</h2>
           <div class="style-cost">
@@ -14,8 +17,9 @@
           </div>
           <button mat-flat-button>View</button>
         </div>
-      </mat-card>
-    </a>
-  </div>
+      </mat-card-content>
+    </mat-card>
+  </a>
+
   }
 </div>

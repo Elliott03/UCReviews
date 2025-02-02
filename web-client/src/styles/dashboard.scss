@@ -1,6 +1,5 @@
 @use "util" as *;
 @use "mixins" as *;
-@use "functions" as *;
 
 .dashboard {
   padding: 1rem;
@@ -13,8 +12,8 @@
   @include breakpoint($bp-large) {
     grid-template-columns: repeat(3, 1fr);
   }
-  max-width: 100%;
-  min-height: 100vh;
+  padding: 30px 40px;
+  margin: 0 auto;
 }
 
 .hero-image {
