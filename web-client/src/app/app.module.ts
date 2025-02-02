@@ -39,6 +39,7 @@ import { DormStyleIconComponent } from './shared/dorm-style-icon/dorm-style-icon
 import { DiningCategoryIconComponent } from './shared/dining-category-icon/dining-category-icon.component';
 import { MealPlanIconComponent } from './shared/meal-plan-icon/meal-plan-icon.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { BreadcrumbComponent, BreadcrumbItemDirective } from 'xng-breadcrumb';
 
 @NgModule({
   declarations: [
@@ -80,6 +81,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     RouterOutlet,
     MatCheckboxModule,
     TextFieldModule,
+    BreadcrumbComponent,
+    BreadcrumbItemDirective,
     RouterModule.forRoot([
       { path: 'signup', component: SignupPageComponent },
       { path: 'login', component: LoginPageComponent },
@@ -87,17 +90,21 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
         path: 'dashboard',
         component: OverallDashboardComponent,
         canActivate: [AuthGuard],
+        data: { breadcrumb: { label: 'Dashboard', url: '/dashboard' } },
       },
       {
         path: 'dashboard/housing',
         component: DormDashboardComponent,
         canActivate: [AuthGuard],
+        data: { breadcrumb: { label: 'Housing', url: '/dashboard/housing' } },
       },
       {
         path: 'dashboard/housing/:dorm',
         component: DormPageComponent,
         canActivate: [AuthGuard],
+        data: { breadcrumb: { alias: 'dormName' } },
       },
+
       {
         path: 'dashboard/garages',
         component: GarageDashboardComponent,
