@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IDiningHall } from '../Models/DiningHall';
 import { DiningService } from '../core/services/dining.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../core/services/auth.service';
 
 @Component({
@@ -10,13 +10,15 @@ import { AuthService } from '../core/services/auth.service';
   styleUrl: './dining-dashboard.component.scss',
 })
 export class DiningDashboardComponent {
+  hasChildRoute = false;
   diningHalls: IDiningHall[] = [];
   prev = 0;
   perPage = 6;
   constructor(
     private _diningService: DiningService,
     private _router: Router,
-    public _authService: AuthService
+    public _authService: AuthService,
+    private _route: ActivatedRoute
   ) {}
   ngOnInit(): void {
     if (this._authService.isLoggedIn()) {
@@ -24,6 +26,9 @@ export class DiningDashboardComponent {
     } else {
       this._router.navigate(['/signup']);
     }
+    this._route.url.subscribe(() => {
+      this.hasChildRoute = this._route.children.length > 0;
+    });
   }
   loadDiningHalls() {
     this._diningService

@@ -52,9 +52,9 @@ import { BreadcrumbComponent, BreadcrumbItemDirective } from 'xng-breadcrumb';
     DormPageComponent,
     GarageDashboardComponent,
     GaragePageComponent,
-    OverallDashboardComponent,
     DiningDashboardComponent,
     DiningPageComponent,
+    OverallDashboardComponent,
   ],
   bootstrap: [AppComponent],
   imports: [
@@ -90,40 +90,51 @@ import { BreadcrumbComponent, BreadcrumbItemDirective } from 'xng-breadcrumb';
         path: 'dashboard',
         component: OverallDashboardComponent,
         canActivate: [AuthGuard],
-        data: { breadcrumb: { label: 'Dashboard', url: '/dashboard' } },
-      },
-      {
-        path: 'dashboard/housing',
-        component: DormDashboardComponent,
-        canActivate: [AuthGuard],
-        data: { breadcrumb: { label: 'Housing', url: '/dashboard/housing' } },
-      },
-      {
-        path: 'dashboard/housing/:dorm',
-        component: DormPageComponent,
-        canActivate: [AuthGuard],
-        data: { breadcrumb: { alias: 'dormName' } },
-      },
-
-      {
-        path: 'dashboard/garages',
-        component: GarageDashboardComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'dashboard/garages/:slug',
-        component: GaragePageComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'dashboard/dining',
-        component: DiningDashboardComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'dashboard/dining/:nameQueryParameter',
-        component: DiningPageComponent,
-        canActivate: [AuthGuard],
+        data: { breadcrumb: 'Dashboard' },
+        children: [
+          {
+            path: 'housing',
+            component: DormDashboardComponent,
+            canActivate: [AuthGuard],
+            data: { breadcrumb: 'Housing' },
+            children: [
+              {
+                path: ':dorm',
+                component: DormPageComponent,
+                canActivate: [AuthGuard],
+                data: { breadcrumb: 'Dorm Details' },
+              },
+            ],
+          },
+          {
+            path: 'garages',
+            component: GarageDashboardComponent,
+            canActivate: [AuthGuard],
+            data: { breadcrumb: 'Garages' },
+            children: [
+              {
+                path: ':slug',
+                component: GaragePageComponent,
+                canActivate: [AuthGuard],
+                data: { breadcrumb: 'Garage Details' },
+              },
+            ],
+          },
+          {
+            path: 'dining',
+            component: DiningDashboardComponent,
+            canActivate: [AuthGuard],
+            data: { breadcrumb: 'Dining' },
+            children: [
+              {
+                path: ':nameQueryParameter',
+                component: DiningPageComponent,
+                canActivate: [AuthGuard],
+                data: { breadcrumb: 'Dining Details' },
+              },
+            ],
+          },
+        ],
       },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: '**', redirectTo: 'dashboard', pathMatch: 'full' },

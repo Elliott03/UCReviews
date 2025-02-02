@@ -1,5 +1,5 @@
-<div id="overall-dashboard-page" class="dashboard">
-  @for(category of categories; track category.id) {
+<div id="dashboard-page" class="dashboard" *ngIf="!hasChildRoute">
+  @for (category of categories; track category.id) {
   <a class="inline-card reset" [routerLink]="category.path">
     <mat-card class="card">
       <div class="img-wrapper">
@@ -20,6 +20,7 @@
       </mat-card-content>
     </mat-card>
   </a>
-
   }
 </div>
+
+<router-outlet></router-outlet>
