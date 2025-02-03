@@ -23,7 +23,9 @@ export class LoginPageComponent {
   isError: boolean = false;
   validationErrorMessage = signal('');
   authenticationError: boolean = false;
-  authenticationErrorMessage: Signal<string> = signal('Invalid 2FA code');
+  authenticationErrorMessage: Signal<string> = signal(
+    'Invalid authentication code'
+  );
 
   otpConfig = { length: 6, allowNumbersOnly: true, showError: true };
 
@@ -75,9 +77,9 @@ export class LoginPageComponent {
 
   updateErrorMessage() {
     if (this.password.hasError('required')) {
-      this.validationErrorMessage.set('2FA code is required');
+      this.validationErrorMessage.set('Authentication code is required');
     } else if (this.password.hasError('notANumber')) {
-      this.validationErrorMessage.set('2FA code must be a number');
+      this.validationErrorMessage.set('Authentication code must be a number');
     }
   }
 }
