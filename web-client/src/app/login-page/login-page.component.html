@@ -1,7 +1,7 @@
 <mat-card class="auth-layout">
   <img src="../../assets/ucreviews-logo.png" class="logo" />
   <div class="auth-form">
-    <mat-label>2-Factor Auth Code</mat-label>
+    <mat-label>Authentication Code</mat-label>
     <ng-otp-input [formControl]="password" [config]="otpConfig"></ng-otp-input>
     <mat-error *ngIf="password.invalid">{{
       validationErrorMessage()
