@@ -31,6 +31,14 @@ import { DiningDashboardComponent } from './dining-dashboard/dining-dashboard.co
 import { DiningPageComponent } from './dining-page/dining-page.component';
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 import { ReviewsComponent } from './shared/reviews/reviews.component';
+import { FooterComponent } from './shared/footer/footer.component';
+import { NgOtpInputModule } from 'ng-otp-input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { DormStyleIconComponent } from './shared/dorm-style-icon/dorm-style-icon.component';
+import { DiningCategoryIconComponent } from './shared/dining-category-icon/dining-category-icon.component';
+import { MealPlanIconComponent } from './shared/meal-plan-icon/meal-plan-icon.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -38,6 +46,7 @@ import { ReviewsComponent } from './shared/reviews/reviews.component';
     LoginPageComponent,
     SignupPageComponent,
     NavbarComponent,
+    FooterComponent,
     DormDashboardComponent,
     DormPageComponent,
     GarageDashboardComponent,
@@ -61,8 +70,16 @@ import { ReviewsComponent } from './shared/reviews/reviews.component';
     TextFieldModule,
     RouterLink,
     InfiniteScrollDirective,
+    MatIconModule,
+    DormStyleIconComponent,
+    DiningCategoryIconComponent,
+    MealPlanIconComponent,
+    MatTooltipModule,
+    NgOtpInputModule,
     ReviewsComponent,
     RouterOutlet,
+    MatCheckboxModule,
+    TextFieldModule,
     RouterModule.forRoot([
       { path: 'signup', component: SignupPageComponent },
       { path: 'login', component: LoginPageComponent },

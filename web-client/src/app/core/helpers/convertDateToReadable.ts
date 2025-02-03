@@ -1,4 +1,4 @@
-export function convertDateToReadable(reviewDate: Date) {
+export function convertDateToReadable(reviewDate: Date, abbreviate: boolean) {
   // 'T' separates the date and time in the ISO 8601 DateTime format
   const dateTimeList: string[] = reviewDate.toString().split('T');
   const date = dateTimeList[0];
@@ -44,6 +44,10 @@ export function convertDateToReadable(reviewDate: Date) {
     case Months.December:
       readableMonth = 'December';
       break;
+  }
+
+  if (abbreviate) {
+    readableMonth = readableMonth.slice(0, 3);
   }
 
   return `${readableMonth} ${day}, ${year}`;

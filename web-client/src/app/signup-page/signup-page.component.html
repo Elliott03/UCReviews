@@ -1,21 +1,18 @@
-<mat-card class="signup-layout">
-    <h1 class="signup-text">Sign Up</h1>
+<mat-card class="auth-layout">
     <img src="../../assets/ucreviews-logo.png" class="logo"/>
-    <div class="signup-form">
-
+    <div class="auth-form">
         <mat-form-field appearance="outline">
             <mat-label>UC Email</mat-label>
-            <input 
-                required 
-                matInput 
+            <input
+                required
+                matInput
                 [formControl]="email"
-                placeholder="example@mail.uc.edu"> 
+                placeholder="example@mail.uc.edu">
         </mat-form-field>
         @if (email.invalid) {
             <mat-error>{{errorMessage()}}</mat-error>
         }
-        <button mat-flat-button class="secondary-button" (click)="signup()" >Sign Up</button>
+        <button mat-flat-button class="secondary-button" (click)="signup()" >Log in</button>
     </div>
-    <h3 class="footer-text">We are not affiliated with University of Cincinnati</h3>
 </mat-card>
 

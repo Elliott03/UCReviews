@@ -1,0 +1,33 @@
+@use "util" as *;
+
+.auth-layout {
+  background-color: get-color($shades-of-blue-grey, 10);
+  width: min(35em, 100vw);
+  min-height: 35em;
+  margin: auto;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 40px;
+  gap: 10px;
+}
+
+.auth-text {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  color: get-color($shades-of-blue-grey, 3);
+}
+
+.logo {
+  width: 200px;
+  height: 200px;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

@@ -1,22 +1,35 @@
 @if(garage) {
 
-<div class="garage-page">
+<div class="single garage">
   <!-- <p>{{ JSON.stringify(garage) }}</p> -->
-  <img src="api/Images/Garages/{{ garage.slug }}.jpg" class="hero-image" />
+  <mat-card class="card">
+    <img src="api/Images/Garages/{{ garage.slug }}.jpg" class="hero-image" />
+  </mat-card>
   <h1>{{ garage.name }} - {{ garage.campus }}</h1>
-  <ngx-stars
-    #garageRating
-    [readonly]="true"
-    [initialStars]="0"
-    [size]="4"
-  ></ngx-stars>
-  <div class="attributes">
-    <h2 class="permit-required">
-      Permit Required - {{ garage.permitRequired }}
-    </h2>
+  <div class="info">
+    <ngx-stars
+      #garageRating
+      [readonly]="true"
+      [initialStars]="0"
+      [size]="4"
+    ></ngx-stars>
+    <div class="summary">
+      Here we will have a summary of the reviews for this garage, or we can add
+      a description. Either needs implemented. Lorem ipsum dolor sit amet
+      consectetur adipisicing elit. Rerum nam pariatur impedit sequi iste
+      obcaecati illum, sit numquam reprehenderit libero voluptas fuga
+      praesentium quis debitis consequuntur explicabo quo totam ullam.
+    </div>
+    <ul class="attributes">
+      @if (garage.permitRequired) {
+      <li class="attribute">
+        Requires Permit
+        <mat-icon>card_membership</mat-icon>
+      </li>
+      }
+    </ul>
   </div>
-  <hr class="horizontal-line" />
-  <mat-card class="create-review p-2 card">
+  <mat-card id="create-review" class="create-review p-2 card">
     <mat-card-content>
       <h2 class="username">{{ username }}</h2>
       <ngx-stars
@@ -26,14 +39,15 @@
         [initialStars]="0"
         [size]="3"
       ></ngx-stars>
-      <textarea
-        matInput
-        [maxLength]="1000"
-        (input)="updateCharacterCount($event)"
-        [(ngModel)]="reviewText"
-        class="create-review-text"
-        placeholder="Review text here"
-      ></textarea>
+      <mat-form-field class="create-review-text-field">
+        <textarea
+          matInput
+          [maxLength]="1000"
+          (input)="updateCharacterCount($event)"
+          [(ngModel)]="reviewText"
+          class="create-review-text"
+        ></textarea>
+      </mat-form-field>
       <span class="character-counter">
         {{ currentCharacterCount }} / {{ maxCharacterCount }}
       </span>
@@ -46,7 +60,6 @@
       </button>
     </mat-card-content>
   </mat-card>
-  <hr class="horizontal-line" />
   <div class="review-container">
     <reviews
       #reviewsComponent

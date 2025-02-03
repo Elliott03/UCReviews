@@ -1,54 +1,70 @@
-<div id="dorm-page" class="dorm-page">
-  @if (dorm) {
-  <img
-    src="api/Images/Large_Dorms/{{ dorm.nameQueryParameter }}.jpg"
-    class="image"
-  />
-  }
-  <h1 class="name">{{ dorm?.name }}</h1>
-  <ngx-stars
-    #dormRating
-    [readonly]="true"
-    [initialStars]="0"
-    [size]="4"
-  ></ngx-stars>
-  <div class="style-cost">
-    <h2 class="style">{{ dorm?.style }}</h2>
-    <h2 class="cost">{{ dorm?.cost }}</h2>
-  </div>
-  <h3 class="description">{{ dorm?.description }}</h3>
-  <hr class="horizontal-line" />
-  <mat-card class="create-review">
-    <h2 class="username">{{ username }}</h2>
-    <textarea
-      matInput
-      [maxLength]="1000"
-      (input)="updateCharacterCount($event)"
-      [(ngModel)]="reviewText"
-      class="create-review-text"
-      placeholder="Review text here"
-    ></textarea>
-    <h5 class="character-counter">
-      {{ currentCharacterCount }} / {{ maxCharacterCount }}
-    </h5>
-    <ngx-stars
-      #reviewRating
-      class="rating-stars"
-      [readonly]="false"
-      [initialStars]="0"
-      [size]="3"
-    ></ngx-stars>
-    <button
-      mat-flat-button
-      (click)="sendReview()"
-      class="secondary review-button"
-    >
-      Review
-    </button>
+@if(dorm) {
+<div class="single dorm">
+  <mat-card class="card">
+    <img
+      src="api/Images/Large_Dorms/{{ dorm.nameQueryParameter }}.jpg"
+      class="hero-image"
+    />
   </mat-card>
-  <hr class="horizontal-line" />
-  <reviews
-    #reviewsComponent
-    [loadReviewsMethod]="getReviewsLoader()"
-  ></reviews>
+  <h1>{{ dorm.name }}</h1>
+  <div class="info">
+    <ngx-stars
+      #dormRating
+      [readonly]="true"
+      [initialStars]="0"
+      [size]="4"
+    ></ngx-stars>
+    <div class="summary">
+      {{ dorm.description }}
+    </div>
+    <ul class="attributes">
+      <li class="attribute">
+        Style: {{ dorm.style }}
+        <dorm-style-icon [style]="dorm.style"></dorm-style-icon>
+      </li>
+      <li class="attribute">
+        Cost: @for (char of dorm.cost.split(''); track char) {
+        <mat-icon class="cost-icon">attach_money</mat-icon>
+        }
+      </li>
+    </ul>
+  </div>
+  <mat-card id="create-review" class="create-review p-2 card">
+    <mat-card-content>
+      <h2 class="username">{{ username }}</h2>
+      <ngx-stars
+        #reviewRating
+        class="rating-stars"
+        [readonly]="false"
+        [initialStars]="0"
+        [size]="3"
+      ></ngx-stars>
+      <mat-form-field class="create-review-text-field">
+        <textarea
+          matInput
+          [maxLength]="1000"
+          (input)="updateCharacterCount($event)"
+          [(ngModel)]="reviewText"
+          class="create-review-text"
+        ></textarea>
+      </mat-form-field>
+      <span class="character-counter">
+        {{ currentCharacterCount }} / {{ maxCharacterCount }}
+      </span>
+      <button
+        mat-flat-button
+        (click)="sendReview()"
+        class="secondary review-button"
+      >
+        Review
+      </button>
+    </mat-card-content>
+  </mat-card>
+  <div class="review-container">
+    <reviews
+      #reviewsComponent
+      [loadReviewsMethod]="getReviewsLoader()"
+    ></reviews>
+  </div>
 </div>
+}

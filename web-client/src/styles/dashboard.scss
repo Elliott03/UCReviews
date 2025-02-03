@@ -1,0 +1,68 @@
+@use "util" as *;
+@use "mixins" as *;
+
+.dashboard {
+  padding: 1rem;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(1, 1fr);
+  padding: 20px 20px;
+  @include breakpoint($bp-medium) {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 20px 40px;
+  }
+  @include breakpoint($bp-large) {
+    grid-template-columns: repeat(3, 1fr);
+    padding: 20px 60px;
+  }
+  @include breakpoint($bp-xlarge) {
+    padding: 20px 80px;
+  }
+  margin: 0 auto;
+}
+
+.hero-image {
+  max-width: 100%;
+  aspect-ratio: 16/9;
+}
+
+.card {
+  height: 100%;
+  background-color: get-color($shades-of-blue-grey, 8);
+  &:hover {
+    background-color: get-color($shades-of-blue-grey, 7);
+  }
+}
+
+.attributes {
+  display: flex;
+  gap: 0.5rem;
+  list-style: none;
+  padding: 10px 0;
+  margin: 0;
+}
+
+ngx-stars > div {
+  width: min-content;
+}
+
+.img-wrapper {
+  overflow: hidden;
+  display: flex;
+  border-radius: var(
+      --mdc-elevated-card-container-shape,
+      var(--mat-app-corner-medium)
+    )
+    var(--mdc-elevated-card-container-shape, var(--mat-app-corner-medium)) 0 0;
+  img {
+    width: 100%;
+    object-fit: cover;
+    transition: transform 0.35s ease-in-out;
+  }
+}
+
+.card:hover {
+  img {
+    transform: scale(1.05);
+  }
+}

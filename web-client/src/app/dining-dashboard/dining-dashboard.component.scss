@@ -1,5 +1,7 @@
-@import "main";
-@import "resets/link";
+@use "main";
+@use "resets/link";
+@use "dashboard.scss";
+@use "util" as *;
 
 .hero-image {
   max-width: 100%;

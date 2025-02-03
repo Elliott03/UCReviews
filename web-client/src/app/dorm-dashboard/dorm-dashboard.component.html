@@ -1,37 +1,49 @@
 <div
-  id="dashboard-page"
-  class="dashboard-page"
+  class="dashboard dorm"
   infiniteScroll
   [infiniteScrollDistance]="2"
   [infiniteScrollThrottle]="50"
   (scrolled)="onScroll()"
 >
   @for (dorm of dorms; track dorm) {
-  <div class="inline-card">
-    <a
-      [routerLink]="['/dashboard/housing', dorm.nameQueryParameter]"
-      class="reset"
-    >
-      <mat-card class="card">
+  <a
+    class="inline-card reset"
+    [routerLink]="'/dashboard/housing/' + dorm.nameQueryParameter"
+  >
+    <mat-card class="card">
+      <div class="img-wrapper">
         <img
           src="api/Images/Small_Dorms/{{ dorm.nameQueryParameter }}.jpg"
-          class="image"
+          class="hero-image"
+          alt="Image of {{ dorm.name }}"
         />
+      </div>
+      <mat-card-content>
         <div class="info">
           <h2 class="name">{{ dorm.name }}</h2>
           <ngx-stars
             [size]="2"
             [readonly]="true"
             [initialStars]="dorm.reviewSummary?.averageRating || 0"
+            [matTooltip]="getDormRatingTitle(dorm)"
           ></ngx-stars>
-          <div class="style-cost">
-            <h3 class="style">{{ dorm.style }}</h3>
-            <h3 class="cost">{{ dorm.cost }}</h3>
-          </div>
+          <ul class="attributes">
+            <li class="attribute">
+              <dorm-style-icon
+                [style]="dorm.style"
+                [matTooltip]="dorm.style"
+              ></dorm-style-icon>
+            </li>
+            <li class="attribute" matTooltip="Cost">
+              @for (char of dorm.cost.split(''); track char) {
+              <mat-icon class="cost-icon">attach_money</mat-icon>
+              }
+            </li>
+          </ul>
           <button mat-flat-button>Review</button>
         </div>
-      </mat-card>
-    </a>
-  </div>
+      </mat-card-content>
+    </mat-card>
+  </a>
   }
 </div>

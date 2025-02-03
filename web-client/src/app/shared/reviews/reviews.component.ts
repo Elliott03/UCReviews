@@ -22,6 +22,8 @@ export class ReviewsComponent {
   prev = 0;
   reviews: Map<number, IReview> = new Map();
 
+  JSON = JSON;
+
   @Input() loadReviewsMethod!: (
     params: PageableQueryParam
   ) => Promise<IReview[]>;

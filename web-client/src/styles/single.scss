@@ -1,0 +1,69 @@
+@use "util" as *;
+
+.hero-image {
+  width: 100%;
+}
+
+.card {
+  overflow: hidden;
+}
+
+.single {
+  padding: 30px 15px;
+  margin: 0 auto;
+  @media (min-width: 776px) {
+    max-width: 65vw;
+  }
+}
+
+.review-container {
+  margin-top: 15px;
+}
+
+.create-review-text-field {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.create-review-text {
+  width: 100%;
+  min-height: 5rem;
+  margin-top: 0.5rem;
+}
+
+.character-counter {
+  display: block;
+  margin: 0.5rem 0;
+}
+
+.review-options {
+  margin-left: calc(
+    ((var(--mdc-checkbox-state-layer-size, 40px) - 18px) / 2) * -1
+  );
+  margin-bottom: 4px;
+}
+
+.card {
+  background-color: get-color($shades-of-blue-grey, 8);
+}
+
+.attributes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  list-style: none;
+  padding: 10px 0 20px 0;
+  margin: 0;
+}
+
+.attribute {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.info {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+}
