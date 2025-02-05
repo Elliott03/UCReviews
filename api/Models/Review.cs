@@ -40,4 +40,10 @@ public class Review
 
     [JsonIgnore]
     public virtual DiningHall? DiningHall { get; set; }
+
+    [ForeignKey("Course")]
+    public int? CourseId { get; set; }
+
+    [JsonIgnore]
+    public virtual Course? Course { get; set; }
 }
