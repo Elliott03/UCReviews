@@ -99,10 +99,14 @@ import { BreadcrumbComponent, BreadcrumbItemDirective } from 'xng-breadcrumb';
             data: { breadcrumb: 'Housing' },
             children: [
               {
-                path: ':dorm',
+                path: ':slug',
                 component: DormPageComponent,
                 canActivate: [AuthGuard],
-                data: { breadcrumb: 'Dorm Details' },
+                data: {
+                  breadcrumb: {
+                    alias: '@name',
+                  },
+                },
               },
             ],
           },
@@ -116,7 +120,11 @@ import { BreadcrumbComponent, BreadcrumbItemDirective } from 'xng-breadcrumb';
                 path: ':slug',
                 component: GaragePageComponent,
                 canActivate: [AuthGuard],
-                data: { breadcrumb: 'Garage Details' },
+                data: {
+                  breadcrumb: {
+                    alias: '@name',
+                  },
+                },
               },
             ],
           },
@@ -127,10 +135,14 @@ import { BreadcrumbComponent, BreadcrumbItemDirective } from 'xng-breadcrumb';
             data: { breadcrumb: 'Dining' },
             children: [
               {
-                path: ':nameQueryParameter',
+                path: ':slug',
                 component: DiningPageComponent,
                 canActivate: [AuthGuard],
-                data: { breadcrumb: 'Dining Details' },
+                data: {
+                  breadcrumb: {
+                    alias: '@name',
+                  },
+                },
               },
             ],
           },

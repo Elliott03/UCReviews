@@ -3,6 +3,7 @@ import { IDiningHall } from '../Models/DiningHall';
 import { DiningService } from '../core/services/dining.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../core/services/auth.service';
+import { BreadcrumbService } from 'xng-breadcrumb';
 
 @Component({
   selector: 'dining-dashboard',
@@ -17,7 +18,7 @@ export class DiningDashboardComponent {
   constructor(
     private _diningService: DiningService,
     private _router: Router,
-    public _authService: AuthService,
+    private _authService: AuthService,
     private _route: ActivatedRoute
   ) {}
   ngOnInit(): void {

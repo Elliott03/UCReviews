@@ -37,13 +37,11 @@ export class DormPageComponent implements OnInit {
   reviewStarsComponent: NgxStarsComponent = new NgxStarsComponent();
 
   @ViewChild('reviewsComponent')
-  reviewsComponent: ReviewsComponent = new ReviewsComponent(
-    this._reviewService
-  );
+  reviewsComponent!: ReviewsComponent;
 
   constructor(
-    private bcService: BreadcrumbService,
-    private route: ActivatedRoute,
+    private _bcService: BreadcrumbService,
+    private _route: ActivatedRoute,
     private _dormService: DormService,
     private _reviewService: ReviewService,
     private _authService: AuthService,
@@ -52,11 +50,10 @@ export class DormPageComponent implements OnInit {
 
   ngOnInit(): void {
     if (this._authService.isLoggedIn()) {
-      const queryParam = this.route.snapshot.params['dorm'];
+      const queryParam = this._route.snapshot.params['slug'];
       this._dormService.getDorm(queryParam).subscribe((dorm) => {
         this.dorm = dorm;
-
-        this.bcService.set('@dormName', dorm.name);
+        this._bcService.set('@name', dorm.name);
 
         dorm.reviewSummary?.averageRating &&
           this.dormStarsComponent.setRating(dorm.reviewSummary.averageRating);
