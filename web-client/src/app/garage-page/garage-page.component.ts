@@ -66,7 +66,7 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
 
     console.log('garage', this.garage);
 
-    this._bcService.set('@name', this.garage.name);
+    this._bcService.set('dashboard/garages/:slug', this.garage.name);
     const stringUser = localStorage.getItem('user');
 
     if (stringUser) {

@@ -102,11 +102,6 @@ import { BreadcrumbComponent, BreadcrumbItemDirective } from 'xng-breadcrumb';
                 path: ':slug',
                 component: DormPageComponent,
                 canActivate: [AuthGuard],
-                data: {
-                  breadcrumb: {
-                    alias: '@name',
-                  },
-                },
               },
             ],
           },
@@ -120,11 +115,6 @@ import { BreadcrumbComponent, BreadcrumbItemDirective } from 'xng-breadcrumb';
                 path: ':slug',
                 component: GaragePageComponent,
                 canActivate: [AuthGuard],
-                data: {
-                  breadcrumb: {
-                    alias: '@name',
-                  },
-                },
               },
             ],
           },
@@ -138,11 +128,6 @@ import { BreadcrumbComponent, BreadcrumbItemDirective } from 'xng-breadcrumb';
                 path: ':slug',
                 component: DiningPageComponent,
                 canActivate: [AuthGuard],
-                data: {
-                  breadcrumb: {
-                    alias: '@name',
-                  },
-                },
               },
             ],
           },

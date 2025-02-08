@@ -55,8 +55,7 @@ export class DiningPageComponent implements OnInit, AfterViewInit {
       this._router.navigate(['/signup']);
       return;
     }
-    const nameQueryParameter =
-      this._route.snapshot.params['slug'];
+    const nameQueryParameter = this._route.snapshot.params['slug'];
     this.JSON = JSON;
     this.diningHall = await firstValueFrom(
       this._diningService.getDiningHall(nameQueryParameter)
@@ -67,7 +66,7 @@ export class DiningPageComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    this._bcService.set('@name', this.diningHall.name);
+    this._bcService.set('dashboard/dining/:slug', this.diningHall.name);
 
     const stringUser = localStorage.getItem('user');
 

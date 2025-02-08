@@ -53,7 +53,7 @@ export class DormPageComponent implements OnInit {
       const queryParam = this._route.snapshot.params['slug'];
       this._dormService.getDorm(queryParam).subscribe((dorm) => {
         this.dorm = dorm;
-        this._bcService.set('@name', dorm.name);
+        this._bcService.set('dashboard/housing/:slug', dorm.name);
 
         dorm.reviewSummary?.averageRating &&
           this.dormStarsComponent.setRating(dorm.reviewSummary.averageRating);
