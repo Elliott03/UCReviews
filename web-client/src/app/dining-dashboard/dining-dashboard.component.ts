@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IDiningHall } from '../Models/DiningHall';
 import { DiningService } from '../core/services/dining.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AuthService } from '../core/services/auth.service';
 import { BreadcrumbService } from 'xng-breadcrumb';
 
@@ -27,8 +27,10 @@ export class DiningDashboardComponent {
     } else {
       this._router.navigate(['/signup']);
     }
-    this._route.url.subscribe(() => {
-      this.hasChildRoute = this._route.children.length > 0;
+    this._router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.hasChildRoute = this._route.children.length > 0;
+      }
     });
   }
   loadDiningHalls() {

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IParkingGarage } from '../Models/ParkingGarage';
 import { GarageService } from '../core/services/garage.service';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { AuthService } from '../core/services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 
@@ -27,8 +27,10 @@ export class GarageDashboardComponent {
     } else {
       this._router.navigate(['/signup']);
     }
-    this._route.url.subscribe(() => {
-      this.hasChildRoute = this._route.children.length > 0;
+    this._router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.hasChildRoute = this._route.children.length > 0;
+      }
     });
   }
   loadGarages() {

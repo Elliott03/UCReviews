@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AuthService } from '../core/services/auth.service';
 import { Category } from '../Models/category.model';
 
@@ -40,8 +40,10 @@ export class OverallDashboardComponent implements OnInit {
     public _authService: AuthService,
     private route: ActivatedRoute
   ) {
-    this.route.url.subscribe(() => {
-      this.hasChildRoute = this.route.children.length > 0;
+    this._router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.hasChildRoute = this.route.children.length > 0;
+      }
     });
   }
 

@@ -19,3 +19,7 @@ navbar {
   top: 0;
   z-index: 999;
 }
+
+.xng-breadcrumb-list:has(> :only-child) {
+  visibility: hidden; // This will hide the breadcrumbs if only one item but keep the space they add
+}

@@ -83,59 +83,62 @@ import { BreadcrumbComponent, BreadcrumbItemDirective } from 'xng-breadcrumb';
     TextFieldModule,
     BreadcrumbComponent,
     BreadcrumbItemDirective,
-    RouterModule.forRoot([
-      { path: 'signup', component: SignupPageComponent },
-      { path: 'login', component: LoginPageComponent },
-      {
-        path: 'dashboard',
-        component: OverallDashboardComponent,
-        canActivate: [AuthGuard],
-        data: { breadcrumb: 'Dashboard' },
-        children: [
-          {
-            path: 'housing',
-            component: DormDashboardComponent,
-            canActivate: [AuthGuard],
-            data: { breadcrumb: 'Housing' },
-            children: [
-              {
-                path: ':slug',
-                component: DormPageComponent,
-                canActivate: [AuthGuard],
-              },
-            ],
-          },
-          {
-            path: 'garages',
-            component: GarageDashboardComponent,
-            canActivate: [AuthGuard],
-            data: { breadcrumb: 'Garages' },
-            children: [
-              {
-                path: ':slug',
-                component: GaragePageComponent,
-                canActivate: [AuthGuard],
-              },
-            ],
-          },
-          {
-            path: 'dining',
-            component: DiningDashboardComponent,
-            canActivate: [AuthGuard],
-            data: { breadcrumb: 'Dining' },
-            children: [
-              {
-                path: ':slug',
-                component: DiningPageComponent,
-                canActivate: [AuthGuard],
-              },
-            ],
-          },
-        ],
-      },
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: '**', redirectTo: 'dashboard', pathMatch: 'full' },
-    ]),
+    RouterModule.forRoot(
+      [
+        { path: 'signup', component: SignupPageComponent },
+        { path: 'login', component: LoginPageComponent },
+        {
+          path: 'dashboard',
+          component: OverallDashboardComponent,
+          canActivate: [AuthGuard],
+          data: { breadcrumb: 'Dashboard' },
+          children: [
+            {
+              path: 'housing',
+              component: DormDashboardComponent,
+              canActivate: [AuthGuard],
+              data: { breadcrumb: 'Housing' },
+              children: [
+                {
+                  path: ':slug',
+                  component: DormPageComponent,
+                  canActivate: [AuthGuard],
+                },
+              ],
+            },
+            {
+              path: 'garages',
+              component: GarageDashboardComponent,
+              canActivate: [AuthGuard],
+              data: { breadcrumb: 'Garages' },
+              children: [
+                {
+                  path: ':slug',
+                  component: GaragePageComponent,
+                  canActivate: [AuthGuard],
+                },
+              ],
+            },
+            {
+              path: 'dining',
+              component: DiningDashboardComponent,
+              canActivate: [AuthGuard],
+              data: { breadcrumb: 'Dining' },
+              children: [
+                {
+                  path: ':slug',
+                  component: DiningPageComponent,
+                  canActivate: [AuthGuard],
+                },
+              ],
+            },
+          ],
+        },
+        { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+        { path: '**', redirectTo: 'dashboard', pathMatch: 'full' },
+      ],
+      { onSameUrlNavigation: 'reload' }
+    ),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
