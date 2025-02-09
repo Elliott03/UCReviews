@@ -60,6 +60,14 @@ public class ReviewRepository : IReviewRepository
         return await query.ToListAsync();
     }
 
+    public async Task<List<Review>> GetReviewsByCourseId(int courseId, int prev, int perPage)
+    {
+        var query = _dbContext.Review.AsQueryable();
+        perPage = int.Min(perPage, _paginationSettings.MaxPerPage);
+        query = query.Where(r => r.Id > prev && r.CourseId == courseId).Take(perPage);
+        return await query.ToListAsync();
+    }
+
 #nullable enable
 
 

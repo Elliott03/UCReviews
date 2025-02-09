@@ -9,5 +9,6 @@ public interface IReviewRepository
     public Task<List<Review>> GetReviewsByDormId(int dormId, int prev, int perPage);
     public Task<List<Review>> GetReviewsByParkingGarageId(int parkingGarageId, int prev, int perPage);
     public Task<List<Review>> GetReviewsByDiningHallId(int diningHallId, int prev, int perPage);
+    public Task<List<Review>> GetReviewsByCourseId(int courseId, int prev, int perPage);
     public Task<ReviewWithSummary> SaveReview(Review review);
 }
