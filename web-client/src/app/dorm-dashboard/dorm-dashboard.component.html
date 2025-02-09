@@ -5,7 +5,7 @@
   [infiniteScrollThrottle]="50"
   (scrolled)="onScroll()"
 >
-  @for (dorm of dorms; track dorm) {
+  @for (dorm of dorms; track dorm.id) {
   <a
     class="inline-card reset"
     [routerLink]="'/dashboard/housing/' + dorm.nameQueryParameter"
