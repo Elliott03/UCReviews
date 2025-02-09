@@ -31,6 +31,13 @@ export class OverallDashboardComponent implements OnInit {
       id: 3,
       path: '/dashboard/dining',
     },
+    {
+      name: 'Courses',
+      description: 'Rate and review courses.',
+      image: 'courses.jpg',
+      id: 4,
+      path: '/dashboard/courses',
+    }
   ];
 
   constructor(private _router: Router, public _authService: AuthService) {}

@@ -29,6 +29,7 @@ import { GaragePageComponent } from './garage-page/garage-page.component';
 import { GarageDashboardComponent } from './garage-dashboard/garage-dashboard.component';
 import { DiningDashboardComponent } from './dining-dashboard/dining-dashboard.component';
 import { DiningPageComponent } from './dining-page/dining-page.component';
+import { CourseDashboardComponent } from './course-dashboard/course-dashboard.component';
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 import { ReviewsComponent } from './shared/reviews/reviews.component';
 import { FooterComponent } from './shared/footer/footer.component';
@@ -54,6 +55,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     OverallDashboardComponent,
     DiningDashboardComponent,
     DiningPageComponent,
+    CourseDashboardComponent,
   ],
   bootstrap: [AppComponent],
   imports: [
@@ -116,6 +118,11 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
       {
         path: 'dashboard/dining/:nameQueryParameter',
         component: DiningPageComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'dashboard/courses',
+        component: CourseDashboardComponent,
         canActivate: [AuthGuard],
       },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
