@@ -562,6 +562,27 @@ public class UCReviewsContext : DbContext
             }
         );
 
+        builder.Entity<Course>()
+        .HasData(
+            new Course
+            {
+                Id = 1,
+                Subject = "IT",
+                Number = "5003C",
+                Name = "SR CAPSTONE PROJECT I",
+                Description = "This capstone course is part 1 of the senior level course designed to allow students to review, analyze and integrate the work completed towards the bachelor of science in Information Technology degree. The student will complete an approved academic project, paper, and presentation that demonstrates mastery of the BSIT degree requirements.",
+                NameQueryParameter = "IT5003C"
+            },
+            new Course
+            {
+                Id = 2,
+                Subject = "IT",
+                Number = "5004C",
+                Name = "SR CAPSTONE PROJECT II",
+                Description = "This capstone course is part 2 of the senior level course designed to allow students to review, analyze and integrate the work completed towards the bachelor of science in Information Technology degree. The student will complete an approved academic project, paper, and presentation that demonstrates mastery of the BSIT degree requirements.",
+                NameQueryParameter = "IT5004C"
+            }
+        );
         base.OnModelCreating(builder);
     }
 }
