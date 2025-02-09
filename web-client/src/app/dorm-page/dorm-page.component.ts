@@ -49,14 +49,10 @@ export class DormPageComponent implements OnInit {
     private _router: Router
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit() {
     if (this._authService.isLoggedIn()) {
       const queryParam = this.route.snapshot.params['dorm'];
-      this._dormService.getDorm(queryParam).subscribe((dorm) => {
-        this.dorm = dorm;
-        dorm.reviewSummary?.averageRating &&
-          this.dormStarsComponent.setRating(dorm.reviewSummary.averageRating);
-      });
+      this.dorm = await firstValueFrom(this._dormService.getDorm(queryParam));
       const stringUser = localStorage.getItem('user');
       if (stringUser) {
         this.user = JSON.parse(stringUser);
@@ -70,10 +66,36 @@ export class DormPageComponent implements OnInit {
       this._router.navigate(['/signup']);
     }
   }
+
+  ngAfterViewInit() {
+    // Wait for the dorm data to be loaded
+    if (this.dorm) {
+      this.setDormRating();
+    } else {
+      // If dorm is not yet loaded, listen for it
+      this.route.params.subscribe(async (params) => {
+        const nameQueryParameter = params['dorm'];
+        this.dorm = await firstValueFrom(
+          this._dormService.getDorm(nameQueryParameter)
+        );
+        this.setDormRating();
+      });
+    }
+  }
+
   updateCharacterCount(event: any) {
     const currentText: string = event.target.value;
     this.currentCharacterCount = currentText.length;
   }
+
+  setDormRating() {
+    if (this.dormStarsComponent && this.dorm) {
+      this.dormStarsComponent.setRating(
+        this.dorm.reviewSummary?.averageRating || 0
+      );
+    }
+  }
+
   async sendReview() {
     const userId = this._authService.getUserId();
     if (!this.reviewText || userId === -1 || !this.dorm) return;
