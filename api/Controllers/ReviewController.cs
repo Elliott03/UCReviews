@@ -8,6 +8,7 @@ using api.ViewModels;
 using Microsoft.Extensions.Options;
 using api.Settings;
 using api.Dto;
+using api.Enums;
 
 [ApiController]
 [Route("[controller]")]
@@ -61,5 +62,25 @@ public class ReviewController : ControllerBase
             return await _service.SaveReview(review);
         return Conflict();
     }
+    [HttpGet("vote/{reviewId}")]
+    public async Task<ActionResult> UpdateVote(int reviewId, [FromQuery(Name = "voteType")] string voteType) 
+    {
 
+        VoteType finalVoteType;
+        if (voteType == "upvote") {
+            finalVoteType = VoteType.Upvote;
+        } else if (voteType == "downvote") {
+            finalVoteType = VoteType.Downvote;
+        } else {
+            finalVoteType = VoteType.NoVote;
+        }
+        Review reviewToVoteOn = await _service.GetReviewById(reviewId);
+        Vote vote = new Vote() 
+        {
+            ReviewId = reviewToVoteOn.Id,
+            SelectedVote = finalVoteType
+        };
+        await _service.SaveVote(vote);
+        return Ok();
+    }
 }

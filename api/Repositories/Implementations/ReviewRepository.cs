@@ -1,6 +1,7 @@
 namespace api.Repositories.Implementations;
 
 using api.Dto;
+using api.Enums;
 using api.Extensions;
 using api.Models;
 using api.Repositories.Interfaces;
@@ -40,7 +41,25 @@ public class ReviewRepository : IReviewRepository
         var query = _dbContext.Review.AsQueryable();
         perPage = int.Min(perPage, _paginationSettings.MaxPerPage);
         query = query.Where(r => r.Id > prev && r.DormId == dormId).Take(perPage);
-        return await query.ToListAsync();
+        List<Review> reviews =  await query.ToListAsync();
+        foreach(var review in reviews) 
+        {
+            var votes = await _dbContext.Vote.Where(v => v.ReviewId == review.Id).ToListAsync();
+            review.Votes = votes;
+            int averageVote = 0;
+            foreach(var vote in votes) 
+            {
+                if (vote.SelectedVote == VoteType.Upvote)
+                {
+                    averageVote++;
+                } else if (vote.SelectedVote == VoteType.Downvote)
+                {
+                    averageVote--;
+                }
+            }
+            review.AverageVote = averageVote;
+        }
+        return reviews;
     }
 
 
@@ -74,5 +93,15 @@ public class ReviewRepository : IReviewRepository
         await _dbContext.SaveChangesAsync();
 
         return new ReviewWithSummary { review = review, summary = reviewSummary };
+    }
+    public async Task<Review> GetReviewById(int id) 
+    {
+        var review = await _dbContext.Review.FirstOrDefaultAsync(r => r.Id == id);
+        return review;
+    }
+    public async Task SaveVote(Vote vote) 
+    {
+        await _dbContext.AddAsync(vote);
+        await _dbContext.SaveChangesAsync();
     }
 }

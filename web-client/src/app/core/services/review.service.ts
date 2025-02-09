@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IReview, SaveReview, SaveReviewResponse } from 'src/app/Models/Review';
+import { IReview, Review, SaveReview, SaveReviewResponse } from 'src/app/Models/Review';
 import { PageableQueryParam } from '../types/QueryParams';
 import { buildQueryParams } from '../helpers/buildQueryParams';
 
@@ -53,5 +53,11 @@ export class ReviewService {
 
   addReview(review: SaveReview): Observable<SaveReviewResponse> {
     return this._http.post<SaveReviewResponse>('/api/Review', review);
+  }
+  updateVote(review: IReview, vote: string) {
+    const queryParams = buildQueryParams({
+      voteType: vote
+    });
+    return this._http.get(`/api/Review/vote/${review.id}?${queryParams}`).subscribe();
   }
 }

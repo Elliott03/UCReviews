@@ -26,7 +26,22 @@
           {{ convertDateToReadable(review.timeCreated, true) }}
         </em>
       </div>
-      <span class="review-text">{{ review.reviewText }}</span>
+      <div class="text-votes">
+        <span class="review-text">{{ review.reviewText }}</span>
+        <div class="votes" >
+          <span class="vote" (click)="upvote(review)">
+            <svg width="36" height="36">
+              <path d="M2 26h32L18 10 2 26z" [attr.fill]="color"></path>
+            </svg>
+          </span>
+          {{ review.averageVote }}
+          <span class="vote" (click)="downvote(review)">
+            <svg width="36" height="36">
+              <path d="M2 10h32L18 26 2 10z" fill="currentColor"></path>
+            </svg>
+          </span>
+        </div>
+      </div>
     </mat-card-content>
   </mat-card>
   }

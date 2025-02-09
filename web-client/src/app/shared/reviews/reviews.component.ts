@@ -21,7 +21,7 @@ export class ReviewsComponent {
   perPage = 2;
   prev = 0;
   reviews: Map<number, IReview> = new Map();
-
+  
   JSON = JSON;
 
   @Input() loadReviewsMethod!: (
@@ -29,7 +29,7 @@ export class ReviewsComponent {
   ) => Promise<IReview[]>;
 
   constructor(private _reviewService: ReviewService) {}
-
+  public color: string = "red";
   ngOnInit(): void {
     this.loadReviews();
   }
@@ -62,4 +62,16 @@ export class ReviewsComponent {
       this.reviews = new Map([[review.id, review], ...this.reviews]);
     }
   }
+  public upvote(review: IReview) {
+    this.vote(review, "upvote");
+  }
+  public downvote(review: IReview) {
+    this.vote(review, "downvote");
+  }
+  public vote(review: IReview, vote: string) {
+    console.log(review);
+    console.log(vote);
+    this._reviewService.updateVote(review, vote);
+  }
+
 }

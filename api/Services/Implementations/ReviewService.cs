@@ -50,4 +50,12 @@ public class ReviewService : IReviewService
         return await _repository.SaveReview(review);
     }
 
+    public async Task<Review> GetReviewById(int id) 
+    {
+        return await _repository.GetReviewById(id);
+    }
+    public async Task SaveVote(Vote vote) 
+    {
+        await _repository.SaveVote(vote);
+    }
 }

@@ -28,6 +28,6 @@ public class DiningHallRepository : IDiningHallRepository
     {
         var query = _dbContext.DiningHall.AsQueryable();
         query = query.Include(b => b.ReviewSummary);
-        return await query.FirstOrDefaultAsync();
+        return await query.Where(x => x.NameQueryParameter == slug).FirstOrDefaultAsync();
     }
 }

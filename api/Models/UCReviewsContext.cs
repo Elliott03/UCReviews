@@ -10,6 +10,7 @@ public class UCReviewsContext : DbContext
     public DbSet<ParkingGarage> ParkingGarage { get; set; }
     public DbSet<DiningHall> DiningHall { get; set; }
     public DbSet<ReviewSummary> ReviewSummary { get; set; }
+    public DbSet<Vote> Vote { get; set; }
 
     public UCReviewsContext(DbContextOptions<UCReviewsContext> options)
         : base(options)
@@ -63,7 +64,10 @@ public class UCReviewsContext : DbContext
             .WithOne(r => r.DiningHall)
             .HasForeignKey<ReviewSummary>(rs => rs.DiningHallId)
             .IsRequired(false);
-
+        builder.Entity<Review>()
+            .HasMany(x => x.Votes)
+            .WithOne(x => x.Review)
+            .HasForeignKey(x => x.ReviewId);
 
         builder.Entity<Dorm>()
         .HasData(

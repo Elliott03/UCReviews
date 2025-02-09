@@ -9,6 +9,7 @@ export interface IReview {
   reviewText: string;
   starRating: number;
   timeCreated: Date;
+  averageVote: number;
   userId: number;
   dormId: number;
   user: IUser;

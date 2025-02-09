@@ -3,6 +3,7 @@ namespace api.Models;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
+using api.Enums;
 using Microsoft.EntityFrameworkCore;
 
 #nullable enable
@@ -40,4 +41,8 @@ public class Review
 
     [JsonIgnore]
     public virtual DiningHall? DiningHall { get; set; }
+    [JsonIgnore]
+    public List<Vote>? Votes { get; set; }
+    [NotMapped]
+    public int AverageVote { get; set; }
 }
