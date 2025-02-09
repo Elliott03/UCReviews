@@ -12,6 +12,7 @@ import { IReview, SaveReview } from '../Models/Review';
 import { PageableQueryParam } from '../core/types/QueryParams';
 import { ReviewsComponent } from '../shared/reviews/reviews.component';
 import { IParkingGarage } from '../Models/ParkingGarage';
+import { IReviewWithUser } from '../Models/ReviewWithUser';
 
 @Component({
   selector: 'garage-page',
@@ -113,7 +114,13 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
     const addedReview = await firstValueFrom(
       this._reviewService.addReview(newReview)
     );
-    this.reviewsComponent.addReviewToFront(addedReview.review);
+    this.reviewsComponent.addReviewToFront({
+      review: addedReview.review,
+      user: {
+        id: userId,
+        email: this.user?.email || '',
+      },
+    });
     this.garageStarsComponent.setRating(addedReview.summary.averageRating);
     this.reviewStarsComponent.setRating(0); // Reset component
     this.reviewText = '';
@@ -125,7 +132,7 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
     this.currentCharacterCount = currentText.length;
   }
 
-  getReviewsLoader(): (params: PageableQueryParam) => Promise<IReview[]> {
+  getReviewsLoader(): (params: PageableQueryParam) => Promise<IReviewWithUser[]> {
     return async ({ prev, perPage }: PageableQueryParam) => {
       if (!this.garage) return [];
       const reviews = await firstValueFrom(

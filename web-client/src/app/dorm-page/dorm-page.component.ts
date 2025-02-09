@@ -12,6 +12,7 @@ import { convertDateToReadable as _convertDateToReadable } from '../core/helpers
 import { PageableQueryParam } from '../core/types/QueryParams';
 import { firstValueFrom } from 'rxjs';
 import { ReviewsComponent } from '../shared/reviews/reviews.component';
+import { IReviewWithUser } from '../Models/ReviewWithUser';
 
 @Component({
   selector: 'dorm-page',
@@ -85,14 +86,22 @@ export class DormPageComponent implements OnInit {
     const addedReview = await firstValueFrom(
       this._reviewService.addReview(newReview)
     );
-    this.reviewsComponent.addReviewToFront(addedReview.review);
+    this.reviewsComponent.addReviewToFront({
+      review: addedReview.review,
+      user: {
+        id: userId,
+        email: this.user?.email || '',
+      },
+    });
     this.dormStarsComponent.setRating(addedReview.summary.averageRating);
     this.reviewStarsComponent.setRating(0); // Reset component
     this.reviewText = '';
     this.currentCharacterCount = 0;
   }
 
-  getReviewsLoader(): (params: PageableQueryParam) => Promise<IReview[]> {
+  getReviewsLoader(): (
+    params: PageableQueryParam
+  ) => Promise<IReviewWithUser[]> {
     return async ({ prev, perPage }: PageableQueryParam) => {
       if (!this.dorm) return [];
       const reviews = await firstValueFrom(
