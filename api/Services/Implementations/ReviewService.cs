@@ -35,7 +35,7 @@ public class ReviewService : IReviewService
         return await _repository.GetReviewsByDiningHallId(diningHallId, prev, perPage);
     }
 
-    public async Task<List<Review>> GetReviewsByCourseId(int dormId, int prev, int perPage)
+    public async Task<List<ReviewWithUser>> GetReviewsByCourseId(int dormId, int prev, int perPage)
     {
         return await _repository.GetReviewsByCourseId(dormId, prev, perPage);
     }

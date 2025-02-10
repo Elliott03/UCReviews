@@ -55,7 +55,7 @@ public class ReviewController : ControllerBase
     }
 
     [HttpGet("Course/{courseId}")]
-    public async Task<ActionResult<List<Review>>> GetReviewByCourseId(int courseId, [FromQuery] int prev = 0, [FromQuery] int? perPage = null)
+    public async Task<ActionResult<List<ReviewWithUser>>> GetReviewByCourseId(int courseId, [FromQuery] int prev = 0, [FromQuery] int? perPage = null)
     {
         perPage ??= _paginationSettings.DefaultPerPage;
         return await _service.GetReviewsByCourseId(courseId, prev, (int)perPage);
