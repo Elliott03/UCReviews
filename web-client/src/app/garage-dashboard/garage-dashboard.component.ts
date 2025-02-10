@@ -40,6 +40,7 @@ export class GarageDashboardComponent {
         prev: this.prev,
       })
       .subscribe((garages) => {
+        garages.sort((a, b) => a.id - b.id);
         this.garages.push(...garages);
       });
   }

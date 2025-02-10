@@ -6,7 +6,7 @@
   (scrolled)="onScroll()"
   *ngIf="!hasChildRoute"
 >
-  @for (diningHall of diningHalls; track diningHall) {
+  @for (diningHall of diningHalls; track diningHall.id) {
   <a
     class="inline-card reset"
     [routerLink]="'/dashboard/dining/' + diningHall.nameQueryParameter"

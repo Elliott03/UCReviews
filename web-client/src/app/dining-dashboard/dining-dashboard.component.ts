@@ -40,6 +40,7 @@ export class DiningDashboardComponent {
         prev: this.prev,
       })
       .subscribe((diningHalls) => {
+        diningHalls.sort((a, b) => a.id - b.id);
         this.diningHalls.push(...diningHalls);
       });
   }

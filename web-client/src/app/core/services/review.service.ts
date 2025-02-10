@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { IReview, SaveReview, SaveReviewResponse } from 'src/app/Models/Review';
 import { PageableQueryParam } from '../types/QueryParams';
 import { buildQueryParams } from '../helpers/buildQueryParams';
+import { IReviewWithUser } from 'src/app/Models/ReviewWithUser';
 
 @Injectable({
   providedIn: 'root',
@@ -15,12 +16,12 @@ export class ReviewService {
     perPage,
     prev,
     dormId,
-  }: PageableQueryParam & { dormId: string }): Observable<IReview[]> {
+  }: PageableQueryParam & { dormId: string }): Observable<IReviewWithUser[]> {
     const queryParams = buildQueryParams<PageableQueryParam>({
       perPage: perPage,
       prev: prev,
     });
-    return this._http.get<IReview[]>(
+    return this._http.get<IReviewWithUser[]>(
       `/api/Review/Dorm/${dormId}?${queryParams}`
     );
   }
@@ -28,12 +29,14 @@ export class ReviewService {
     perPage,
     prev,
     parkingGarageId,
-  }: PageableQueryParam & { parkingGarageId: string }): Observable<IReview[]> {
+  }: PageableQueryParam & { parkingGarageId: string }): Observable<
+    IReviewWithUser[]
+  > {
     const queryParams = buildQueryParams<PageableQueryParam>({
       perPage: perPage,
       prev: prev,
     });
-    return this._http.get<IReview[]>(
+    return this._http.get<IReviewWithUser[]>(
       `/api/Review/ParkingGarage/${parkingGarageId}?${queryParams}`
     );
   }
@@ -41,12 +44,14 @@ export class ReviewService {
     perPage,
     prev,
     diningHallId,
-  }: PageableQueryParam & { diningHallId: string }): Observable<IReview[]> {
+  }: PageableQueryParam & { diningHallId: string }): Observable<
+    IReviewWithUser[]
+  > {
     const queryParams = buildQueryParams<PageableQueryParam>({
       perPage: perPage,
       prev: prev,
     });
-    return this._http.get<IReview[]>(
+    return this._http.get<IReviewWithUser[]>(
       `/api/Review/DiningHall/${diningHallId}?${queryParams}`
     );
   }

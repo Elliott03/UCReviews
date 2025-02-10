@@ -39,6 +39,7 @@ export class DormDashboardComponent implements OnInit {
         prev: this.prev,
       })
       .subscribe((dorms) => {
+        dorms.sort((a, b) => a.id - b.id);
         this.dorms.push(...dorms);
       });
   }

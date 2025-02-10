@@ -35,29 +35,43 @@ public class ReviewRepository : IReviewRepository
         return await query.ToListAsync();
     }
 
-    public async Task<List<Review>> GetReviewsByDormId(int dormId, int prev, int perPage)
+    public async Task<List<ReviewWithUser>> GetReviewsWithUsers(IQueryable<Review> query)
+    {
+        // Get get the user for each review, and combine the reviews with the users
+        var reviewsWithUsers = await query.Include(r => r.User).ToListAsync();
+        var reviewWithUsers = new List<ReviewWithUser>();
+        foreach (var review in reviewsWithUsers)
+        {
+            var user = await _dbContext.User.FindAsync(review.UserId);
+            reviewWithUsers.Add(new ReviewWithUser { review = review, user = new ReviewUser { Id = user.Id, Email = user.Email } });
+        }
+
+        return reviewWithUsers;
+    }
+
+    public async Task<List<ReviewWithUser>> GetReviewsByDormId(int dormId, int prev, int perPage)
     {
         var query = _dbContext.Review.AsQueryable();
         perPage = int.Min(perPage, _paginationSettings.MaxPerPage);
         query = query.Where(r => r.Id > prev && r.DormId == dormId).Take(perPage);
-        return await query.ToListAsync();
+        return await GetReviewsWithUsers(query);
     }
 
 
-    public async Task<List<Review>> GetReviewsByParkingGarageId(int parkingGarageId, int prev, int perPage)
+    public async Task<List<ReviewWithUser>> GetReviewsByParkingGarageId(int parkingGarageId, int prev, int perPage)
     {
         var query = _dbContext.Review.AsQueryable();
         perPage = int.Min(perPage, _paginationSettings.MaxPerPage);
         query = query.Where(r => r.Id > prev && r.ParkingGarageId == parkingGarageId).Take(perPage);
-        return await query.ToListAsync();
+        return await GetReviewsWithUsers(query);
     }
 
-    public async Task<List<Review>> GetReviewsByDiningHallId(int diningHallId, int prev, int perPage)
+    public async Task<List<ReviewWithUser>> GetReviewsByDiningHallId(int diningHallId, int prev, int perPage)
     {
         var query = _dbContext.Review.AsQueryable();
         perPage = int.Min(perPage, _paginationSettings.MaxPerPage);
         query = query.Where(r => r.Id > prev && r.DiningHallId == diningHallId).Take(perPage);
-        return await query.ToListAsync();
+        return await GetReviewsWithUsers(query);
     }
 
 #nullable enable

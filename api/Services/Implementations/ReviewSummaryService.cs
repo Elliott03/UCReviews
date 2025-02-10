@@ -72,7 +72,9 @@ class ReviewSummaryService : IReviewSummaryService
         }
         else
         {
-            await _dbContext.ReviewSummary.ExecuteUpdateAsync(setters =>
+            await _dbContext.ReviewSummary
+                .Where(rs => rs.Id == reviewSummary.Id)
+                .ExecuteUpdateAsync(setters =>
                 setters
                     .SetProperty(rs => rs.SummaryText, summary)
                     .SetProperty(rs => rs.TotalReviews, reviewSummary.TotalReviews + 1)

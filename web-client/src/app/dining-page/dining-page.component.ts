@@ -12,6 +12,7 @@ import { IUser } from '../Models/User';
 import { IReview, SaveReview } from '../Models/Review';
 import { PageableQueryParam } from '../core/types/QueryParams';
 import { ReviewsComponent } from '../shared/reviews/reviews.component';
+import { IReviewWithUser } from '../Models/ReviewWithUser';
 import { BreadcrumbService } from 'xng-breadcrumb';
 
 @Component({
@@ -116,7 +117,13 @@ export class DiningPageComponent implements OnInit, AfterViewInit {
     const addedReview = await firstValueFrom(
       this._reviewService.addReview(newReview)
     );
-    this.reviewsComponent.addReviewToFront(addedReview.review);
+    this.reviewsComponent.addReviewToFront({
+      review: addedReview.review,
+      user: {
+        id: userId,
+        email: this.user?.email || '',
+      },
+    });
     this.diningHallStarsComponent.setRating(addedReview.summary.averageRating);
     this.reviewStarsComponent.setRating(0); // Reset component
     this.reviewText = '';
@@ -128,7 +135,9 @@ export class DiningPageComponent implements OnInit, AfterViewInit {
     this.currentCharacterCount = currentText.length;
   }
 
-  getReviewsLoader(): (params: PageableQueryParam) => Promise<IReview[]> {
+  getReviewsLoader(): (
+    params: PageableQueryParam
+  ) => Promise<IReviewWithUser[]> {
     return async ({ prev, perPage }: PageableQueryParam) => {
       if (!this.diningHall) return [];
       const reviews = await firstValueFrom(
