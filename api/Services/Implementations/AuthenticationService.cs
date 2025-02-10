@@ -32,7 +32,6 @@ public class AuthenticationService : IAuthenticationService
         {
             unHashedPassword += random.Next(10).ToString();
         }
-        _mailService.SendMail(email, unHashedPassword);
         // Hash and salt the password
         byte[] salt = RandomNumberGenerator.GetBytes(128 / 8);
         string hashedPassword = Convert.ToBase64String(KeyDerivation.Pbkdf2(
@@ -43,6 +42,7 @@ public class AuthenticationService : IAuthenticationService
             numBytesRequested: 256 / 8
         ));
         await _userService.AddUser(email, hashedPassword, salt);
+        _mailService.SendMail(email, unHashedPassword);
     }
     public async Task<User> GetAuthenticatedUser(string email, string password)
     {

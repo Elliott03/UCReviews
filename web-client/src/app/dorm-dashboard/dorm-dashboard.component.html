@@ -4,6 +4,7 @@
   [infiniteScrollDistance]="2"
   [infiniteScrollThrottle]="50"
   (scrolled)="onScroll()"
+  *ngIf="!hasChildRoute"
 >
   @for (dorm of dorms; track dorm) {
   <a
@@ -47,3 +48,5 @@
   </a>
   }
 </div>
+
+<router-outlet></router-outlet>

@@ -12,6 +12,7 @@ import { IReview, SaveReview } from '../Models/Review';
 import { PageableQueryParam } from '../core/types/QueryParams';
 import { ReviewsComponent } from '../shared/reviews/reviews.component';
 import { IParkingGarage } from '../Models/ParkingGarage';
+import { BreadcrumbService } from 'xng-breadcrumb';
 
 @Component({
   selector: 'garage-page',
@@ -20,7 +21,6 @@ import { IParkingGarage } from '../Models/ParkingGarage';
 })
 export class GaragePageComponent implements OnInit, AfterViewInit {
   garage?: IParkingGarage;
-  // JSON: any;
   user: IUser | undefined;
   username: string | undefined;
   reviewText: string = '';
@@ -37,12 +37,11 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
   reviewStarsComponent: NgxStarsComponent = new NgxStarsComponent();
 
   @ViewChild('reviewsComponent')
-  reviewsComponent: ReviewsComponent = new ReviewsComponent(
-    this._reviewService
-  );
+  reviewsComponent!: ReviewsComponent;
 
   constructor(
-    private route: ActivatedRoute,
+    private _bcService: BreadcrumbService,
+    private _route: ActivatedRoute,
     private _garageService: GarageService,
     private _reviewService: ReviewService,
     private _authService: AuthService,
@@ -54,7 +53,7 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
       this._router.navigate(['/signup']);
       return;
     }
-    const slug = this.route.snapshot.params['slug'];
+    const slug = this._route.snapshot.params['slug'];
     // this.JSON = JSON;
     this.garage = await firstValueFrom(
       this._garageService.getParkingGarage(slug)
@@ -65,6 +64,9 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
       return;
     }
 
+    console.log('garage', this.garage);
+
+    this._bcService.set('dashboard/garages/:slug', this.garage.name);
     const stringUser = localStorage.getItem('user');
 
     if (stringUser) {
@@ -83,8 +85,8 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
       this.setGarageRating();
     } else {
       // If garage is not yet loaded, listen for it
-      this.route.params.subscribe(async (params) => {
-        const slug = params['slug'];
+      this._route.params.subscribe(async (params) => {
+        const slug = params['name'];
         this.garage = await firstValueFrom(
           this._garageService.getParkingGarage(slug)
         );

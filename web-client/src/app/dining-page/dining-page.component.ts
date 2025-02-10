@@ -12,6 +12,7 @@ import { IUser } from '../Models/User';
 import { IReview, SaveReview } from '../Models/Review';
 import { PageableQueryParam } from '../core/types/QueryParams';
 import { ReviewsComponent } from '../shared/reviews/reviews.component';
+import { BreadcrumbService } from 'xng-breadcrumb';
 
 @Component({
   selector: 'dining-page',
@@ -38,12 +39,11 @@ export class DiningPageComponent implements OnInit, AfterViewInit {
   reviewStarsComponent: NgxStarsComponent = new NgxStarsComponent();
 
   @ViewChild('reviewsComponent')
-  reviewsComponent: ReviewsComponent = new ReviewsComponent(
-    this._reviewService
-  );
+  reviewsComponent!: ReviewsComponent;
 
   constructor(
-    private route: ActivatedRoute,
+    private _bcService: BreadcrumbService,
+    private _route: ActivatedRoute,
     private _diningService: DiningService,
     private _reviewService: ReviewService,
     private _authService: AuthService,
@@ -55,7 +55,7 @@ export class DiningPageComponent implements OnInit, AfterViewInit {
       this._router.navigate(['/signup']);
       return;
     }
-    const nameQueryParameter = this.route.snapshot.params['nameQueryParameter'];
+    const nameQueryParameter = this._route.snapshot.params['slug'];
     this.JSON = JSON;
     this.diningHall = await firstValueFrom(
       this._diningService.getDiningHall(nameQueryParameter)
@@ -65,6 +65,8 @@ export class DiningPageComponent implements OnInit, AfterViewInit {
       this._router.navigate(['/dashboard', 'dining']);
       return;
     }
+
+    this._bcService.set('dashboard/dining/:slug', this.diningHall.name);
 
     const stringUser = localStorage.getItem('user');
 
@@ -84,7 +86,7 @@ export class DiningPageComponent implements OnInit, AfterViewInit {
       this.setDiningHallRating();
     } else {
       // If diningHall is not yet loaded, listen for it
-      this.route.params.subscribe(async (params) => {
+      this._route.params.subscribe(async (params) => {
         const nameQueryParameter = params['nameQueryParameter'];
         this.diningHall = await firstValueFrom(
           this._diningService.getDiningHall(nameQueryParameter)

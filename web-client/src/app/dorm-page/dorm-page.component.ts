@@ -12,6 +12,7 @@ import { convertDateToReadable as _convertDateToReadable } from '../core/helpers
 import { PageableQueryParam } from '../core/types/QueryParams';
 import { firstValueFrom } from 'rxjs';
 import { ReviewsComponent } from '../shared/reviews/reviews.component';
+import { BreadcrumbService } from 'xng-breadcrumb';
 
 @Component({
   selector: 'dorm-page',
@@ -36,12 +37,11 @@ export class DormPageComponent implements OnInit {
   reviewStarsComponent: NgxStarsComponent = new NgxStarsComponent();
 
   @ViewChild('reviewsComponent')
-  reviewsComponent: ReviewsComponent = new ReviewsComponent(
-    this._reviewService
-  );
+  reviewsComponent!: ReviewsComponent;
 
   constructor(
-    private route: ActivatedRoute,
+    private _bcService: BreadcrumbService,
+    private _route: ActivatedRoute,
     private _dormService: DormService,
     private _reviewService: ReviewService,
     private _authService: AuthService,
@@ -50,9 +50,11 @@ export class DormPageComponent implements OnInit {
 
   ngOnInit(): void {
     if (this._authService.isLoggedIn()) {
-      const queryParam = this.route.snapshot.params['dorm'];
+      const queryParam = this._route.snapshot.params['slug'];
       this._dormService.getDorm(queryParam).subscribe((dorm) => {
         this.dorm = dorm;
+        this._bcService.set('dashboard/housing/:slug', dorm.name);
+
         dorm.reviewSummary?.averageRating &&
           this.dormStarsComponent.setRating(dorm.reviewSummary.averageRating);
       });
