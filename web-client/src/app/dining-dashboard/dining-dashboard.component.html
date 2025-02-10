@@ -4,6 +4,7 @@
   [infiniteScrollDistance]="2"
   [infiniteScrollThrottle]="50"
   (scrolled)="onScroll()"
+  *ngIf="!hasChildRoute"
 >
   @for (diningHall of diningHalls; track diningHall.id) {
   <a
@@ -44,3 +45,5 @@
   </a>
   }
 </div>
+
+<router-outlet></router-outlet>

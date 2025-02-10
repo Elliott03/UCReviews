@@ -13,6 +13,7 @@ import { PageableQueryParam } from '../core/types/QueryParams';
 import { firstValueFrom } from 'rxjs';
 import { ReviewsComponent } from '../shared/reviews/reviews.component';
 import { IReviewWithUser } from '../Models/ReviewWithUser';
+import { BreadcrumbService } from 'xng-breadcrumb';
 
 @Component({
   selector: 'dorm-page',
@@ -37,12 +38,11 @@ export class DormPageComponent implements OnInit {
   reviewStarsComponent: NgxStarsComponent = new NgxStarsComponent();
 
   @ViewChild('reviewsComponent')
-  reviewsComponent: ReviewsComponent = new ReviewsComponent(
-    this._reviewService
-  );
+  reviewsComponent!: ReviewsComponent;
 
   constructor(
-    private route: ActivatedRoute,
+    private _bcService: BreadcrumbService,
+    private _route: ActivatedRoute,
     private _dormService: DormService,
     private _reviewService: ReviewService,
     private _authService: AuthService,
@@ -51,8 +51,9 @@ export class DormPageComponent implements OnInit {
 
   async ngOnInit() {
     if (this._authService.isLoggedIn()) {
-      const queryParam = this.route.snapshot.params['dorm'];
+      const queryParam = this.route.snapshot.params['slug'];
       this.dorm = await firstValueFrom(this._dormService.getDorm(queryParam));
+      this._bcService.set('dashboard/housing/:slug', dorm.name);
       const stringUser = localStorage.getItem('user');
       if (stringUser) {
         this.user = JSON.parse(stringUser);

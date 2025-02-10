@@ -4,6 +4,7 @@
   [infiniteScrollDistance]="2"
   [infiniteScrollThrottle]="50"
   (scrolled)="onScroll()"
+  *ngIf="!hasChildRoute"
 >
   @for (garage of garages; track garage.id) {
   <a
@@ -41,3 +42,5 @@
   </a>
   }
 </div>
+
+<router-outlet></router-outlet>

@@ -18,9 +18,9 @@ public class MailService : IMailService
         int numberOfCharactersForEmailEnding = 12;
         string username = email.Substring(0, email.Length - numberOfCharactersForEmailEnding);
         var message = new MimeMessage();
-        message.From.Add(new MailboxAddress(name: "UC Reviews", address: "uchousingreviews@gmail.com"));
+        message.From.Add(new MailboxAddress(name: "UCReviews", address: "uchousingreviews@gmail.com"));
         message.To.Add(new MailboxAddress(name: username, address: email));
-        message.Subject = "Temporary Password for UC Reviews";
+        message.Subject = "Temporary Password for UCReviews";
         message.Body = new TextPart("plain")
         {
             Text = $"Your temporary UCReviews password is: {password}"
