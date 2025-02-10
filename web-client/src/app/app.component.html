@@ -1,5 +1,10 @@
 <div class="app">
   <navbar></navbar>
+  <xng-breadcrumb [separator]="iconTemplate"></xng-breadcrumb>
+
+  <ng-template #iconTemplate>
+    <mat-icon>arrow_right</mat-icon>
+  </ng-template>
   <router-outlet></router-outlet>
   <foot></foot>
 </div>

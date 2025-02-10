@@ -12,6 +12,8 @@ import { convertDateToReadable as _convertDateToReadable } from '../core/helpers
 import { PageableQueryParam } from '../core/types/QueryParams';
 import { firstValueFrom } from 'rxjs';
 import { ReviewsComponent } from '../shared/reviews/reviews.component';
+import { IReviewWithUser } from '../Models/ReviewWithUser';
+import { BreadcrumbService } from 'xng-breadcrumb';
 
 @Component({
   selector: 'dorm-page',
@@ -36,26 +38,22 @@ export class DormPageComponent implements OnInit {
   reviewStarsComponent: NgxStarsComponent = new NgxStarsComponent();
 
   @ViewChild('reviewsComponent')
-  reviewsComponent: ReviewsComponent = new ReviewsComponent(
-    this._reviewService
-  );
+  reviewsComponent!: ReviewsComponent;
 
   constructor(
-    private route: ActivatedRoute,
+    private _bcService: BreadcrumbService,
+    private _route: ActivatedRoute,
     private _dormService: DormService,
     private _reviewService: ReviewService,
     private _authService: AuthService,
     private _router: Router
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit() {
     if (this._authService.isLoggedIn()) {
-      const queryParam = this.route.snapshot.params['dorm'];
-      this._dormService.getDorm(queryParam).subscribe((dorm) => {
-        this.dorm = dorm;
-        dorm.reviewSummary?.averageRating &&
-          this.dormStarsComponent.setRating(dorm.reviewSummary.averageRating);
-      });
+      const queryParam = this._route.snapshot.params['slug'];
+      this.dorm = await firstValueFrom(this._dormService.getDorm(queryParam));
+      this._bcService.set('dashboard/housing/:slug', this.dorm.name);
       const stringUser = localStorage.getItem('user');
       if (stringUser) {
         this.user = JSON.parse(stringUser);
@@ -69,10 +67,36 @@ export class DormPageComponent implements OnInit {
       this._router.navigate(['/signup']);
     }
   }
+
+  ngAfterViewInit() {
+    // Wait for the dorm data to be loaded
+    if (this.dorm) {
+      this.setDormRating();
+    } else {
+      // If dorm is not yet loaded, listen for it
+      this._route.params.subscribe(async (params) => {
+        const nameQueryParameter = params['dorm'];
+        this.dorm = await firstValueFrom(
+          this._dormService.getDorm(nameQueryParameter)
+        );
+        this.setDormRating();
+      });
+    }
+  }
+
   updateCharacterCount(event: any) {
     const currentText: string = event.target.value;
     this.currentCharacterCount = currentText.length;
   }
+
+  setDormRating() {
+    if (this.dormStarsComponent && this.dorm) {
+      this.dormStarsComponent.setRating(
+        this.dorm.reviewSummary?.averageRating || 0
+      );
+    }
+  }
+
   async sendReview() {
     const userId = this._authService.getUserId();
     if (!this.reviewText || userId === -1 || !this.dorm) return;
@@ -85,14 +109,22 @@ export class DormPageComponent implements OnInit {
     const addedReview = await firstValueFrom(
       this._reviewService.addReview(newReview)
     );
-    this.reviewsComponent.addReviewToFront(addedReview.review);
+    this.reviewsComponent.addReviewToFront({
+      review: addedReview.review,
+      user: {
+        id: userId,
+        email: this.user?.email || '',
+      },
+    });
     this.dormStarsComponent.setRating(addedReview.summary.averageRating);
     this.reviewStarsComponent.setRating(0); // Reset component
     this.reviewText = '';
     this.currentCharacterCount = 0;
   }
 
-  getReviewsLoader(): (params: PageableQueryParam) => Promise<IReview[]> {
+  getReviewsLoader(): (
+    params: PageableQueryParam
+  ) => Promise<IReviewWithUser[]> {
     return async ({ prev, perPage }: PageableQueryParam) => {
       if (!this.dorm) return [];
       const reviews = await firstValueFrom(

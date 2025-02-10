@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AuthService } from '../core/services/auth.service';
 import { Category } from '../Models/category.model';
 
@@ -9,6 +9,8 @@ import { Category } from '../Models/category.model';
   styleUrls: ['./overall-dashboard.component.scss'],
 })
 export class OverallDashboardComponent implements OnInit {
+  hasChildRoute = false;
+
   categories: Category[] = [
     {
       name: 'Residence Halls',
@@ -40,7 +42,17 @@ export class OverallDashboardComponent implements OnInit {
     }
   ];
 
-  constructor(private _router: Router, public _authService: AuthService) {}
+  constructor(
+    private _router: Router,
+    public _authService: AuthService,
+    private route: ActivatedRoute
+  ) {
+    this._router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.hasChildRoute = this.route.children.length > 0;
+      }
+    });
+  }
 
   ngOnInit(): void {
     if (!this._authService.isLoggedIn()) {

@@ -4,8 +4,9 @@
   [infiniteScrollDistance]="2"
   [infiniteScrollThrottle]="50"
   (scrolled)="onScroll()"
+  *ngIf="!hasChildRoute"
 >
-  @for (garage of garages; track garage) {
+  @for (garage of garages; track garage.id) {
   <a
     class="inline-card reset"
     [routerLink]="'/dashboard/garages/' + garage.slug"
@@ -41,3 +42,5 @@
   </a>
   }
 </div>
+
+<router-outlet></router-outlet>

@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { IDiningHall } from '../Models/DiningHall';
 import { DiningService } from '../core/services/dining.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AuthService } from '../core/services/auth.service';
+import { BreadcrumbService } from 'xng-breadcrumb';
 
 @Component({
   selector: 'dining-dashboard',
@@ -10,13 +11,15 @@ import { AuthService } from '../core/services/auth.service';
   styleUrl: './dining-dashboard.component.scss',
 })
 export class DiningDashboardComponent {
+  hasChildRoute = false;
   diningHalls: IDiningHall[] = [];
   prev = 0;
   perPage = 6;
   constructor(
     private _diningService: DiningService,
     private _router: Router,
-    public _authService: AuthService
+    private _authService: AuthService,
+    private _route: ActivatedRoute
   ) {}
   ngOnInit(): void {
     if (this._authService.isLoggedIn()) {
@@ -24,6 +27,11 @@ export class DiningDashboardComponent {
     } else {
       this._router.navigate(['/signup']);
     }
+    this._router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.hasChildRoute = this._route.children.length > 0;
+      }
+    });
   }
   loadDiningHalls() {
     this._diningService
@@ -32,6 +40,7 @@ export class DiningDashboardComponent {
         prev: this.prev,
       })
       .subscribe((diningHalls) => {
+        diningHalls.sort((a, b) => a.id - b.id);
         this.diningHalls.push(...diningHalls);
       });
   }

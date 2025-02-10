@@ -40,6 +40,7 @@ import { DormStyleIconComponent } from './shared/dorm-style-icon/dorm-style-icon
 import { DiningCategoryIconComponent } from './shared/dining-category-icon/dining-category-icon.component';
 import { MealPlanIconComponent } from './shared/meal-plan-icon/meal-plan-icon.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { BreadcrumbComponent, BreadcrumbItemDirective } from 'xng-breadcrumb';
 
 @NgModule({
   declarations: [
@@ -52,9 +53,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     DormPageComponent,
     GarageDashboardComponent,
     GaragePageComponent,
-    OverallDashboardComponent,
     DiningDashboardComponent,
     DiningPageComponent,
+    OverallDashboardComponent,
     CourseDashboardComponent,
   ],
   bootstrap: [AppComponent],
@@ -82,52 +83,77 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     RouterOutlet,
     MatCheckboxModule,
     TextFieldModule,
-    RouterModule.forRoot([
-      { path: 'signup', component: SignupPageComponent },
-      { path: 'login', component: LoginPageComponent },
-      {
-        path: 'dashboard',
-        component: OverallDashboardComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'dashboard/housing',
-        component: DormDashboardComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'dashboard/housing/:dorm',
-        component: DormPageComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'dashboard/garages',
-        component: GarageDashboardComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'dashboard/garages/:slug',
-        component: GaragePageComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'dashboard/dining',
-        component: DiningDashboardComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'dashboard/dining/:nameQueryParameter',
-        component: DiningPageComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'dashboard/courses',
-        component: CourseDashboardComponent,
-        canActivate: [AuthGuard],
-      },
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: '**', redirectTo: 'dashboard', pathMatch: 'full' },
-    ]),
+    BreadcrumbComponent,
+    BreadcrumbItemDirective,
+    RouterModule.forRoot(
+      [
+        { path: 'signup', component: SignupPageComponent },
+        { path: 'login', component: LoginPageComponent },
+        {
+          path: 'dashboard',
+          component: OverallDashboardComponent,
+          canActivate: [AuthGuard],
+          data: { breadcrumb: 'Dashboard' },
+          children: [
+            {
+              path: 'housing',
+              component: DormDashboardComponent,
+              canActivate: [AuthGuard],
+              data: { breadcrumb: 'Housing' },
+              children: [
+                {
+                  path: ':slug',
+                  component: DormPageComponent,
+                  canActivate: [AuthGuard],
+                },
+              ],
+            },
+            {
+              path: 'garages',
+              component: GarageDashboardComponent,
+              canActivate: [AuthGuard],
+              data: { breadcrumb: 'Garages' },
+              children: [
+                {
+                  path: ':slug',
+                  component: GaragePageComponent,
+                  canActivate: [AuthGuard],
+                },
+              ],
+            },
+            {
+              path: 'dining',
+              component: DiningDashboardComponent,
+              canActivate: [AuthGuard],
+              data: { breadcrumb: 'Dining' },
+              children: [
+                {
+                  path: ':slug',
+                  component: DiningPageComponent,
+                  canActivate: [AuthGuard],
+                },
+              ],
+              },
+              {
+                  path: 'courses',
+                  component: CourseDashboardComponent,
+                  canActivate: [AuthGuard],
+                  data: { breadcrumb: 'Courses' },
+                  children: [
+                      {
+                          path: ':slug',
+                          component: CoursePageComponent,
+                          canActivate: [AuthGuard],
+                      }
+                  ]
+              }
+          ],
+        },
+        { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+        { path: '**', redirectTo: 'dashboard', pathMatch: 'full' },
+      ],
+      { onSameUrlNavigation: 'reload' }
+    ),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
