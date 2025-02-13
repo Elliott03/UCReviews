@@ -87,7 +87,7 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
     } else {
       // If garage is not yet loaded, listen for it
       this._route.params.subscribe(async (params) => {
-        const slug = params['name'];
+        const slug = params['slug'];
         this.garage = await firstValueFrom(
           this._garageService.getParkingGarage(slug)
         );

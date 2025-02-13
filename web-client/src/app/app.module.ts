@@ -100,7 +100,7 @@ import { BreadcrumbComponent, BreadcrumbItemDirective } from 'xng-breadcrumb';
               data: { breadcrumb: 'Housing' },
               children: [
                 {
-                  path: ':slug',
+                  path: ':name',
                   component: DormPageComponent,
                   canActivate: [AuthGuard],
                 },
@@ -126,7 +126,7 @@ import { BreadcrumbComponent, BreadcrumbItemDirective } from 'xng-breadcrumb';
               data: { breadcrumb: 'Dining' },
               children: [
                 {
-                  path: ':slug',
+                  path: ':name',
                   component: DiningPageComponent,
                   canActivate: [AuthGuard],
                 },
