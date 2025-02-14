@@ -56,7 +56,7 @@ export class DiningPageComponent implements OnInit, AfterViewInit {
       this._router.navigate(['/signup']);
       return;
     }
-    const nameQueryParameter = this._route.snapshot.params['slug'];
+    const nameQueryParameter = this._route.snapshot.params['name'];
     this.JSON = JSON;
     this.diningHall = await firstValueFrom(
       this._diningService.getDiningHall(nameQueryParameter)
@@ -88,7 +88,7 @@ export class DiningPageComponent implements OnInit, AfterViewInit {
     } else {
       // If diningHall is not yet loaded, listen for it
       this._route.params.subscribe(async (params) => {
-        const nameQueryParameter = params['nameQueryParameter'];
+        const nameQueryParameter = params['name'];
         this.diningHall = await firstValueFrom(
           this._diningService.getDiningHall(nameQueryParameter)
         );
