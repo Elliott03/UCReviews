@@ -8,7 +8,7 @@ import { BreadcrumbService } from 'xng-breadcrumb';
 @Component({
   selector: 'dining-dashboard',
   templateUrl: './dining-dashboard.component.html',
-  styleUrl: './dining-dashboard.component.scss',
+  styleUrls: ['./dining-dashboard.component.scss'],
 })
 export class DiningDashboardComponent {
   hasChildRoute = false;
@@ -49,6 +49,7 @@ export class DiningDashboardComponent {
       .getDiningHalls({
         perPage: this.perPage,
         prev: this.prev,
+        searchTerm: this.searchTerm, // Include the search term in the request
       })
       .subscribe((diningHalls) => {
         diningHalls.sort((a, b) => a.id - b.id);
@@ -72,5 +73,16 @@ export class DiningDashboardComponent {
     return this.diningHalls.filter(diningHall =>
       diningHall.name.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
+  }
+
+  onSearchChange() {
+    // Reset the pagination and search results when the search term changes
+    this.diningHalls = [];
+    this.prev = 0;
+    this.loadDiningHalls();
+  }
+
+  trackById(index: number, item: IDiningHall) {
+    return item.id; // Efficient tracking of items by their unique ID
   }
 }
