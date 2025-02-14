@@ -20,9 +20,14 @@
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
+  margin-top: 30px; // Padding from the header menu
 
   mat-form-field {
-    width: 50%;
+    width: 70%;
     min-width: 300px;
+    background-color: white; // White background only for the search bar
+    padding: 17px;
+    // margin-bottom: 0; // Remove extra margin at the bottom
+    padding-bottom: 0px; // Reduce bottom padding
   }
 }
