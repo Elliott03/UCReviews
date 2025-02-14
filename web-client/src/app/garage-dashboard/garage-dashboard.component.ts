@@ -8,7 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'garage-dashboard',
   templateUrl: './garage-dashboard.component.html',
-  styleUrl: './garage-dashboard.component.scss',
+  styleUrls: ['./garage-dashboard.component.scss'],
 })
 export class GarageDashboardComponent {
   hasChildRoute = false;
@@ -31,9 +31,15 @@ export class GarageDashboardComponent {
       this._router.navigate(['/signup']);
     }
 
+    // Subscribe to router events to reset or clear the search term on navigation
     this._router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.hasChildRoute = this._route.children.length > 0;
+        
+        // Only clear search term if navigating to a specific card or page
+        if (this._router.url.includes('/dashboard/garages/')) {
+          this.searchTerm = '';  // Clear the search term
+        }
       }
     });
   }
@@ -62,7 +68,6 @@ export class GarageDashboardComponent {
     this.loadGarages();
   }
 
-  // New method to filter garages based on search input
   filteredGarages(): IParkingGarage[] {
     return this.garages.filter(garage =>
       garage.name.toLowerCase().includes(this.searchTerm.toLowerCase())
