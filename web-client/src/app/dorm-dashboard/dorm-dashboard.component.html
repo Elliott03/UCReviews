@@ -1,3 +1,11 @@
+<div class="search-bar" *ngIf="!hasChildRoute">
+  <mat-form-field appearance="outline">
+    <mat-label>Search Residence Halls</mat-label>
+    <input matInput [(ngModel)]="searchTerm" placeholder="Enter dorm name">
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+</div>
+
 <div
   class="dashboard dorm"
   infiniteScroll
@@ -6,7 +14,7 @@
   (scrolled)="onScroll()"
   *ngIf="!hasChildRoute"
 >
-  @for (dorm of dorms; track dorm.id) {
+  @for (dorm of filteredDorms(); track dorm.id) {
   <a
     class="inline-card reset"
     [routerLink]="'/dashboard/housing/' + dorm.nameQueryParameter"

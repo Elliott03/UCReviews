@@ -1,7 +1,32 @@
-@use "main.scss";
+@use "main";
+@use "resets/link";
 @use "dashboard.scss";
-@use "resets/link.scss";
+@use "util" as *;
 
 .cost-icon {
   margin-right: -0.75rem;
+}
+
+.hero-image {
+  max-width: 100%;
+  aspect-ratio: 16/9;
+}
+
+.card {
+  height: 100%;
+  background-color: get-color($shades-of-blue-grey, 8);
+  &:hover {
+    background-color: get-color($shades-of-blue-grey, 7);
+  }
+}
+
+.search-bar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+
+  mat-form-field {
+    width: 50%;
+    min-width: 300px;
+  }
 }
