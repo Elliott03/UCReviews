@@ -49,6 +49,7 @@ export class GarageDashboardComponent {
       .getParkingGarages({
         perPage: this.perPage,
         prev: this.prev,
+        searchTerm: this.searchTerm, // Include search term here
       })
       .subscribe((garages) => {
         garages.sort((a, b) => a.id - b.id);
@@ -72,5 +73,16 @@ export class GarageDashboardComponent {
     return this.garages.filter(garage =>
       garage.name.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
+  }
+
+  onSearchChange() {
+    // Reset the pagination and garage list when the search term changes
+    this.garages = [];
+    this.prev = 0;
+    this.loadGarages();
+  }
+
+  trackById(index: number, item: IParkingGarage) {
+    return item.id; // Efficient tracking of items by their unique ID
   }
 }

@@ -1,7 +1,7 @@
 <div class="search-bar" *ngIf="!hasChildRoute">
   <mat-form-field appearance="outline">
     <mat-label>Search Parking Garages</mat-label>
-    <input matInput [(ngModel)]="searchTerm" placeholder="Enter garage name">
+    <input matInput [(ngModel)]="searchTerm" placeholder="Enter garage name" (input)="onSearchChange()">
     <mat-icon matSuffix>search</mat-icon>
   </mat-form-field>
 </div>
@@ -14,41 +14,39 @@
   (scrolled)="onScroll()"
   *ngIf="!hasChildRoute"
 >
-  @for (garage of filteredGarages(); track garage.id) {
-  <a
-    class="inline-card reset"
-    [routerLink]="'/dashboard/garages/' + garage.slug"
-  >
-    <mat-card class="card">
-      <div class="img-wrapper">
-        <img
-          src="api/Images/Garages/{{ garage.slug }}.jpg"
-          class="hero-image"
-          alt="Image of {{ garage.name }}"
-        />
-      </div>
-      <mat-card-content>
-        <div class="info">
-          <h2 class="name">{{ garage.name }}</h2>
-          <ngx-stars
-            [size]="2"
-            [readonly]="true"
-            [initialStars]="garage.reviewSummary?.averageRating || 0"
-            [matTooltip]="getGarageRatingTitle(garage)"
-          ></ngx-stars>
-          <ul class="attributes">
-            @if (garage.permitRequired) {
-            <li class="attribute">
-              <mat-icon matTooltip="Requires Permit">card_membership</mat-icon>
-            </li>
-            }
-          </ul>
-          <button mat-flat-button>Review</button>
+  <ng-container *ngFor="let garage of filteredGarages(); trackBy: trackById">
+    <a
+      class="inline-card reset"
+      [routerLink]="'/dashboard/garages/' + garage.slug"
+    >
+      <mat-card class="card">
+        <div class="img-wrapper">
+          <img
+            src="api/Images/Garages/{{ garage.slug }}.jpg"
+            class="hero-image"
+            alt="Image of {{ garage.name }}"
+          />
         </div>
-      </mat-card-content>
-    </mat-card>
-  </a>
-  }
+        <mat-card-content>
+          <div class="info">
+            <h2 class="name">{{ garage.name }}</h2>
+            <ngx-stars
+              [size]="2"
+              [readonly]="true"
+              [initialStars]="garage.reviewSummary?.averageRating || 0"
+              [matTooltip]="getGarageRatingTitle(garage)"
+            ></ngx-stars>
+            <ul class="attributes">
+              <li class="attribute" *ngIf="garage.permitRequired">
+                <mat-icon matTooltip="Requires Permit">card_membership</mat-icon>
+              </li>
+            </ul>
+            <button mat-flat-button>Review</button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </a>
+  </ng-container>
 </div>
 
 <router-outlet></router-outlet>

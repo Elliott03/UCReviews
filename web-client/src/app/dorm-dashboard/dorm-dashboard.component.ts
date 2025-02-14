@@ -47,6 +47,7 @@ export class DormDashboardComponent implements OnInit {
       .getDorms({
         perPage: this.perPage,
         prev: this.prev,
+        searchTerm: this.searchTerm, // Pass the search term to the service
       })
       .subscribe((dorms) => {
         dorms.sort((a, b) => a.id - b.id);
@@ -66,9 +67,20 @@ export class DormDashboardComponent implements OnInit {
     this.loadDorms();
   }
 
+  onSearchChange() {
+    // Reset the pagination and dorm list when the search term changes
+    this.dorms = [];
+    this.prev = 0;
+    this.loadDorms();
+  }
+
   filteredDorms(): ISmallDorm[] {
     return this.dorms.filter(dorm =>
       dorm.name.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
+  }
+
+  trackById(index: number, item: ISmallDorm) {
+    return item.id; // Efficient tracking of items by their unique ID
   }
 }
