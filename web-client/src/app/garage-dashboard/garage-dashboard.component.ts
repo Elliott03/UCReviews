@@ -13,26 +13,31 @@ import { ActivatedRoute } from '@angular/router';
 export class GarageDashboardComponent {
   hasChildRoute = false;
   garages: IParkingGarage[] = [];
+  searchTerm: string = ''; // New property for search
   prev = 0;
   perPage = 6;
+
   constructor(
     private _garageService: GarageService,
     private _router: Router,
     public _authService: AuthService,
     private _route: ActivatedRoute
   ) {}
+
   ngOnInit(): void {
     if (this._authService.isLoggedIn()) {
       this.loadGarages();
     } else {
       this._router.navigate(['/signup']);
     }
+
     this._router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.hasChildRoute = this._route.children.length > 0;
       }
     });
   }
+
   loadGarages() {
     this._garageService
       .getParkingGarages({
@@ -44,14 +49,23 @@ export class GarageDashboardComponent {
         this.garages.push(...garages);
       });
   }
+
   getGarageRatingTitle(garage: IParkingGarage) {
     if (!garage.reviewSummary?.averageRating) {
       return 'Not yet rated';
     }
     return `${garage.reviewSummary.averageRating} stars`;
   }
+
   onScroll(): void {
     this.prev += this.perPage;
     this.loadGarages();
+  }
+
+  // New method to filter garages based on search input
+  filteredGarages(): IParkingGarage[] {
+    return this.garages.filter(garage =>
+      garage.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
   }
 }

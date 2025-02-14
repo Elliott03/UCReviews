@@ -1,3 +1,14 @@
 @use "main.scss";
 @use "dashboard.scss";
 @use "resets/link.scss";
+
+.search-bar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+
+  mat-form-field {
+    width: 50%;
+    min-width: 300px;
+  }
+}

@@ -1,3 +1,11 @@
+<div class="search-bar">
+  <mat-form-field appearance="outline">
+    <mat-label>Search Parking Garages</mat-label>
+    <input matInput [(ngModel)]="searchTerm" placeholder="Enter garage name">
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+</div>
+
 <div
   class="dashboard garage"
   infiniteScroll
@@ -6,7 +14,7 @@
   (scrolled)="onScroll()"
   *ngIf="!hasChildRoute"
 >
-  @for (garage of garages; track garage.id) {
+  @for (garage of filteredGarages(); track garage.id) {
   <a
     class="inline-card reset"
     [routerLink]="'/dashboard/garages/' + garage.slug"
