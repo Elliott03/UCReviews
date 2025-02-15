@@ -36,7 +36,7 @@ export class GarageDashboardComponent {
         this.hasChildRoute = this._route.children.length > 0;
         
         if (this._router.url.includes('/dashboard/garages/')) {
-          this.searchTerm = ''; 
+          this.searchTerm = '';  // Reset search term when navigating to a specific garage page
         }
       }
     });
@@ -47,12 +47,19 @@ export class GarageDashboardComponent {
       .getParkingGarages({
         perPage: this.perPage,
         prev: this.prev,
-        searchTerm: this.searchTerm,
+        searchTerm: this.searchTerm,  // Pass search term here
       })
       .subscribe((garages) => {
         garages.sort((a, b) => a.id - b.id);
         this.garages.push(...garages);
       });
+  }
+
+  onSearchChange(searchTerm: string) {
+    this.searchTerm = searchTerm;  // Update the search term
+    this.garages = [];  // Reset the list of garages
+    this.prev = 0;  // Reset pagination
+    this.loadGarages();  // Reload the garages with the new search term
   }
 
   getGarageRatingTitle(garage: IParkingGarage) {
@@ -73,13 +80,7 @@ export class GarageDashboardComponent {
     );
   }
 
-  onSearchChange() {
-    this.garages = [];
-    this.prev = 0;
-    this.loadGarages();
-  }
-
   trackById(index: number, item: IParkingGarage) {
-    return item.id; 
+    return item.id;
   }
 }

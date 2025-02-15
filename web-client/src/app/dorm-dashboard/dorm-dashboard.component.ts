@@ -35,7 +35,7 @@ export class DormDashboardComponent implements OnInit {
         this.hasChildRoute = this._route.children.length > 0;
 
         if (this._router.url.includes('/dashboard/housing/')) {
-          this.searchTerm = ''; 
+          this.searchTerm = '';  // Clear search term when navigating to a specific dorm page
         }
       }
     });
@@ -46,12 +46,19 @@ export class DormDashboardComponent implements OnInit {
       .getDorms({
         perPage: this.perPage,
         prev: this.prev,
-        searchTerm: this.searchTerm,
+        searchTerm: this.searchTerm,  // Pass searchTerm to service
       })
       .subscribe((dorms) => {
         dorms.sort((a, b) => a.id - b.id);
         this.dorms.push(...dorms);
       });
+  }
+
+  onSearchChange(searchTerm: string) {
+    this.searchTerm = searchTerm; // Update search term
+    this.dorms = [];  // Reset the list of dorms
+    this.prev = 0;  // Reset pagination
+    this.loadDorms();  // Load new dorms based on the updated search term
   }
 
   getDormRatingTitle(dorm: ISmallDorm) {
@@ -66,12 +73,6 @@ export class DormDashboardComponent implements OnInit {
     this.loadDorms();
   }
 
-  onSearchChange() {
-    this.dorms = [];
-    this.prev = 0;
-    this.loadDorms();
-  }
-
   filteredDorms(): ISmallDorm[] {
     return this.dorms.filter(dorm =>
       dorm.name.toLowerCase().includes(this.searchTerm.toLowerCase())
@@ -79,6 +80,6 @@ export class DormDashboardComponent implements OnInit {
   }
 
   trackById(index: number, item: ISmallDorm) {
-    return item.id; 
+    return item.id;
   }
 }

@@ -21,19 +21,18 @@ public class ParkingGarageRepository : IParkingGarageRepository
     // Update method to accept searchTerm
     public async Task<IEnumerable<ParkingGarage>> GetParkingGarages(int prev, int perPage, string? searchTerm = null)
     {
-        var query = _dbContext.ParkingGarage.AsQueryable();
+    var query = _dbContext.ParkingGarage.AsQueryable();
 
-        // Apply search filter if searchTerm is provided
-        if (!string.IsNullOrWhiteSpace(searchTerm))
-        {
-            query = query.Where(g => g.Name.Contains(searchTerm)); // Case-insensitive filtering
-        }
+    if (!string.IsNullOrWhiteSpace(searchTerm))
+    {
+        query = query.Where(g => g.Name.Contains(searchTerm));  // Apply search filter
+    }
 
-        perPage = Math.Min(perPage, _paginationSettings.MaxPerPage);  // Ensure perPage does not exceed the max
-        query = query.Where(g => g.Id > prev).Take(perPage);
+    perPage = Math.Min(perPage, _paginationSettings.MaxPerPage);
+    query = query.Where(g => g.Id > prev).Take(perPage);
+    query = query.Include(rs => rs.ReviewSummary);
 
-        query = query.Include(rs => rs.ReviewSummary); // Include related ReviewSummary
-        return await query.ToListAsync();
+    return await query.ToListAsync();
     }
 
     public async Task<ParkingGarage> GetParkingGarage(string slug)

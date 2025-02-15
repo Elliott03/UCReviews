@@ -13,9 +13,9 @@ export class DormService {
 
   getDorms({ perPage, prev, searchTerm }: QueryParams & { searchTerm: string }): Observable<ISmallDorm[]> {
     const queryParams = buildQueryParams<QueryParams>({
-      perPage: perPage,
-      prev: prev,
-      searchTerm: searchTerm,  // Add searchTerm to the query params
+      perPage,
+      prev,
+      searchTerm,  // Ensure searchTerm is passed
     });
     return this._http.get<ISmallDorm[]>(`/api/Dorm?${queryParams}`);
   }

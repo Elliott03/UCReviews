@@ -73,10 +73,11 @@ export class DiningDashboardComponent {
     );
   }
 
-  onSearchChange() {
-    this.diningHalls = [];
-    this.prev = 0;
-    this.loadDiningHalls();
+  onSearchChange(searchTerm: string) {
+    this.searchTerm = searchTerm;
+    this.diningHalls = []; 
+    this.prev = 0; 
+    this.loadDiningHalls(); 
   }
 
   trackById(index: number, item: IDiningHall) {

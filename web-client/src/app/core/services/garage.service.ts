@@ -21,7 +21,7 @@ export class GarageService {
       prev,
       ...(searchTerm ? { searchTerm } : {}),
     });
-
+  
     return this._http.get<IParkingGarage[]>(`/api/ParkingGarage?${queryParams}`);
   }
 

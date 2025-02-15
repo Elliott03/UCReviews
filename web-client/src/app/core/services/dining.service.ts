@@ -13,9 +13,9 @@ export class DiningService {
 
   getDiningHalls({ perPage, prev, searchTerm }: QueryParams & { searchTerm: string }): Observable<IDiningHall[]> {
     const queryParams = buildQueryParams<QueryParams>({
-      perPage: perPage,
-      prev: prev,
-      searchTerm: searchTerm,
+      perPage,
+      prev,
+      searchTerm,
     });
     return this._http.get<IDiningHall[]>(`/api/DiningHall?${queryParams}`);
   }

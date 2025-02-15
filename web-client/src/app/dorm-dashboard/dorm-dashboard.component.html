@@ -1,10 +1,4 @@
-<div class="search-bar" *ngIf="!hasChildRoute">
-  <mat-form-field appearance="outline">
-    <mat-label>Search Residence Halls</mat-label>
-    <input matInput [(ngModel)]="searchTerm" placeholder="Enter dorm name" (input)="onSearchChange()">
-    <mat-icon matSuffix>search</mat-icon>
-  </mat-form-field>
-</div>
+<app-search (searchChanged)="onSearchChange($event)"></app-search>
 
 <div
   class="dashboard dorm"
