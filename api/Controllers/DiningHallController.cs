@@ -20,10 +20,15 @@ public class DiningHallController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<DiningHall>>> GetDiningHalls([FromQuery] int prev = 0, [FromQuery] int? perPage = null)
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<DiningHall>>> GetDiningHalls(
+    [FromQuery] int prev = 0, 
+    [FromQuery] int? perPage = null, 
+    [FromQuery] string? searchTerm = null) 
     {
-        perPage ??= _paginationSettings.DefaultPerPage;
-        return Ok(await _service.GetDiningHalls(prev, (int)perPage));
+    perPage ??= _paginationSettings.DefaultPerPage;
+    var diningHalls = await _service.GetDiningHalls(prev, (int)perPage, searchTerm);
+    return Ok(diningHalls);
     }
     [HttpGet("{slug}")]
     public async Task<ActionResult<DiningHall>> GetDiningHall(string slug)

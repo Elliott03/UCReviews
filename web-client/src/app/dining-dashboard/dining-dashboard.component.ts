@@ -13,7 +13,7 @@ import { BreadcrumbService } from 'xng-breadcrumb';
 export class DiningDashboardComponent {
   hasChildRoute = false;
   diningHalls: IDiningHall[] = [];
-  searchTerm: string = ''; // New property for search
+  searchTerm: string = '';
   prev = 0;
   perPage = 6;
 
@@ -31,14 +31,12 @@ export class DiningDashboardComponent {
       this._router.navigate(['/signup']);
     }
 
-    // Subscribe to router events to reset or clear the search term on navigation
     this._router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.hasChildRoute = this._route.children.length > 0;
 
-        // Only clear search term if navigating to a specific card or page
         if (this._router.url.includes('/dashboard/dining/')) {
-          this.searchTerm = '';  // Clear the search term
+          this.searchTerm = '';
         }
       }
     });
@@ -49,7 +47,7 @@ export class DiningDashboardComponent {
       .getDiningHalls({
         perPage: this.perPage,
         prev: this.prev,
-        searchTerm: this.searchTerm, // Include the search term in the request
+        searchTerm: this.searchTerm,
       })
       .subscribe((diningHalls) => {
         diningHalls.sort((a, b) => a.id - b.id);
@@ -76,13 +74,12 @@ export class DiningDashboardComponent {
   }
 
   onSearchChange() {
-    // Reset the pagination and search results when the search term changes
     this.diningHalls = [];
     this.prev = 0;
     this.loadDiningHalls();
   }
 
   trackById(index: number, item: IDiningHall) {
-    return item.id; // Efficient tracking of items by their unique ID
+    return item.id;
   }
 }
