@@ -15,7 +15,7 @@ export class DormService {
     const queryParams = buildQueryParams<QueryParams>({
       perPage: perPage,
       prev: prev,
-      searchTerm: searchTerm, // Add searchTerm to the query params
+      searchTerm: searchTerm,  // Add searchTerm to the query params
     });
     return this._http.get<ISmallDorm[]>(`/api/Dorm?${queryParams}`);
   }

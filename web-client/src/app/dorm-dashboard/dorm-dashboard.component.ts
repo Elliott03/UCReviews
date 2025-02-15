@@ -12,7 +12,7 @@ import { AuthService } from '../core/services/auth.service';
 export class DormDashboardComponent implements OnInit {
   hasChildRoute = false;
   dorms: ISmallDorm[] = [];
-  searchTerm: string = ''; // New property for search
+  searchTerm: string = '';
   prev = 0;
   perPage = 6;
 
@@ -34,9 +34,8 @@ export class DormDashboardComponent implements OnInit {
       if (event instanceof NavigationEnd) {
         this.hasChildRoute = this._route.children.length > 0;
 
-        // Only clear search term if navigating to a specific dorm page
         if (this._router.url.includes('/dashboard/housing/')) {
-          this.searchTerm = '';  // Clear the search term
+          this.searchTerm = ''; 
         }
       }
     });
@@ -47,7 +46,7 @@ export class DormDashboardComponent implements OnInit {
       .getDorms({
         perPage: this.perPage,
         prev: this.prev,
-        searchTerm: this.searchTerm, // Pass the search term to the service
+        searchTerm: this.searchTerm,
       })
       .subscribe((dorms) => {
         dorms.sort((a, b) => a.id - b.id);
@@ -68,7 +67,6 @@ export class DormDashboardComponent implements OnInit {
   }
 
   onSearchChange() {
-    // Reset the pagination and dorm list when the search term changes
     this.dorms = [];
     this.prev = 0;
     this.loadDorms();
@@ -81,6 +79,6 @@ export class DormDashboardComponent implements OnInit {
   }
 
   trackById(index: number, item: ISmallDorm) {
-    return item.id; // Efficient tracking of items by their unique ID
+    return item.id; 
   }
 }

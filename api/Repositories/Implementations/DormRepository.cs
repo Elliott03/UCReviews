@@ -16,13 +16,20 @@ public class DormRepository : IDormRepository
         _paginationSettings = paginationSettings.Value;
     }
 
-    public async Task<IEnumerable<Dorm>> GetDorms(int prev, int perPage)
+    public async Task<IEnumerable<Dorm>> GetDorms(int prev, int perPage, string? searchTerm = null)
     {
-        var query = _dbContext.Dorm.AsQueryable();
-        perPage = int.Min(perPage, _paginationSettings.MaxPerPage);
-        query = query.Where(g => g.Id > prev).Take(perPage);
-        query = query.Include(b => b.ReviewSummary);
-        return await query.ToListAsync();
+    var query = _dbContext.Dorm.AsQueryable();
+
+    if (!string.IsNullOrWhiteSpace(searchTerm))
+    {
+        query = query.Where(g => g.Name.Contains(searchTerm));
+    }
+
+    perPage = Math.Min(perPage, _paginationSettings.MaxPerPage);
+    query = query.Where(g => g.Id > prev).Take(perPage);
+    query = query.Include(b => b.ReviewSummary);
+
+    return await query.ToListAsync();
     }
 
     public async Task<Dorm> GetDorm(string queryParam)

@@ -28,10 +28,11 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Dorm>>> GetDorms([FromQuery] int prev = 0, [FromQuery] int? perPage = null)
+        public async Task<ActionResult<List<Dorm>>> GetDorms([FromQuery] int prev = 0, [FromQuery] int? perPage = null, [FromQuery] string? searchTerm = null)
         {
             perPage ??= _paginationSettings.DefaultPerPage;
-            return Ok(await _service.GetDorms(prev, (int)perPage));
+            var dorms = await _service.GetDorms(prev, (int)perPage, searchTerm); 
+            return Ok(dorms);
         }
 
         [HttpGet("{slug}")]
