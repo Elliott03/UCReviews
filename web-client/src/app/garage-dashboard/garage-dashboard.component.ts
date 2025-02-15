@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IParkingGarage } from '../Models/ParkingGarage';
 import { GarageService } from '../core/services/garage.service';
 import { NavigationEnd, Router } from '@angular/router';
@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './garage-dashboard.component.html',
   styleUrls: ['./garage-dashboard.component.scss'],
 })
-export class GarageDashboardComponent {
+export class GarageDashboardComponent implements OnInit {
   hasChildRoute = false;
   garages: IParkingGarage[] = [];
   searchTerm: string = '';
@@ -36,7 +36,7 @@ export class GarageDashboardComponent {
         this.hasChildRoute = this._route.children.length > 0;
         
         if (this._router.url.includes('/dashboard/garages/')) {
-          this.searchTerm = '';  // Reset search term when navigating to a specific garage page
+          this.searchTerm = ''; 
         }
       }
     });
@@ -47,7 +47,7 @@ export class GarageDashboardComponent {
       .getParkingGarages({
         perPage: this.perPage,
         prev: this.prev,
-        searchTerm: this.searchTerm,  // Pass search term here
+        searchTerm: this.searchTerm,
       })
       .subscribe((garages) => {
         garages.sort((a, b) => a.id - b.id);
@@ -56,10 +56,10 @@ export class GarageDashboardComponent {
   }
 
   onSearchChange(searchTerm: string) {
-    this.searchTerm = searchTerm;  // Update the search term
-    this.garages = [];  // Reset the list of garages
-    this.prev = 0;  // Reset pagination
-    this.loadGarages();  // Reload the garages with the new search term
+    this.searchTerm = searchTerm; 
+    this.garages = [];
+    this.prev = 0; 
+    this.loadGarages(); 
   }
 
   getGarageRatingTitle(garage: IParkingGarage) {

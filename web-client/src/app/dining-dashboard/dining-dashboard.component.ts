@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IDiningHall } from '../Models/DiningHall';
 import { DiningService } from '../core/services/dining.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
@@ -10,7 +10,7 @@ import { BreadcrumbService } from 'xng-breadcrumb';
   templateUrl: './dining-dashboard.component.html',
   styleUrls: ['./dining-dashboard.component.scss'],
 })
-export class DiningDashboardComponent {
+export class DiningDashboardComponent implements OnInit {
   hasChildRoute = false;
   diningHalls: IDiningHall[] = [];
   searchTerm: string = '';
@@ -36,7 +36,7 @@ export class DiningDashboardComponent {
         this.hasChildRoute = this._route.children.length > 0;
 
         if (this._router.url.includes('/dashboard/dining/')) {
-          this.searchTerm = '';
+          this.searchTerm = ''; 
         }
       }
     });
@@ -55,6 +55,13 @@ export class DiningDashboardComponent {
       });
   }
 
+  onSearchChange(searchTerm: string) {
+    this.searchTerm = searchTerm; 
+    this.diningHalls = [];
+    this.prev = 0;
+    this.loadDiningHalls(); 
+  }
+
   getDiningRatingTitle(diningHall: IDiningHall) {
     if (!diningHall.reviewSummary?.averageRating) {
       return 'Not yet rated';
@@ -71,13 +78,6 @@ export class DiningDashboardComponent {
     return this.diningHalls.filter(diningHall =>
       diningHall.name.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
-  }
-
-  onSearchChange(searchTerm: string) {
-    this.searchTerm = searchTerm;
-    this.diningHalls = []; 
-    this.prev = 0; 
-    this.loadDiningHalls(); 
   }
 
   trackById(index: number, item: IDiningHall) {

@@ -6,7 +6,7 @@ namespace api.Repositories.Interfaces;
 
 public interface IParkingGarageRepository
 {
-    Task<IEnumerable<ParkingGarage>> GetParkingGarages(int prev, int perPage, string? searchTerm = null); // Add searchTerm
+    Task<IEnumerable<ParkingGarage>> GetParkingGarages(int prev, int perPage, string? searchTerm = null);
     Task<ParkingGarage> GetParkingGarage(int id);
     Task<ParkingGarage> GetParkingGarage(string slug);
 }

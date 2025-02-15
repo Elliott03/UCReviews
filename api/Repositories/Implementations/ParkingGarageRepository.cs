@@ -18,14 +18,13 @@ public class ParkingGarageRepository : IParkingGarageRepository
         _paginationSettings = paginationSettings.Value;
     }
 
-    // Update method to accept searchTerm
     public async Task<IEnumerable<ParkingGarage>> GetParkingGarages(int prev, int perPage, string? searchTerm = null)
     {
     var query = _dbContext.ParkingGarage.AsQueryable();
 
     if (!string.IsNullOrWhiteSpace(searchTerm))
     {
-        query = query.Where(g => g.Name.Contains(searchTerm));  // Apply search filter
+        query = query.Where(g => g.Name.Contains(searchTerm)); 
     }
 
     perPage = Math.Min(perPage, _paginationSettings.MaxPerPage);

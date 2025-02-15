@@ -1,4 +1,4 @@
-<app-search (searchChanged)="onSearchChange($event)"></app-search>
+<app-search *ngIf="!hasChildRoute" (searchChanged)="onSearchChange($event)"></app-search>
 
 <div
   class="dashboard dining"

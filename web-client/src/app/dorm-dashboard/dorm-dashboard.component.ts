@@ -35,7 +35,7 @@ export class DormDashboardComponent implements OnInit {
         this.hasChildRoute = this._route.children.length > 0;
 
         if (this._router.url.includes('/dashboard/housing/')) {
-          this.searchTerm = '';  // Clear search term when navigating to a specific dorm page
+          this.searchTerm = '';
         }
       }
     });
@@ -46,7 +46,7 @@ export class DormDashboardComponent implements OnInit {
       .getDorms({
         perPage: this.perPage,
         prev: this.prev,
-        searchTerm: this.searchTerm,  // Pass searchTerm to service
+        searchTerm: this.searchTerm,
       })
       .subscribe((dorms) => {
         dorms.sort((a, b) => a.id - b.id);
@@ -55,10 +55,10 @@ export class DormDashboardComponent implements OnInit {
   }
 
   onSearchChange(searchTerm: string) {
-    this.searchTerm = searchTerm; // Update search term
-    this.dorms = [];  // Reset the list of dorms
-    this.prev = 0;  // Reset pagination
-    this.loadDorms();  // Load new dorms based on the updated search term
+    this.searchTerm = searchTerm;
+    this.dorms = []; 
+    this.prev = 0;
+    this.loadDorms(); 
   }
 
   getDormRatingTitle(dorm: ISmallDorm) {
