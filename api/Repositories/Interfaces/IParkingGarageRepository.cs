@@ -1,11 +1,12 @@
-using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using api.Models;
 
 namespace api.Repositories.Interfaces;
 
 public interface IParkingGarageRepository
 {
-    public Task<IEnumerable<ParkingGarage>> GetParkingGarages(int prev, int perPage);
-    public Task<ParkingGarage> GetParkingGarage(string slug);
-    public Task<ParkingGarage> GetParkingGarage(int id);
+    Task<IEnumerable<ParkingGarage>> GetParkingGarages(int prev, int perPage, string? searchTerm = null); // Add searchTerm
+    Task<ParkingGarage> GetParkingGarage(int id);
+    Task<ParkingGarage> GetParkingGarage(string slug);
 }

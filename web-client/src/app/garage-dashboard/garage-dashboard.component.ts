@@ -13,7 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 export class GarageDashboardComponent {
   hasChildRoute = false;
   garages: IParkingGarage[] = [];
-  searchTerm: string = ''; // New property for search
+  searchTerm: string = '';
   prev = 0;
   perPage = 6;
 
@@ -31,14 +31,12 @@ export class GarageDashboardComponent {
       this._router.navigate(['/signup']);
     }
 
-    // Subscribe to router events to reset or clear the search term on navigation
     this._router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.hasChildRoute = this._route.children.length > 0;
         
-        // Only clear search term if navigating to a specific card or page
         if (this._router.url.includes('/dashboard/garages/')) {
-          this.searchTerm = '';  // Clear the search term
+          this.searchTerm = ''; 
         }
       }
     });
@@ -49,7 +47,7 @@ export class GarageDashboardComponent {
       .getParkingGarages({
         perPage: this.perPage,
         prev: this.prev,
-        searchTerm: this.searchTerm, // Include search term here
+        searchTerm: this.searchTerm,
       })
       .subscribe((garages) => {
         garages.sort((a, b) => a.id - b.id);
@@ -76,13 +74,12 @@ export class GarageDashboardComponent {
   }
 
   onSearchChange() {
-    // Reset the pagination and garage list when the search term changes
     this.garages = [];
     this.prev = 0;
     this.loadGarages();
   }
 
   trackById(index: number, item: IParkingGarage) {
-    return item.id; // Efficient tracking of items by their unique ID
+    return item.id; 
   }
 }

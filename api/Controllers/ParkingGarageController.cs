@@ -28,10 +28,16 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ParkingGarage>>> GetParkingGarages([FromQuery] int prev = 0, [FromQuery] int? perPage = null)
+        public async Task<ActionResult<List<ParkingGarage>>> GetParkingGarages(
+        [FromQuery] int prev = 0, 
+        [FromQuery] int? perPage = null, 
+        [FromQuery] string? searchTerm = null) 
         {
             perPage ??= _paginationSettings.DefaultPerPage;
-            return Ok(await _service.GetParkingGarages(prev, (int)perPage));
+
+            var garages = await _service.GetParkingGarages(prev, (int)perPage, searchTerm); 
+
+            return Ok(garages);
         }
 
         [HttpGet("{slug}")]

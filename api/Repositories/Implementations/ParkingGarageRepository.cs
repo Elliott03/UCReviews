@@ -18,13 +18,21 @@ public class ParkingGarageRepository : IParkingGarageRepository
         _paginationSettings = paginationSettings.Value;
     }
 
-    public async Task<IEnumerable<ParkingGarage>> GetParkingGarages(int prev, int perPage)
+    // Update method to accept searchTerm
+    public async Task<IEnumerable<ParkingGarage>> GetParkingGarages(int prev, int perPage, string? searchTerm = null)
     {
         var query = _dbContext.ParkingGarage.AsQueryable();
 
-        perPage = int.Min(perPage, _paginationSettings.MaxPerPage);
+        // Apply search filter if searchTerm is provided
+        if (!string.IsNullOrWhiteSpace(searchTerm))
+        {
+            query = query.Where(g => g.Name.Contains(searchTerm)); // Case-insensitive filtering
+        }
+
+        perPage = Math.Min(perPage, _paginationSettings.MaxPerPage);  // Ensure perPage does not exceed the max
         query = query.Where(g => g.Id > prev).Take(perPage);
-        query = query.Include(rs => rs.ReviewSummary);
+
+        query = query.Include(rs => rs.ReviewSummary); // Include related ReviewSummary
         return await query.ToListAsync();
     }
 
@@ -37,7 +45,6 @@ public class ParkingGarageRepository : IParkingGarageRepository
     {
         return await HandleGetGarage(g => g.Id == id);
     }
-
 
     private async Task<ParkingGarage> HandleGetGarage(Expression<Func<ParkingGarage, bool>> predicate)
     {
