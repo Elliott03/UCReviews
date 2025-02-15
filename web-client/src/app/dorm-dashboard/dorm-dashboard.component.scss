@@ -2,12 +2,3 @@
 @use "resets/link";
 @use "dashboard.scss";
 @use "util" as *;
-
-.cost-icon {
-  margin-right: -0.75rem;
-}
-
-.hero-image {
-  max-width: 100%;
-  aspect-ratio: 16/9;
-}

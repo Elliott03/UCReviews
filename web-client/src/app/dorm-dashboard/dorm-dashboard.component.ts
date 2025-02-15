@@ -35,7 +35,7 @@ export class DormDashboardComponent implements OnInit {
         this.hasChildRoute = this._route.children.length > 0;
 
         if (this._router.url.includes('/dashboard/housing/')) {
-          this.searchTerm = '';
+          this.searchTerm = ''; 
         }
       }
     });
@@ -57,8 +57,8 @@ export class DormDashboardComponent implements OnInit {
   onSearchChange(searchTerm: string) {
     this.searchTerm = searchTerm;
     this.dorms = []; 
-    this.prev = 0;
-    this.loadDorms(); 
+    this.prev = 0; 
+    this.loadDorms();
   }
 
   getDormRatingTitle(dorm: ISmallDorm) {
