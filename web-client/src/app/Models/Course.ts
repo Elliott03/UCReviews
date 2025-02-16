@@ -6,7 +6,7 @@ export interface ICourse {
   number: string;
   name: string;
   description: string;
-  slug: string;
+  nameQueryParameter: string;
   reviewSummary: ReviewSummary | null;
 }
 

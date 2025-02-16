@@ -4,11 +4,12 @@
   [infiniteScrollDistance]="2"
   [infiniteScrollThrottle]="50"
   (scrolled)="onScroll()"
+  *ngIf="!hasChildRoute"
 >
   @for (course of courses; track course.id) {
   <a
     class="inline-card reset"
-    [routerLink]="'/dashboard/courses/' + course.slug"
+    [routerLink]="'/dashboard/courses/' + course.nameQueryParameter"
   >
     <mat-card class="card">
       <mat-card-content>
@@ -28,3 +29,5 @@
   </a>
   }
 </div>
+
+<router-outlet></router-outlet>

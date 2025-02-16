@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ICourse } from '../Models/Course';
 import { CourseService } from '../core/services/course.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AuthService } from '../core/services/auth.service';
 
 @Component({
@@ -10,13 +10,15 @@ import { AuthService } from '../core/services/auth.service';
   styleUrl: './course-dashboard.component.scss',
 })
 export class CourseDashboardComponent {
+  hasChildRoute = false;
   courses: ICourse[] = [];
   prev = 0;
   perPage = 6;
   constructor(
     private _courseService: CourseService,
     private _router: Router,
-    public _authService: AuthService
+    public _authService: AuthService,
+    private _route: ActivatedRoute
   ) {}
   ngOnInit(): void {
     if (this._authService.isLoggedIn()) {
@@ -24,6 +26,11 @@ export class CourseDashboardComponent {
     } else {
       this._router.navigate(['/signup']);
     }
+    this._router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.hasChildRoute = this._route.children.length > 0;
+      }
+    });
   }
   loadCourses() {
     this._courseService
