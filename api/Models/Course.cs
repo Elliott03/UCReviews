@@ -9,7 +9,6 @@ public class Course : IReviewable
     public string Subject { get; set; }
     public string Number { get; set; }
     public string Name { get; set; }
-    public string Description { get; set; }
     [Required]
     public string NameQueryParameter { get; set; }
     [JsonIgnore]
