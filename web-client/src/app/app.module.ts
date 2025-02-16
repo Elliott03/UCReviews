@@ -30,6 +30,7 @@ import { GarageDashboardComponent } from './garage-dashboard/garage-dashboard.co
 import { DiningDashboardComponent } from './dining-dashboard/dining-dashboard.component';
 import { DiningPageComponent } from './dining-page/dining-page.component';
 import { CourseDashboardComponent } from './course-dashboard/course-dashboard.component';
+import { CoursePageComponent } from './course-page/course-page.component';
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 import { ReviewsComponent } from './shared/reviews/reviews.component';
 import { FooterComponent } from './shared/footer/footer.component';
@@ -57,6 +58,7 @@ import { BreadcrumbComponent, BreadcrumbItemDirective } from 'xng-breadcrumb';
     DiningPageComponent,
     OverallDashboardComponent,
     CourseDashboardComponent,
+    CoursePageComponent,
   ],
   bootstrap: [AppComponent],
   imports: [
