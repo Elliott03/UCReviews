@@ -1,38 +1,17 @@
-:host {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+@use "util" as *;
+@use "mixins" as *;
+
+.search-bar {
+  padding: 20px 20px 0px 20px;
+  @include breakpoint($bp-large) {
+    width: min(40%, 300px);
+    margin: -65px 0 0 auto;
+  }
+  mat-form-field {
+    background-color: white;
     width: 100%;
-    margin-bottom: 1rem;
   }
-  
-  .search-container {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    max-width: 500px;
-    background: #fff;
-    border: 2px solid #ccc;
-    border-radius: 25px;
-    padding: 10px 15px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  .mat-mdc-form-field-subscript-wrapper {
+    display: none;
   }
-  
-  .search-container input {
-    flex: 1;
-    border: none;
-    outline: none;
-    font-size: 16px;
-    padding: 10px;
-    background: transparent;
-  }
-  
-  .search-container input::placeholder {
-    color: #aaa;
-  }
-  
-  .search-icon {
-    color: red;
-    font-size: 20px;
-    margin-right: 10px;
-  }
+}
