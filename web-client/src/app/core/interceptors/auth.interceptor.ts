@@ -29,7 +29,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
     return next.handle(reqWithBearer || req).pipe(
       catchError((err: HttpErrorResponse) => {
-        if (err.status === 403) {
+        if ([401, 403].includes(err.status)) {
           this._router.navigate(['/signup']);
         }
         return throwError(() => err);
