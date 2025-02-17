@@ -1,0 +1,36 @@
+@use "main.scss";
+@use "single.scss";
+
+.add-course-modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    width: 400px;
+  }
+  
+  mat-dialog-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .add-course-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  
+  mat-form-field {
+    width: 300px;
+    margin-bottom: 16px;
+  }
+  
+  mat-dialog-actions {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }

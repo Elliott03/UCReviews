@@ -3,6 +3,8 @@ import { ICourse } from '../Models/Course';
 import { CourseService } from '../core/services/course.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AuthService } from '../core/services/auth.service';
+import { MatDialog } from '@angular/material/dialog';
+import { AddCourseModalComponent } from '../add-course-modal/add-course-modal.component';
 
 @Component({
   selector: 'course-dashboard',
@@ -18,7 +20,8 @@ export class CourseDashboardComponent {
     private _courseService: CourseService,
     private _router: Router,
     public _authService: AuthService,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    public dialog: MatDialog
   ) {}
   ngOnInit(): void {
     if (this._authService.isLoggedIn()) {
@@ -52,5 +55,12 @@ export class CourseDashboardComponent {
   onScroll(): void {
     this.prev += this.perPage;
     this.loadCourses();
+  }
+  openAddCourseModal(): void {
+    const dialogRef = this.dialog.open(AddCourseModalComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      // Update the dashboard to show the newly added course
+    });
   }
 }

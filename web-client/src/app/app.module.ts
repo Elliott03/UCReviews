@@ -42,6 +42,8 @@ import { DiningCategoryIconComponent } from './shared/dining-category-icon/dinin
 import { MealPlanIconComponent } from './shared/meal-plan-icon/meal-plan-icon.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { BreadcrumbComponent, BreadcrumbItemDirective } from 'xng-breadcrumb';
+import { AddCourseModalComponent } from './add-course-modal/add-course-modal.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -59,6 +61,7 @@ import { BreadcrumbComponent, BreadcrumbItemDirective } from 'xng-breadcrumb';
     OverallDashboardComponent,
     CourseDashboardComponent,
     CoursePageComponent,
+    AddCourseModalComponent
   ],
   bootstrap: [AppComponent],
   imports: [
@@ -68,6 +71,7 @@ import { BreadcrumbComponent, BreadcrumbItemDirective } from 'xng-breadcrumb';
     NgxStarsModule,
     MatCardModule,
     MatFormFieldModule,
+    MatDialogModule,
     MatInputModule,
     ReactiveFormsModule,
     MatButtonModule,
