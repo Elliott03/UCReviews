@@ -1,11 +1,13 @@
-using System;
 using api.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace api.Services.Interfaces;
-
-public interface IDormService
+namespace api.Services.Interfaces
 {
-    public Task<IEnumerable<Dorm>> GetDorms(int prev, int perPage);
-    public Task<Dorm> GetDorm(int id);
-    public Task<Dorm> GetDorm(string slug);
+    public interface IDormService
+    {
+        Task<IEnumerable<Dorm>> GetDorms(int prev, int perPage, string? searchTerm = null);
+        Task<Dorm> GetDorm(string slug);
+        Task<Dorm> GetDorm(int id);
+    }
 }

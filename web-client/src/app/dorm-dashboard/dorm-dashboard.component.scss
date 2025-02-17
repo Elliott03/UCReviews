@@ -1,7 +1,4 @@
-@use "main.scss";
+@use "main";
+@use "resets/link";
 @use "dashboard.scss";
-@use "resets/link.scss";
-
-.cost-icon {
-  margin-right: -0.75rem;
-}
+@use "util" as *;
