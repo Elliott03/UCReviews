@@ -80,7 +80,9 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
     } else {
       this._route.params.subscribe(async (params) => {
         const slug = params['slug'];
-        this.garage = await firstValueFrom(this._garageService.getParkingGarage(slug));
+        this.garage = await firstValueFrom(
+          this._garageService.getParkingGarage(slug)
+        );
         this.setGarageRating();
       });
     }

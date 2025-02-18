@@ -50,8 +50,20 @@ export class DormPageComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    // Check if the user is logged in
-    if (!this._authService.isLoggedIn()) {
+    if (this._authService.isLoggedIn()) {
+      const queryParam = this._route.snapshot.params['name'];
+      this.dorm = await firstValueFrom(this._dormService.getDorm(queryParam));
+      this._bcService.set('dashboard/housing/:slug', this.dorm.name);
+      const stringUser = localStorage.getItem('user');
+      if (stringUser) {
+        this.user = JSON.parse(stringUser);
+        const numberOfCharactersForEmailEnding = -12;
+        this.username = this.user?.email.slice(
+          0,
+          numberOfCharactersForEmailEnding
+        );
+      }
+    } else {
       this._router.navigate(['/signup']);
       return;
     }
@@ -86,8 +98,15 @@ export class DormPageComponent implements OnInit {
       this.setDormRating();
     } else {
       this._route.params.subscribe(async (params) => {
+<<<<<<< HEAD
+        const nameQueryParameter = params['name'];
+        this.dorm = await firstValueFrom(
+          this._dormService.getDorm(nameQueryParameter)
+        );
+=======
         const nameQueryParameter = params['slug'];
         this.dorm = await firstValueFrom(this._dormService.getDorm(nameQueryParameter));
+>>>>>>> main
         this.setDormRating();
       });
     }

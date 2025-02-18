@@ -102,7 +102,7 @@ import { SearchComponent } from './components/search/search.component';
               data: { breadcrumb: 'Housing' },
               children: [
                 {
-                  path: ':slug',
+                  path: ':name',
                   component: DormPageComponent,
                   canActivate: [AuthGuard],
                 },
@@ -128,7 +128,7 @@ import { SearchComponent } from './components/search/search.component';
               data: { breadcrumb: 'Dining' },
               children: [
                 {
-                  path: ':slug',
+                  path: ':name',
                   component: DiningPageComponent,
                   canActivate: [AuthGuard],
                 },
