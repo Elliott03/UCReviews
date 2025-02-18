@@ -28,20 +28,20 @@
       </div>
       <div class="text-votes">
         <span class="review-text">{{ review.reviewText }}</span>
-        <div class="votes" >
+        <div class="votes">
           <span class="vote" (click)="upvote(review)">
-            <svg width="36" height="36">
-              <path d="M2 26h32L18 10 2 26z" [attr.fill]="upvoteReviewColor(review)"></path>
+            <svg width="36" height="36" viewBox="0 0 36 36">
+              <path d="M18 6L6 22h9v8h6v-8h9L18 6z" [attr.fill]="upvoteReviewColor(review)"></path>
             </svg>
           </span>
           {{ review.averageVote }}
           <span class="vote" (click)="downvote(review)">
-            <svg width="36" height="36">
-              <path d="M2 10h32L18 26 2 10z" [attr.fill]="downvoteReviewColor(review)"></path>
+            <svg width="36" height="36" viewBox="0 0 36 36">
+              <path d="M18 30L6 14h9V6h6v8h9L18 30z" [attr.fill]="downvoteReviewColor(review)"></path>
             </svg>
           </span>
-    
         </div>
+        
       </div>
     </mat-card-content>
   </mat-card>
