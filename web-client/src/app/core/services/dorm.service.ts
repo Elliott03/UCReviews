@@ -11,10 +11,11 @@ import { buildQueryParams } from '../helpers/buildQueryParams';
 export class DormService {
   constructor(private _http: HttpClient) {}
 
-  getDorms({ perPage, prev }: QueryParams): Observable<ISmallDorm[]> {
+  getDorms({ perPage, prev, searchTerm }: QueryParams & { searchTerm: string }): Observable<ISmallDorm[]> {
     const queryParams = buildQueryParams<QueryParams>({
-      perPage: perPage,
-      prev: prev,
+      perPage,
+      prev,
+      searchTerm,  // Ensure searchTerm is passed
     });
     return this._http.get<ISmallDorm[]>(`/api/Dorm?${queryParams}`);
   }

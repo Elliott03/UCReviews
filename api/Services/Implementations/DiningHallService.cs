@@ -16,8 +16,8 @@ public class DiningHallService : IDiningHallService
         return await _repository.GetDiningHall(slug);
     }
 
-    public async Task<IEnumerable<DiningHall>> GetDiningHalls(int prev, int perPage)
+    public async Task<IEnumerable<DiningHall>> GetDiningHalls(int prev, int perPage, string? searchTerm = null)
     {
-        return await _repository.GetDiningHalls(prev, perPage);
+    return await _repository.GetDiningHalls(prev, perPage, searchTerm); 
     }
 }

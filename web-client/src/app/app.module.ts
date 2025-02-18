@@ -40,10 +40,12 @@ import { DiningCategoryIconComponent } from './shared/dining-category-icon/dinin
 import { MealPlanIconComponent } from './shared/meal-plan-icon/meal-plan-icon.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { BreadcrumbComponent, BreadcrumbItemDirective } from 'xng-breadcrumb';
+import { SearchComponent } from './components/search/search.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    SearchComponent,
     LoginPageComponent,
     SignupPageComponent,
     NavbarComponent,

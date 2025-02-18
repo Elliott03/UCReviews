@@ -15,14 +15,21 @@ public class DiningHallRepository : IDiningHallRepository
         _dbContext = dbContext;
         _paginationSettings = paginationSettings.Value;
     }
-    public async Task<IEnumerable<DiningHall>> GetDiningHalls(int prev, int perPage)
+    public async Task<IEnumerable<DiningHall>> GetDiningHalls(int prev, int perPage, string? searchTerm = null)
+{
+    var query = _dbContext.DiningHall.AsQueryable();
+
+    if (!string.IsNullOrWhiteSpace(searchTerm))
     {
-        var query = _dbContext.DiningHall.AsQueryable();
-        perPage = int.Min(perPage, _paginationSettings.MaxPerPage);
-        query = query.Where(d => d.Id > prev).Take(perPage);
-        query = query.Include(d => d.ReviewSummary);
-        return await query.ToListAsync();
+        query = query.Where(d => d.Name.Contains(searchTerm));
     }
+
+    perPage = Math.Min(perPage, _paginationSettings.MaxPerPage);
+    query = query.Where(d => d.Id > prev).Take(perPage);
+    query = query.Include(d => d.ReviewSummary);
+
+    return await query.ToListAsync();
+}
 
     public async Task<DiningHall> GetDiningHall(string slug)
     {

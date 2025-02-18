@@ -65,36 +65,62 @@ export class DormPageComponent implements OnInit {
       }
     } else {
       this._router.navigate(['/signup']);
+      return;
+    }
+
+    // Get the dorm's slug from the route parameters
+    const slug = this._route.snapshot.params['slug']; // Make sure your URL is correct
+
+    // Fetch the dorm details using the slug
+    this.dorm = await firstValueFrom(this._dormService.getDorm(slug));
+
+    if (!this.dorm) {
+      // If the dorm is not found, redirect to another page or show an error
+      this._router.navigate(['/dashboard', 'housing']);
+      return;
+    }
+
+    // Set the breadcrumb for the current dorm
+    this._bcService.set('dashboard/housing/:slug', this.dorm.name);
+
+    // Set the user's username if logged in
+    const stringUser = localStorage.getItem('user');
+    if (stringUser) {
+      this.user = JSON.parse(stringUser);
+      const numberOfCharactersForEmailEnding = -12;
+      this.username = this.user?.email.slice(0, numberOfCharactersForEmailEnding);
     }
   }
 
   ngAfterViewInit() {
-    // Wait for the dorm data to be loaded
+    // Wait for the dorm data to be loaded and set the rating
     if (this.dorm) {
       this.setDormRating();
     } else {
-      // If dorm is not yet loaded, listen for it
       this._route.params.subscribe(async (params) => {
+<<<<<<< HEAD
         const nameQueryParameter = params['name'];
         this.dorm = await firstValueFrom(
           this._dormService.getDorm(nameQueryParameter)
         );
+=======
+        const nameQueryParameter = params['slug'];
+        this.dorm = await firstValueFrom(this._dormService.getDorm(nameQueryParameter));
+>>>>>>> main
         this.setDormRating();
       });
+    }
+  }
+
+  setDormRating() {
+    if (this.dormStarsComponent && this.dorm) {
+      this.dormStarsComponent.setRating(this.dorm.reviewSummary?.averageRating || 0);
     }
   }
 
   updateCharacterCount(event: any) {
     const currentText: string = event.target.value;
     this.currentCharacterCount = currentText.length;
-  }
-
-  setDormRating() {
-    if (this.dormStarsComponent && this.dorm) {
-      this.dormStarsComponent.setRating(
-        this.dorm.reviewSummary?.averageRating || 0
-      );
-    }
   }
 
   async sendReview() {
@@ -106,9 +132,7 @@ export class DormPageComponent implements OnInit {
       userId,
       dormId: this.dorm.id,
     });
-    const addedReview = await firstValueFrom(
-      this._reviewService.addReview(newReview)
-    );
+    const addedReview = await firstValueFrom(this._reviewService.addReview(newReview));
     this.reviewsComponent.addReviewToFront({
       review: addedReview.review,
       user: {
@@ -122,18 +146,14 @@ export class DormPageComponent implements OnInit {
     this.currentCharacterCount = 0;
   }
 
-  getReviewsLoader(): (
-    params: PageableQueryParam
-  ) => Promise<IReviewWithUser[]> {
+  getReviewsLoader(): (params: PageableQueryParam) => Promise<IReviewWithUser[]> {
     return async ({ prev, perPage }: PageableQueryParam) => {
       if (!this.dorm) return [];
-      const reviews = await firstValueFrom(
-        this._reviewService.getReviewsByDormId({
-          perPage,
-          prev,
-          dormId: String(this.dorm.id),
-        })
-      );
+      const reviews = await firstValueFrom(this._reviewService.getReviewsByDormId({
+        perPage,
+        prev,
+        dormId: String(this.dorm.id),
+      }));
       return reviews;
     };
   }
