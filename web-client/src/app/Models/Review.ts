@@ -15,8 +15,13 @@ export interface IReview {
   user: IUser;
   dorm?: ILargeDorm;
   parkingGarage?: IParkingGarage;
+  userVoteType: UserVoteType;
 }
-
+export enum UserVoteType {
+  UserUpvoted,
+  UserDownvoted,
+  UserNeutral
+}
 export type Review = IReview;
 
 export type Reviewable = Dorm | ParkingGarage | DiningHall;

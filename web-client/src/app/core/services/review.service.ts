@@ -54,10 +54,10 @@ export class ReviewService {
   addReview(review: SaveReview): Observable<SaveReviewResponse> {
     return this._http.post<SaveReviewResponse>('/api/Review', review);
   }
-  updateVote(review: IReview, vote: string) {
+  updateVote(review: IReview, vote: string): Observable<IReview> {
     const queryParams = buildQueryParams({
       voteType: vote
     });
-    return this._http.get(`/api/Review/vote/${review.id}?${queryParams}`).subscribe();
+    return this._http.get<IReview>(`/api/Review/vote/${review.id}?${queryParams}`);
   }
 }

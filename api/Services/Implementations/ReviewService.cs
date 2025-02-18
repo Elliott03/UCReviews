@@ -15,24 +15,24 @@ public class ReviewService : IReviewService
     {
         _repository = repository;
     }
-    public async Task<IEnumerable<Review>> GetReviews(int prev, int perPage)
+    public async Task<IEnumerable<Review>> GetReviews(int prev, int perPage, int userId)
     {
-        return await _repository.GetReviews(prev, perPage);
+        return await _repository.GetReviews(prev, perPage, userId);
     }
-    public async Task<List<Review>> GetReviewsByDormId(int dormId, int prev, int perPage)
+    public async Task<List<Review>> GetReviewsByDormId(int dormId, int prev, int perPage, int userId)
     {
-        return await _repository.GetReviewsByDormId(dormId, prev, perPage);
-    }
-
-    public async Task<List<Review>> GetReviewsByParkingGarageId(int garageId, int prev, int perPage)
-    {
-        return await _repository.GetReviewsByParkingGarageId(garageId, prev, perPage);
+        return await _repository.GetReviewsByDormId(dormId, prev, perPage, userId);
     }
 
-
-    public async Task<List<Review>> GetReviewsByDiningHallId(int diningHallId, int prev, int perPage)
+    public async Task<List<Review>> GetReviewsByParkingGarageId(int garageId, int prev, int perPage, int userId)
     {
-        return await _repository.GetReviewsByDiningHallId(diningHallId, prev, perPage);
+        return await _repository.GetReviewsByParkingGarageId(garageId, prev, perPage, userId);
+    }
+
+
+    public async Task<List<Review>> GetReviewsByDiningHallId(int diningHallId, int prev, int perPage, int userId)
+    {
+        return await _repository.GetReviewsByDiningHallId(diningHallId, prev, perPage, userId);
     }
 
     public async Task<ReviewWithSummary> SaveReview(SaveReviewViewModel model)
@@ -54,8 +54,8 @@ public class ReviewService : IReviewService
     {
         return await _repository.GetReviewById(id);
     }
-    public async Task SaveVote(Vote vote) 
+    public async Task<Review> SaveVote(Vote vote, int userId) 
     {
-        await _repository.SaveVote(vote);
+        return await _repository.SaveVote(vote, userId);
     }
 }

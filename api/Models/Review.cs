@@ -45,4 +45,6 @@ public class Review
     public List<Vote>? Votes { get; set; }
     [NotMapped]
     public int AverageVote { get; set; }
+    [NotMapped]
+    public VoteType? UserVoteType { get; set; }
 }

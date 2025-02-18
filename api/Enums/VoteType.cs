@@ -1,6 +1,6 @@
 namespace api.Enums;
 public enum VoteType {
-    Upvote,
-    Downvote,
-    NoVote
+    Upvote = 0,
+    Downvote = 1,
+    NoVote = 2
 }
