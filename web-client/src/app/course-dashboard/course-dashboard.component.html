@@ -1,4 +1,9 @@
-<button class="addBtn" mat-flat-button (click)="openAddCourseModal()">Add Course</button>
+<div class="button-row">
+  <button *ngIf="showAddButtons" mat-flat-button (click)="openAddCourseModal()">
+    <mat-icon>add</mat-icon> Add Course
+  </button>
+</div>
+
 <div
   class="dashboard course"
   infiniteScroll
@@ -11,6 +16,7 @@
   <a
     class="inline-card reset"
     [routerLink]="'/dashboard/courses/' + course.nameQueryParameter"
+    (click) = onCardClick()
   >
     <mat-card class="card">
       <mat-card-content>
@@ -23,6 +29,7 @@
             [initialStars]="course.reviewSummary?.averageRating || 0"
             [matTooltip]="getCourseRatingTitle(course)"
           ></ngx-stars>
+          <br />
           <button mat-flat-button>Review</button>
         </div>
       </mat-card-content>
@@ -30,5 +37,7 @@
   </a>
   }
 </div>
+
+<p *ngIf="showAddButtons" class="page-footer">Can't find your course? <button mat-button class="add-link" (click)="openAddCourseModal()">Add it here.</button></p>
 
 <router-outlet></router-outlet>

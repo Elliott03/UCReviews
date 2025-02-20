@@ -44,6 +44,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { BreadcrumbComponent, BreadcrumbItemDirective } from 'xng-breadcrumb';
 import { AddCourseModalComponent } from './add-course-modal/add-course-modal.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -91,6 +92,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     TextFieldModule,
     BreadcrumbComponent,
     BreadcrumbItemDirective,
+    MatProgressSpinnerModule,
     RouterModule.forRoot(
       [
         { path: 'signup', component: SignupPageComponent },

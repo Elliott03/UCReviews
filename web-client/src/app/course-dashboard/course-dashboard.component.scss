@@ -2,7 +2,18 @@
 @use "dashboard.scss";
 @use "resets/link.scss";
 
-.addBtn {
-    margin-top: 10px;
-    margin-left: 10px;
+.button-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 5%;
+}
+
+.add-link {
+    color: red;
+    font-size: 1rem;
+}
+
+.page-footer {
+    text-align: center;
+    align-items: center;
 }

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Course, ICourse } from '../Models/Course';
 import { CourseService } from '../core/services/course.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-course-modal',
@@ -13,11 +14,16 @@ export class AddCourseModalComponent {
   courseName: string = '';
   courseSubject: string = '';
   courseNumber: string = '';
+  courseNameError: string = '';
+  courseSubjectError: string = '';
+  courseNumberError: string = '';
   errorMessage: string = '';
+  isLoading: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<AddCourseModalComponent>,
-    private _courseService: CourseService
+    private _courseService: CourseService,
+    private router: Router
   ) {}
 
   onCancel(): void {
@@ -25,8 +31,11 @@ export class AddCourseModalComponent {
   }
 
   onAddCourse(): void {
+    this.courseSubjectError = '';
+    this.courseNumberError = '';
+
     if (!this.courseName || !this.courseSubject || !this.courseNumber) {
-      this.errorMessage = 'Please fill in all fields.';
+      this.errorMessage = 'All fields are required.';
       return;
     }
 
@@ -35,17 +44,22 @@ export class AddCourseModalComponent {
     const name: string = this.courseName.trim().toUpperCase();
 
     const courseNumberRegex = /^\d{4}[a-zA-Z]?$/;
-    const courseSubjectRegex = /^[a-zA-Z]{2,4}$/;
     if (!courseNumberRegex.test(number)) {
-      this.errorMessage = 'Course number must contain four digits and one optional alphabetic letter.';
-      return;
+      this.courseNumberError = 'Course number must contain four digits and one optional alphabetic letter.';
     }
+
+    const courseSubjectRegex = /^[a-zA-Z]{2,4}$/;
     if (!courseSubjectRegex.test(subject)) {
-      this.errorMessage = 'Course subject must contain 2-4 alphabetic letters.';
+      this.courseSubjectError = 'Course subject must contain 2-4 alphabetic letters.';
+    }
+
+    if (this.courseNumberError || this.courseSubjectError) {
       return;
     }
 
-    this.course = {
+    this.isLoading = true;
+
+    const course: ICourse = this.course = {
       id: 0,
       subject: subject,
       number: number,
@@ -53,17 +67,20 @@ export class AddCourseModalComponent {
       nameQueryParameter: subject + number,
       reviewSummary: null
     };
-    this._courseService.saveCourse(this.course).subscribe({
-      next: (course) => {
-        this.dialogRef.close(course);
+
+    this._courseService.saveCourse(course).subscribe({
+      next: (savedCourse) => {
+        this.isLoading = false;
+        this.dialogRef.close(savedCourse);
+        this.router.navigate(['/dashboard/courses', savedCourse.nameQueryParameter]);
       },
       error: (err) => {
+        this.isLoading = false;
         this.errorMessage = err.error.message;
+        this.router.navigate(['/dashboard']);
       }
     });
   }
-  // TODO: reload the page after a course is added
-  //       put up error messages where they're appropriate
-  //       once search is implemented here, an empty search should show "Can't find your course? Add it here"
+  // TODO:
   //       find a way to ensure there aren't any curse words in the course subject or name
 }

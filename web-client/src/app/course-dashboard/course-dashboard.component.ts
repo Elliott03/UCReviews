@@ -16,6 +16,8 @@ export class CourseDashboardComponent {
   courses: ICourse[] = [];
   prev = 0;
   perPage = 6;
+  showAddButtons = true;
+
   constructor(
     private _courseService: CourseService,
     private _router: Router,
@@ -24,6 +26,8 @@ export class CourseDashboardComponent {
     public dialog: MatDialog
   ) {}
   ngOnInit(): void {
+    this.showAddButtons = true;
+
     if (this._authService.isLoggedIn()) {
       this.loadCourses();
     } else {
@@ -32,6 +36,9 @@ export class CourseDashboardComponent {
     this._router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.hasChildRoute = this._route.children.length > 0;
+        if (!this.hasChildRoute) {
+          this.showAddButtons = true;
+        }
       }
     });
   }
@@ -58,9 +65,13 @@ export class CourseDashboardComponent {
   }
   openAddCourseModal(): void {
     const dialogRef = this.dialog.open(AddCourseModalComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      // Update the dashboard to show the newly added course
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.showAddButtons = false;
+      }
     });
+  }
+  onCardClick(): void {
+    this.showAddButtons = false;
   }
 }
