@@ -1,0 +1,19 @@
+@use "main.scss";
+@use "dashboard.scss";
+@use "resets/link.scss";
+
+.button-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 5%;
+}
+
+.add-link {
+    color: red;
+    font-size: 1rem;
+}
+
+.page-footer {
+    text-align: center;
+    align-items: center;
+}

@@ -13,6 +13,11 @@ public class ReviewSummaryRepository : IReviewSummaryRepository
         _dbContext = dbContext;
     }
 
+    public async Task<ReviewSummary> GetReviewSummaryByCourseId(int courseId)
+    {
+        return await _dbContext.ReviewSummary.Where(rs => rs.CourseId == courseId).FirstOrDefaultAsync();
+    }
+
     public async Task<ReviewSummary> GetReviewSummaryByDiningHallId(int diningHallId)
     {
         return await _dbContext.ReviewSummary.Where(rs => rs.DiningHallId == diningHallId).FirstOrDefaultAsync();

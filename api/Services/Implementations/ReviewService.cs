@@ -35,6 +35,10 @@ public class ReviewService : IReviewService
         return await _repository.GetReviewsByDiningHallId(diningHallId, prev, perPage);
     }
 
+    public async Task<List<ReviewWithUser>> GetReviewsByCourseId(int dormId, int prev, int perPage)
+    {
+        return await _repository.GetReviewsByCourseId(dormId, prev, perPage);
+    }
     public async Task<ReviewWithSummary> SaveReview(SaveReviewViewModel model)
     {
         var review = new Review
@@ -46,8 +50,8 @@ public class ReviewService : IReviewService
             DormId = model.DormId,
             ParkingGarageId = model.ParkingGarageId,
             DiningHallId = model.DiningHallId,
+            CourseId = model.CourseId,
         };
         return await _repository.SaveReview(review);
     }
-
 }

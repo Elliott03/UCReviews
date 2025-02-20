@@ -29,6 +29,8 @@ import { GaragePageComponent } from './garage-page/garage-page.component';
 import { GarageDashboardComponent } from './garage-dashboard/garage-dashboard.component';
 import { DiningDashboardComponent } from './dining-dashboard/dining-dashboard.component';
 import { DiningPageComponent } from './dining-page/dining-page.component';
+import { CourseDashboardComponent } from './course-dashboard/course-dashboard.component';
+import { CoursePageComponent } from './course-page/course-page.component';
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 import { ReviewsComponent } from './shared/reviews/reviews.component';
 import { FooterComponent } from './shared/footer/footer.component';
@@ -40,6 +42,9 @@ import { DiningCategoryIconComponent } from './shared/dining-category-icon/dinin
 import { MealPlanIconComponent } from './shared/meal-plan-icon/meal-plan-icon.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { BreadcrumbComponent, BreadcrumbItemDirective } from 'xng-breadcrumb';
+import { AddCourseModalComponent } from './add-course-modal/add-course-modal.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SearchComponent } from './components/search/search.component';
 
 @NgModule({
@@ -57,6 +62,9 @@ import { SearchComponent } from './components/search/search.component';
     DiningDashboardComponent,
     DiningPageComponent,
     OverallDashboardComponent,
+    CourseDashboardComponent,
+    CoursePageComponent,
+    AddCourseModalComponent
   ],
   bootstrap: [AppComponent],
   imports: [
@@ -66,6 +74,7 @@ import { SearchComponent } from './components/search/search.component';
     NgxStarsModule,
     MatCardModule,
     MatFormFieldModule,
+    MatDialogModule,
     MatInputModule,
     ReactiveFormsModule,
     MatButtonModule,
@@ -85,6 +94,7 @@ import { SearchComponent } from './components/search/search.component';
     TextFieldModule,
     BreadcrumbComponent,
     BreadcrumbItemDirective,
+    MatProgressSpinnerModule,
     RouterModule.forRoot(
       [
         { path: 'signup', component: SignupPageComponent },
@@ -133,7 +143,20 @@ import { SearchComponent } from './components/search/search.component';
                   canActivate: [AuthGuard],
                 },
               ],
-            },
+              },
+              {
+                  path: 'courses',
+                  component: CourseDashboardComponent,
+                  canActivate: [AuthGuard],
+                  data: { breadcrumb: 'Courses' },
+                  children: [
+                      {
+                          path: ':slug',
+                          component: CoursePageComponent,
+                          canActivate: [AuthGuard],
+                      }
+                  ]
+              }
           ],
         },
         { path: '', redirectTo: 'dashboard', pathMatch: 'full' },

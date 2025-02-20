@@ -19,6 +19,9 @@ public class ReviewSummary
     [ForeignKey("DiningHall")]
     public int? DiningHallId { get; set; }
 
+    [ForeignKey("Course")]
+    public int? CourseId { get; set; }
+
     [Precision(10, 9)]
     public decimal AverageRating { get; set; }
     public int TotalReviews { get; set; } // For computing a running average: curAvg = curAvg + (newRating - curAvg) / totalReviews
@@ -31,4 +34,6 @@ public class ReviewSummary
     public virtual ParkingGarage? ParkingGarage { get; set; }
     [JsonIgnore]
     public virtual DiningHall? DiningHall { get; set; }
+    [JsonIgnore]
+    public virtual Course? Course { get; set; }
 }
