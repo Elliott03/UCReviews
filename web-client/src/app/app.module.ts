@@ -45,10 +45,12 @@ import { BreadcrumbComponent, BreadcrumbItemDirective } from 'xng-breadcrumb';
 import { AddCourseModalComponent } from './add-course-modal/add-course-modal.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { SearchComponent } from './components/search/search.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    SearchComponent,
     LoginPageComponent,
     SignupPageComponent,
     NavbarComponent,
@@ -110,7 +112,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
               data: { breadcrumb: 'Housing' },
               children: [
                 {
-                  path: ':slug',
+                  path: ':name',
                   component: DormPageComponent,
                   canActivate: [AuthGuard],
                 },
@@ -136,7 +138,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
               data: { breadcrumb: 'Dining' },
               children: [
                 {
-                  path: ':slug',
+                  path: ':name',
                   component: DiningPageComponent,
                   canActivate: [AuthGuard],
                 },

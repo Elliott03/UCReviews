@@ -1,0 +1,17 @@
+@use "util" as *;
+@use "mixins" as *;
+
+.search-bar {
+  padding: 20px 20px 0px 20px;
+  @include breakpoint($bp-large) {
+    width: min(40%, 300px);
+    margin: -65px 0 0 auto;
+  }
+  mat-form-field {
+    background-color: white;
+    width: 100%;
+  }
+  .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+  }
+}

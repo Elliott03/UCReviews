@@ -1,49 +1,57 @@
-<div
-  class="dashboard dining"
-  infiniteScroll
-  [infiniteScrollDistance]="2"
-  [infiniteScrollThrottle]="50"
-  (scrolled)="onScroll()"
-  *ngIf="!hasChildRoute"
->
-  @for (diningHall of diningHalls; track diningHall.id) {
-  <a
-    class="inline-card reset"
-    [routerLink]="'/dashboard/dining/' + diningHall.nameQueryParameter"
+<div class="container">
+  <app-search
+    *ngIf="!hasChildRoute"
+    (searchChanged)="onSearchChange($event)"
+  ></app-search>
+  <div
+    class="dashboard dining"
+    infiniteScroll
+    [infiniteScrollDistance]="2"
+    [infiniteScrollThrottle]="50"
+    (scrolled)="onScroll()"
+    *ngIf="!hasChildRoute"
   >
-    <mat-card class="card">
-      <div class="img-wrapper">
-        <img
-          src="api/Images/DiningHalls/{{ diningHall.nameQueryParameter }}.png"
-          class="hero-image"
-          alt="Image of {{ diningHall.name }}"
-        />
-      </div>
-      <mat-card-content>
-        <div class="info">
-          <h2 class="name">{{ diningHall.name }}</h2>
-          <ngx-stars
-            [size]="2"
-            [readonly]="true"
-            [initialStars]="diningHall.reviewSummary?.averageRating || 0"
-            [matTooltip]="getDiningRatingTitle(diningHall)"
-          ></ngx-stars>
-          <ul class="attributes">
-            @if (diningHall.category) {
-            <li class="attribute">
-              <dining-category-icon
-                [style]="diningHall.category"
-                [matTooltip]="diningHall.category"
-              ></dining-category-icon>
-            </li>
-            }
-          </ul>
-          <button mat-flat-button>Review</button>
-        </div>
-      </mat-card-content>
-    </mat-card>
-  </a>
-  }
+    <ng-container
+      *ngFor="let diningHall of filteredDiningHalls(); trackBy: trackById"
+    >
+      <a
+        class="inline-card reset"
+        [routerLink]="'/dashboard/dining/' + diningHall.nameQueryParameter"
+      >
+        <mat-card class="card">
+          <div class="img-wrapper">
+            <img
+              src="api/Images/DiningHalls/{{
+                diningHall.nameQueryParameter
+              }}.png"
+              class="hero-image"
+              alt="Image of {{ diningHall.name }}"
+            />
+          </div>
+          <mat-card-content>
+            <div class="info">
+              <h2 class="name">{{ diningHall.name }}</h2>
+              <ngx-stars
+                [size]="2"
+                [readonly]="true"
+                [initialStars]="diningHall.reviewSummary?.averageRating || 0"
+                [matTooltip]="getDiningRatingTitle(diningHall)"
+              ></ngx-stars>
+              <ul class="attributes">
+                <li class="attribute" *ngIf="diningHall.category">
+                  <dining-category-icon
+                    [style]="diningHall.category"
+                    [matTooltip]="diningHall.category"
+                  ></dining-category-icon>
+                </li>
+              </ul>
+              <button mat-flat-button>Review</button>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </a>
+    </ng-container>
+  </div>
 </div>
 
 <router-outlet></router-outlet>
