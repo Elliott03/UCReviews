@@ -64,8 +64,6 @@ export class CoursePageComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    console.log('course', this.course);
-
     this._bcService.set('dashboard/courses/:slug', this.course.name);
     const stringUser = localStorage.getItem('user');
 

@@ -37,6 +37,7 @@ export class CourseDashboardComponent {
       if (event instanceof NavigationEnd) {
         this.hasChildRoute = this._route.children.length > 0;
         if (!this.hasChildRoute) {
+          this.loadCourses();
           this.showAddButtons = true;
         }
       }
