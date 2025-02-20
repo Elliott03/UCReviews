@@ -1,4 +1,5 @@
-using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using api.Models;
 using api.Repositories.Interfaces;
 using api.Services.Interfaces;
@@ -24,8 +25,8 @@ public class ParkingGarageService : IParkingGarageService
         return await _parkingGarageRepository.GetParkingGarage(id);
     }
 
-    public async Task<IEnumerable<ParkingGarage>> GetParkingGarages(int prev, int perPage)
+    public async Task<IEnumerable<ParkingGarage>> GetParkingGarages(int prev, int perPage, string? searchTerm = null)
     {
-        return await _parkingGarageRepository.GetParkingGarages(prev, perPage);
+        return await _parkingGarageRepository.GetParkingGarages(prev, perPage, searchTerm);
     }
 }

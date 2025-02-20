@@ -3,15 +3,3 @@
 @use "dashboard.scss";
 @use "util" as *;
 
-.hero-image {
-  max-width: 100%;
-  aspect-ratio: 16/9;
-}
-
-.card {
-  height: 100%;
-  background-color: get-color($shades-of-blue-grey, 8);
-  &:hover {
-    background-color: get-color($shades-of-blue-grey, 7);
-  }
-}

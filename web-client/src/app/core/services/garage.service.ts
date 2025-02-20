@@ -14,21 +14,18 @@ export class GarageService {
   getParkingGarages({
     perPage,
     prev,
-  }: QueryParams): Observable<IParkingGarage[]> {
+    searchTerm = '',
+  }: QueryParams & { searchTerm?: string }): Observable<IParkingGarage[]> {
     const queryParams = buildQueryParams({
-      perPage: perPage,
-      prev: prev,
+      perPage,
+      prev,
+      ...(searchTerm ? { searchTerm } : {}),
     });
-    const garages = this._http.get<IParkingGarage[]>(
-      `/api/ParkingGarage?${queryParams}`
-    );
-    return garages;
+  
+    return this._http.get<IParkingGarage[]>(`/api/ParkingGarage?${queryParams}`);
   }
 
   getParkingGarage(slug_or_id: string): Observable<IParkingGarage> {
-    const garage = this._http.get<IParkingGarage>(
-      `/api/ParkingGarage/${slug_or_id}`
-    );
-    return garage;
+    return this._http.get<IParkingGarage>(`/api/ParkingGarage/${slug_or_id}`);
   }
 }

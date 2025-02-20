@@ -11,10 +11,11 @@ import { buildQueryParams } from '../helpers/buildQueryParams';
 export class DiningService {
   constructor(private _http: HttpClient) {}
 
-  getDiningHalls({ perPage, prev }: QueryParams): Observable<IDiningHall[]> {
+  getDiningHalls({ perPage, prev, searchTerm }: QueryParams & { searchTerm: string }): Observable<IDiningHall[]> {
     const queryParams = buildQueryParams<QueryParams>({
-      perPage: perPage,
-      prev: prev,
+      perPage,
+      prev,
+      searchTerm,
     });
     return this._http.get<IDiningHall[]>(`/api/DiningHall?${queryParams}`);
   }

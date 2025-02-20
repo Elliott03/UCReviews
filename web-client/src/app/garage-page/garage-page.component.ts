@@ -18,7 +18,7 @@ import { BreadcrumbService } from 'xng-breadcrumb';
 @Component({
   selector: 'garage-page',
   templateUrl: './garage-page.component.html',
-  styleUrl: './garage-page.component.scss',
+  styleUrls: ['./garage-page.component.scss'],
 })
 export class GaragePageComponent implements OnInit, AfterViewInit {
   garage?: IParkingGarage;
@@ -54,40 +54,32 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
       this._router.navigate(['/signup']);
       return;
     }
-    const slug = this._route.snapshot.params['slug'];
-    // this.JSON = JSON;
-    this.garage = await firstValueFrom(
-      this._garageService.getParkingGarage(slug)
-    );
+
+    const slug = this._route.snapshot.params['slug']; 
+
+    this.garage = await firstValueFrom(this._garageService.getParkingGarage(slug));
 
     if (!this.garage) {
       this._router.navigate(['/dashboard', 'garages']);
       return;
     }
 
-    console.log('garage', this.garage);
-
     this._bcService.set('dashboard/garages/:slug', this.garage.name);
-    const stringUser = localStorage.getItem('user');
 
+    const stringUser = localStorage.getItem('user');
     if (stringUser) {
       this.user = JSON.parse(stringUser);
       const numberOfCharactersForEmailEnding = -12;
-      this.username = this.user?.email.slice(
-        0,
-        numberOfCharactersForEmailEnding
-      );
+      this.username = this.user?.email.slice(0, numberOfCharactersForEmailEnding);
     }
   }
 
   ngAfterViewInit() {
-    // Wait for the garage data to be loaded
     if (this.garage) {
       this.setGarageRating();
     } else {
-      // If garage is not yet loaded, listen for it
       this._route.params.subscribe(async (params) => {
-        const slug = params['name'];
+        const slug = params['slug'];
         this.garage = await firstValueFrom(
           this._garageService.getParkingGarage(slug)
         );
@@ -98,9 +90,7 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
 
   private setGarageRating() {
     if (this.garageStarsComponent && this.garage) {
-      this.garageStarsComponent.setRating(
-        this.garage.reviewSummary?.averageRating || 0
-      );
+      this.garageStarsComponent.setRating(this.garage.reviewSummary?.averageRating || 0);
     }
   }
 
@@ -113,9 +103,7 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
       userId,
       parkingGarageId: this.garage.id,
     });
-    const addedReview = await firstValueFrom(
-      this._reviewService.addReview(newReview)
-    );
+    const addedReview = await firstValueFrom(this._reviewService.addReview(newReview));
     this.reviewsComponent.addReviewToFront({
       review: addedReview.review,
       user: {
