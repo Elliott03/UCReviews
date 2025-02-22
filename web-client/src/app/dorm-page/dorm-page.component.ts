@@ -68,11 +68,11 @@ export class DormPageComponent implements OnInit {
       return;
     }
 
-    // Get the dorm's slug from the route parameters
-    const slug = this._route.snapshot.params['slug']; // Make sure your URL is correct
+    // Get the dorm's name from the route parameters
+    const name = this._route.snapshot.params['name']; // Make sure your URL is correct
 
-    // Fetch the dorm details using the slug
-    this.dorm = await firstValueFrom(this._dormService.getDorm(slug));
+    // Fetch the dorm details using the name
+    this.dorm = await firstValueFrom(this._dormService.getDorm(name));
 
     if (!this.dorm) {
       // If the dorm is not found, redirect to another page or show an error
@@ -81,7 +81,7 @@ export class DormPageComponent implements OnInit {
     }
 
     // Set the breadcrumb for the current dorm
-    this._bcService.set('dashboard/housing/:slug', this.dorm.name);
+    this._bcService.set('dashboard/housing/:name', this.dorm.name);
 
     // Set the user's username if logged in
     const stringUser = localStorage.getItem('user');
@@ -98,15 +98,10 @@ export class DormPageComponent implements OnInit {
       this.setDormRating();
     } else {
       this._route.params.subscribe(async (params) => {
-<<<<<<< HEAD
         const nameQueryParameter = params['name'];
         this.dorm = await firstValueFrom(
           this._dormService.getDorm(nameQueryParameter)
         );
-=======
-        const nameQueryParameter = params['slug'];
-        this.dorm = await firstValueFrom(this._dormService.getDorm(nameQueryParameter));
->>>>>>> main
         this.setDormRating();
       });
     }
