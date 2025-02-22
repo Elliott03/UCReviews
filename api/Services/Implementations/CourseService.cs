@@ -22,9 +22,9 @@ public class CourseService : ICourseService
         return await _courseRepository.GetCourse(slug);
     }
 
-    public async Task<IEnumerable<Course>> GetCourses(int prev, int perPage)
+    public async Task<IEnumerable<Course>> GetCourses(int prev, int perPage, string? searchTerm)
     {
-        return await _courseRepository.GetCourses(prev, perPage);
+        return await _courseRepository.GetCourses(prev, perPage, searchTerm);
     }
 
     public async Task SaveCourse(Course course)

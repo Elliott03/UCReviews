@@ -34,10 +34,14 @@ public class CourseRepository : ICourseRepository
         return await HandleGetCourse(c => c.NameQueryParameter == slug);
     }
 
-    public async Task<IEnumerable<Course>> GetCourses(int prev, int perPage)
+    public async Task<IEnumerable<Course>> GetCourses(int prev, int perPage, string? searchTerm = null)
     {
         var query = _dbContext.Course.AsQueryable();
-        perPage = int.Min(perPage, _paginationSettings.MaxPerPage);
+        if (!string.IsNullOrWhiteSpace(searchTerm))
+        {
+            query = query.Where(c => c.Name.Contains(searchTerm));
+        }
+        perPage = Math.Min(perPage, _paginationSettings.MaxPerPage);
         query = query.Where(c => c.Id > prev).Take(perPage);
         query = query.Include(c => c.ReviewSummary);
         return await query.ToListAsync();

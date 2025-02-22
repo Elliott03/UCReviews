@@ -28,10 +28,14 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Course>>> GetCourses([FromQuery] int prev = 0, [FromQuery] int? perPage = null)
+        public async Task<ActionResult<List<Course>>> GetCourses(
+            [FromQuery] int prev = 0, 
+            [FromQuery] int? perPage = null, 
+            [FromQuery] string? searchTerm = null)
         {
             perPage ??= _paginationSettings.DefaultPerPage;
-            return Ok(await _courseService.GetCourses(prev, (int)perPage));
+            var courses = await _courseService.GetCourses(prev, (int)perPage, searchTerm);
+            return Ok(courses);
         }
 
         [HttpGet("{slug}")]
