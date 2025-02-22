@@ -38,7 +38,6 @@ export class CourseDashboardComponent implements OnInit {
       if (event instanceof NavigationEnd) {
         this.hasChildRoute = this._route.children.length > 0;
         if (!this.hasChildRoute) {
-          this.loadCourses();
           this.showAddButtons = true;
         }
       }
@@ -81,7 +80,7 @@ export class CourseDashboardComponent implements OnInit {
 
   filteredCourses(): ICourse[] {
     return this.courses.filter((course) => {
-      return course.nameQueryParameter.toLowerCase().includes(this.searchTerm.toLowerCase()) || 
+      return course.nameQueryParameter.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
       course.name.toLowerCase().includes(this.searchTerm.toLowerCase());
     });
   }
