@@ -33,10 +33,10 @@ export class AddCourseModalComponent {
   onAddCourse(): void {
     this.courseSubjectError = '';
     this.courseNumberError = '';
+    this.errorMessage = '';
 
     if (!this.courseName || !this.courseSubject || !this.courseNumber) {
       this.errorMessage = 'All fields are required.';
-      return;
     }
 
     const subject: string = this.courseSubject.trim().toUpperCase();
@@ -53,7 +53,7 @@ export class AddCourseModalComponent {
       this.courseSubjectError = 'Course subject must contain 2-4 alphabetic letters.';
     }
 
-    if (this.courseNumberError || this.courseSubjectError) {
+    if (this.courseNumberError || this.courseSubjectError || this.errorMessage) {
       return;
     }
 

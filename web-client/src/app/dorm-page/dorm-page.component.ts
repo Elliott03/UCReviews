@@ -98,15 +98,10 @@ export class DormPageComponent implements OnInit {
       this.setDormRating();
     } else {
       this._route.params.subscribe(async (params) => {
-<<<<<<< HEAD
         const nameQueryParameter = params['name'];
         this.dorm = await firstValueFrom(
           this._dormService.getDorm(nameQueryParameter)
         );
-=======
-        const nameQueryParameter = params['slug'];
-        this.dorm = await firstValueFrom(this._dormService.getDorm(nameQueryParameter));
->>>>>>> main
         this.setDormRating();
       });
     }
