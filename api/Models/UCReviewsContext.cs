@@ -8,6 +8,7 @@ public class UCReviewsContext : DbContext
     public DbSet<Review> Review { get; set; }
     public DbSet<Dorm> Dorm { get; set; }
     public DbSet<ParkingGarage> ParkingGarage { get; set; }
+    public DbSet<Course> Course { get; set; }
     public DbSet<DiningHall> DiningHall { get; set; }
     public DbSet<ReviewSummary> ReviewSummary { get; set; }
 
@@ -64,6 +65,18 @@ public class UCReviewsContext : DbContext
             .HasForeignKey<ReviewSummary>(rs => rs.DiningHallId)
             .IsRequired(false);
 
+        builder.Entity<Course>()
+            .ToTable("Course")
+            .HasMany(c => c.Reviews)
+            .WithOne(r => r.Course)
+            .HasForeignKey(r => r.CourseId)
+            .IsRequired(false);
+
+        builder.Entity<Course>()
+            .HasOne(c => c.ReviewSummary)
+            .WithOne(r => r.Course)
+            .HasForeignKey<ReviewSummary>(rs => rs.CourseId)
+            .IsRequired(false);
 
         builder.Entity<Dorm>()
         .HasData(
@@ -549,6 +562,25 @@ public class UCReviewsContext : DbContext
             }
         );
 
+        builder.Entity<Course>()
+        .HasData(
+            new Course
+            {
+                Id = 1,
+                Subject = "IT",
+                Number = "5003C",
+                Name = "SR CAPSTONE PROJECT I",
+                NameQueryParameter = "IT5003C"
+            },
+            new Course
+            {
+                Id = 2,
+                Subject = "IT",
+                Number = "5004C",
+                Name = "SR CAPSTONE PROJECT II",
+                NameQueryParameter = "IT5004C"
+            }
+        );
         base.OnModelCreating(builder);
     }
 }

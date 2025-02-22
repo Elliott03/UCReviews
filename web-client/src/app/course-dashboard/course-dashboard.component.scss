@@ -1,0 +1,38 @@
+@use "main.scss";
+@use "dashboard.scss";
+@use "resets/link.scss";
+@use "util" as *;
+
+app-search {
+    margin-top: auto;
+    padding-right: auto;
+    width: 90%;
+}
+
+.add-link {
+    color: red;
+    width: auto;
+    font-size: 1rem;
+}
+
+.fab-container {
+    position: fixed;
+    bottom: 6%;
+    right: 6%;
+    z-index: 1000;
+}
+
+.add-fab {
+    background-color: get-color($shades-of-red, 4);
+    color: white;
+}
+
+.add-fab:hover {
+    background-color: get-color($shades-of-red, 6);
+}
+
+.page-footer {
+    text-align: center;
+    align-items: center;
+    width: 100%;
+}

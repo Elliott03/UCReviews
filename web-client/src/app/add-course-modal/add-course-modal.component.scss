@@ -1,0 +1,50 @@
+@use "main.scss";
+@use "single.scss";
+
+.add-course-modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.3rem;
+    margin: 0 60px;
+    max-width: min(90vw, 600px);
+  }
+
+  .mdc-dialog__title {
+    width: 100%;
+    text-align: center;
+  }
+
+  .mdc-dialog__actions {
+    width: 100%;
+  }
+
+  mat-dialog-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .add-course-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  mat-form-field {
+    width: 300px;
+    margin-bottom: 16px;
+  }
+
+  mat-dialog-actions {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .error-label {
+    width: 300px;
+  }

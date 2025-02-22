@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api.Models;
 
@@ -11,9 +12,11 @@ using api.Models;
 namespace api.Migrations
 {
     [DbContext(typeof(UCReviewsContext))]
-    partial class UCReviewsContextModelSnapshot : ModelSnapshot
+    [Migration("20250209181652_SeedCourses")]
+    partial class SeedCourses
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,6 +32,9 @@ namespace api.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -51,6 +57,7 @@ namespace api.Migrations
                         new
                         {
                             Id = 1,
+                            Description = "This capstone course is part 1 of the senior level course designed to allow students to review, analyze and integrate the work completed towards the bachelor of science in Information Technology degree. The student will complete an approved academic project, paper, and presentation that demonstrates mastery of the BSIT degree requirements.",
                             Name = "SR CAPSTONE PROJECT I",
                             NameQueryParameter = "IT5003C",
                             Number = "5003C",
@@ -59,6 +66,7 @@ namespace api.Migrations
                         new
                         {
                             Id = 2,
+                            Description = "This capstone course is part 2 of the senior level course designed to allow students to review, analyze and integrate the work completed towards the bachelor of science in Information Technology degree. The student will complete an approved academic project, paper, and presentation that demonstrates mastery of the BSIT degree requirements.",
                             Name = "SR CAPSTONE PROJECT II",
                             NameQueryParameter = "IT5004C",
                             Number = "5004C",

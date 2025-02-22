@@ -1,0 +1,54 @@
+<div class="container">
+    <app-search
+      *ngIf="!hasChildRoute"
+      (searchChanged)="onSearchChange($event)"
+    ></app-search>
+  
+  <div
+    class="dashboard course"
+    infiniteScroll
+    [infiniteScrollDistance]="2"
+    [infiniteScrollThrottle]="50"
+    (scrolled)="onScroll()"
+    *ngIf="!hasChildRoute"
+  >
+    <ng-container *ngFor="let course of filteredCourses(); trackBy: trackById">
+      <a
+        class="inline-card reset"
+        [routerLink]="'/dashboard/courses/' + course.nameQueryParameter"
+        (click) = onCardClick()
+      >
+        <mat-card class="card">
+          <mat-card-content>
+            <div class="info">
+              <h2 class="name">{{ course.subject }} {{ course.number }}</h2>
+              <h2 class="name">{{ course.name }}</h2>
+              <ngx-stars
+                [size]="2"
+                [readonly]="true"
+                [initialStars]="course.reviewSummary?.averageRating || 0"
+                [matTooltip]="getCourseRatingTitle(course)"
+              ></ngx-stars>
+              <br />
+              <button mat-flat-button>Review</button>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </a>
+    </ng-container>
+  </div>
+  
+  <div *ngIf="showAddButtons" class="page-footer">
+    Can't find your course? 
+    <button mat-button class="add-link" (click)="openAddCourseModal()">Add it here.</button>
+  </div>
+</div>
+
+<div class="fab-container">
+  <button *ngIf="showAddButtons" mat-fab extended class="add-fab" (click)="openAddCourseModal()" matTooltip="Add a Course">
+    <mat-icon>add</mat-icon>
+    Add Course
+  </button>
+</div>
+
+<router-outlet></router-outlet>

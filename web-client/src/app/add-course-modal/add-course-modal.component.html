@@ -1,0 +1,30 @@
+<div class="add-course-modal">
+    <h2 mat-dialog-title>Add a Course</h2>
+    <div mat-dialog-content>
+    <form class="add-course-form">
+        <mat-error *ngIf="courseSubjectError" class="error-label">{{ courseSubjectError }}</mat-error>
+        <mat-form-field>
+            <mat-label>Course Subject</mat-label>
+            <input matInput [(ngModel)]="courseSubject" name="courseSubject" required="true">
+        </mat-form-field>
+        <mat-error *ngIf="courseNumberError" class="error-label">{{ courseNumberError }}</mat-error>
+        <mat-form-field>
+            <mat-label>Course Number</mat-label>
+            <input matInput [(ngModel)]="courseNumber" name="courseNumber" required="true">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Course Name</mat-label>
+            <input matInput [(ngModel)]="courseName" name="courseName" required="true">
+        </mat-form-field>
+        <mat-error *ngIf="errorMessage" class="error-label">{{ errorMessage }}</mat-error>
+    </form>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button (click)="onCancel()">Cancel</button>
+        <button mat-flat-button (click)="onAddCourse()">Add</button>
+    </div>
+</div>
+
+<div *ngIf="isLoading" class="loading-spinner">
+    <mat-spinner></mat-spinner>
+</div>
