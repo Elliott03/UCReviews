@@ -53,6 +53,12 @@ class ReviewSummaryService : IReviewSummaryService
             isNewReviewSummary = reviewSummary == null;
             reviewSummary ??= new ReviewSummary { DiningHallId = reviewable.Id, AverageRating = review.StarRating };
         }
+        else if (reviewable is Course)
+        {
+            reviewSummary = await _reviewSummaryRepository.GetReviewSummaryByCourseId(reviewable.Id);
+            isNewReviewSummary = reviewSummary == null;
+            reviewSummary ??= new ReviewSummary { CourseId = reviewable.Id, AverageRating = review.StarRating };
+        }
         else
         {
             throw new ArgumentNullException(nameof(reviewable));

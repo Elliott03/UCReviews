@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IReview, SaveReview, SaveReviewResponse } from 'src/app/Models/Review';
+import { IReview, Review, SaveReview, SaveReviewResponse } from 'src/app/Models/Review';
 import { PageableQueryParam } from '../types/QueryParams';
 import { buildQueryParams } from '../helpers/buildQueryParams';
 import { IReviewWithUser } from 'src/app/Models/ReviewWithUser';
@@ -55,8 +55,28 @@ export class ReviewService {
       `/api/Review/DiningHall/${diningHallId}?${queryParams}`
     );
   }
+  getReviewsByCourseId({
+    perPage,
+    prev,
+    courseId,
+  }: PageableQueryParam & { courseId: string }): Observable<IReviewWithUser[]> {
+    const queryParams = buildQueryParams<PageableQueryParam>({
+      perPage: perPage,
+      prev: prev,
+    });
+    return this._http.get<IReviewWithUser[]>(
+      `/api/Review/Course/${courseId}?${queryParams}`
+    );
+  }
+
 
   addReview(review: SaveReview): Observable<SaveReviewResponse> {
     return this._http.post<SaveReviewResponse>('/api/Review', review);
+  }
+  updateVote(review: IReview, vote: string): Observable<IReview> {
+    const queryParams = buildQueryParams({
+      voteType: vote
+    });
+    return this._http.get<IReview>(`/api/Review/vote/${review.id}?${queryParams}`);
   }
 }

@@ -16,6 +16,9 @@ public static class ReviewExtensions
         if (review.DormId != null)
             return await dbContext.Set<Dorm>().FindAsync(review.DormId);
 
+        if (review.CourseId != null)
+            return await dbContext.Set<Course>().FindAsync(review.CourseId);
+
         return null;
     }
 }

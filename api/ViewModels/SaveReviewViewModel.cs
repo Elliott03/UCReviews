@@ -8,4 +8,5 @@ public class SaveReviewViewModel
     public int? DormId { get; set; }
     public int? ParkingGarageId { get; set; }
     public int? DiningHallId { get; set; }
+    public int? CourseId { get; set; }
 }
