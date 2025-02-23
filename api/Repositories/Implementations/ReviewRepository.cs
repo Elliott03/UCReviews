@@ -117,6 +117,14 @@ public class ReviewRepository : IReviewRepository
         return await GetReviewsWithUsers(query, userId);
     }
 
+    public async Task<List<ReviewWithUser>> GetReviewsByCourseId(int courseId, int prev, int perPage, int userId)
+    {
+        var query = _dbContext.Review.AsQueryable();
+        perPage = int.Min(perPage, _paginationSettings.MaxPerPage);
+        query = query.Where(r => r.Id > prev && r.CourseId == courseId).Take(perPage);
+        return await GetReviewsWithUsers(query, userId);
+    }
+
 #nullable enable
 
 

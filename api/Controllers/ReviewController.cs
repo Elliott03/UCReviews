@@ -60,6 +60,13 @@ public class ReviewController : ControllerBase
         return await _service.GetReviewsByDiningHallId(diningHallId, prev, (int)perPage, userId);
     }
 
+    [HttpGet("Course/{courseId}")]
+    public async Task<ActionResult<List<ReviewWithUser>>> GetReviewByCourseId(int courseId, [FromQuery] int prev = 0, [FromQuery] int? perPage = null)
+    {
+        perPage ??= _paginationSettings.DefaultPerPage;
+        return await _service.GetReviewsByCourseId(courseId, prev, (int)perPage);
+    }
+
     [HttpPost]
     public async Task<ActionResult<ReviewWithSummary>> SaveReview(SaveReviewViewModel review)
     {

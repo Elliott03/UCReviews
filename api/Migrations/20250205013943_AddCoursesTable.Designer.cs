@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api.Models;
 
@@ -11,9 +12,11 @@ using api.Models;
 namespace api.Migrations
 {
     [DbContext(typeof(UCReviewsContext))]
-    partial class UCReviewsContextModelSnapshot : ModelSnapshot
+    [Migration("20250205013943_AddCoursesTable")]
+    partial class AddCoursesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,6 +32,9 @@ namespace api.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -46,24 +52,6 @@ namespace api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Course", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "SR CAPSTONE PROJECT I",
-                            NameQueryParameter = "IT5003C",
-                            Number = "5003C",
-                            Subject = "IT"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "SR CAPSTONE PROJECT II",
-                            NameQueryParameter = "IT5004C",
-                            Number = "5004C",
-                            Subject = "IT"
-                        });
                 });
 
             modelBuilder.Entity("api.Models.DiningHall", b =>
@@ -768,30 +756,6 @@ namespace api.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("api.Models.Vote", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ReviewId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("SelectedVote")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ReviewId");
-
-                    b.ToTable("Vote");
-                });
-
             modelBuilder.Entity("api.Models.Review", b =>
                 {
                     b.HasOne("api.Models.Course", "Course")
@@ -854,23 +818,11 @@ namespace api.Migrations
                     b.Navigation("ParkingGarage");
                 });
 
-<<<<<<< HEAD
-            modelBuilder.Entity("api.Models.Vote", b =>
-                {
-                    b.HasOne("api.Models.Review", "Review")
-                        .WithMany("Votes")
-                        .HasForeignKey("ReviewId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Review");
-=======
             modelBuilder.Entity("api.Models.Course", b =>
                 {
                     b.Navigation("ReviewSummary");
 
                     b.Navigation("Reviews");
->>>>>>> main
                 });
 
             modelBuilder.Entity("api.Models.DiningHall", b =>
@@ -892,11 +844,6 @@ namespace api.Migrations
                     b.Navigation("ReviewSummary");
 
                     b.Navigation("Reviews");
-                });
-
-            modelBuilder.Entity("api.Models.Review", b =>
-                {
-                    b.Navigation("Votes");
                 });
 
             modelBuilder.Entity("api.Models.User", b =>

@@ -30,11 +30,14 @@ public class ReviewService : IReviewService
         return await _repository.GetReviewsByParkingGarageId(garageId, prev, perPage, userId);
     }
 
-
-
     public async Task<List<ReviewWithUser>> GetReviewsByDiningHallId(int diningHallId, int prev, int perPage, int userId)
     {
         return await _repository.GetReviewsByDiningHallId(diningHallId, prev, perPage, userId);
+    }
+
+    public async Task<List<ReviewWithUser>> GetReviewsByCourseId(int dormId, int prev, int perPage, int userId)
+    {
+        return await _repository.GetReviewsByCourseId(dormId, prev, perPage, userId);
     }
 
     public async Task<ReviewWithSummary> SaveReview(SaveReviewViewModel model)
@@ -48,6 +51,7 @@ public class ReviewService : IReviewService
             DormId = model.DormId,
             ParkingGarageId = model.ParkingGarageId,
             DiningHallId = model.DiningHallId,
+            CourseId = model.CourseId,
         };
         return await _repository.SaveReview(review);
     }
