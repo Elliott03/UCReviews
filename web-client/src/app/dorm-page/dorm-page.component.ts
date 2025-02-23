@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Dorm, ILargeDorm } from '../Models/Dorm';
+import { ILargeDorm } from '../Models/Dorm';
 import { DormService } from '../core/services/dorm.service';
 import { NgxStarsComponent } from 'ngx-stars';
 import { IUser } from '../Models/User';
-import { IReview, SaveReview } from '../Models/Review';
+import { SaveReview } from '../Models/Review';
 import { AuthService } from '../core/services/auth.service';
 import { ReviewService } from '../core/services/review.service';
 import { emailToUsername as _emailToUsername } from '../core/helpers/emailToUsername';
@@ -69,7 +69,7 @@ export class DormPageComponent implements OnInit {
     }
 
     // Get the dorm's name from the route parameters
-    const name = this._route.snapshot.params['name']; // Make sure your URL is correct
+    const name = this._route.snapshot.params['name'];
 
     // Fetch the dorm details using the name
     this.dorm = await firstValueFrom(this._dormService.getDorm(name));

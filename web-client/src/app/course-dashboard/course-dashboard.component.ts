@@ -35,11 +35,9 @@ export class CourseDashboardComponent implements OnInit {
       this._router.navigate(['/signup']);
     }
     this._router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.hasChildRoute = this._route.children.length > 0;
-        if (!this.hasChildRoute) {
-          this.showAddButtons = true;
-        }
+      this.hasChildRoute = this._route.children.length > 0;
+      if (event instanceof NavigationEnd && !this.hasChildRoute) {
+        this.showAddButtons = true;
       }
     });
   }
@@ -80,8 +78,12 @@ export class CourseDashboardComponent implements OnInit {
 
   filteredCourses(): ICourse[] {
     return this.courses.filter((course) => {
-      return course.nameQueryParameter.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-      course.name.toLowerCase().includes(this.searchTerm.toLowerCase());
+      return (
+        course.nameQueryParameter
+          .toLowerCase()
+          .includes(this.searchTerm.toLowerCase()) ||
+        course.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
     });
   }
   openAddCourseModal(): void {

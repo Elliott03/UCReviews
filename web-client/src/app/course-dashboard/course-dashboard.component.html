@@ -3,7 +3,7 @@
       *ngIf="!hasChildRoute"
       (searchChanged)="onSearchChange($event)"
     ></app-search>
-  
+
   <div
     class="dashboard course"
     infiniteScroll
@@ -37,9 +37,9 @@
       </a>
     </ng-container>
   </div>
-  
-  <div *ngIf="showAddButtons" class="page-footer">
-    Can't find your course? 
+
+  <div *ngIf="showAddButtons && !hasChildRoute" class="page-footer">
+    Can't find your course?
     <button mat-button class="add-link" (click)="openAddCourseModal()">Add it here.</button>
   </div>
 </div>
