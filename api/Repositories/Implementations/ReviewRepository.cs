@@ -1,6 +1,7 @@
 namespace api.Repositories.Implementations;
 
 using api.Dto;
+using api.Enums;
 using api.Extensions;
 using api.Models;
 using api.Repositories.Interfaces;
@@ -27,15 +28,28 @@ public class ReviewRepository : IReviewRepository
         _reviewSummaryService = reviewSummaryService;
     }
 
-    public async Task<IEnumerable<Review>> GetReviews(int prev, int perPage)
+    public async Task<IEnumerable<Review>> GetReviews(int prev, int perPage, int userId)
     {
         var query = _dbContext.Review.AsQueryable();
         perPage = int.Min(perPage, _paginationSettings.MaxPerPage);
         query = query.Where(r => r.Id > prev).Take(perPage);
-        return await query.ToListAsync();
+        var reviews = await query.ToListAsync();
+        foreach (var review in reviews)
+        {
+            var votes = await _dbContext.Vote.Where(v => v.ReviewId == review.Id).ToListAsync();
+            review.Votes = votes;
+            foreach (var vote in review.Votes)
+            {
+                if (vote.UserId == userId)
+                {
+                    review.UserVoteType = (VoteType)vote.SelectedVote;
+                }
+            }
+        }
+        return reviews;
     }
 
-    public async Task<List<ReviewWithUser>> GetReviewsWithUsers(IQueryable<Review> query)
+    public async Task<List<ReviewWithUser>> GetReviewsWithUsers(IQueryable<Review> query, int userId)
     {
         // Get get the user for each review, and combine the reviews with the users
         var reviewsWithUsers = await query.Include(r => r.User).ToListAsync();
@@ -44,42 +58,71 @@ public class ReviewRepository : IReviewRepository
         {
             var user = await _dbContext.User.FindAsync(review.UserId);
             reviewWithUsers.Add(new ReviewWithUser { review = review, user = new ReviewUser { Id = user.Id, Email = user.Email } });
+            var votes = await _dbContext.Vote.Where(v => v.ReviewId == review.Id).ToListAsync();
+            review.Votes = votes;
+            int averageVote = 0;
+            foreach (var vote in votes)
+            {
+                if (vote.SelectedVote == VoteType.Upvote)
+                {
+                    averageVote++;
+                    if (vote.UserId == userId)
+                    {
+                        review.UserVoteType = VoteType.Upvote;
+                    }
+
+                }
+                else if (vote.SelectedVote == VoteType.Downvote)
+                {
+                    averageVote--;
+                    if (vote.UserId == userId)
+                    {
+                        review.UserVoteType = VoteType.Downvote;
+                    }
+
+                }
+            }
+            if (review.UserVoteType != VoteType.Upvote && review.UserVoteType != VoteType.Downvote)
+            {
+                review.UserVoteType = VoteType.NoVote;
+            }
+            review.AverageVote = averageVote;
         }
 
         return reviewWithUsers;
     }
 
-    public async Task<List<ReviewWithUser>> GetReviewsByDormId(int dormId, int prev, int perPage)
+    public async Task<List<ReviewWithUser>> GetReviewsByDormId(int dormId, int prev, int perPage, int userId)
     {
         var query = _dbContext.Review.AsQueryable();
         perPage = int.Min(perPage, _paginationSettings.MaxPerPage);
         query = query.Where(r => r.Id > prev && r.DormId == dormId).Take(perPage);
-        return await GetReviewsWithUsers(query);
+        return await GetReviewsWithUsers(query, userId);
     }
 
 
-    public async Task<List<ReviewWithUser>> GetReviewsByParkingGarageId(int parkingGarageId, int prev, int perPage)
+    public async Task<List<ReviewWithUser>> GetReviewsByParkingGarageId(int parkingGarageId, int prev, int perPage, int userId)
     {
         var query = _dbContext.Review.AsQueryable();
         perPage = int.Min(perPage, _paginationSettings.MaxPerPage);
         query = query.Where(r => r.Id > prev && r.ParkingGarageId == parkingGarageId).Take(perPage);
-        return await GetReviewsWithUsers(query);
+        return await GetReviewsWithUsers(query, userId);
     }
 
-    public async Task<List<ReviewWithUser>> GetReviewsByDiningHallId(int diningHallId, int prev, int perPage)
+    public async Task<List<ReviewWithUser>> GetReviewsByDiningHallId(int diningHallId, int prev, int perPage, int userId)
     {
         var query = _dbContext.Review.AsQueryable();
         perPage = int.Min(perPage, _paginationSettings.MaxPerPage);
         query = query.Where(r => r.Id > prev && r.DiningHallId == diningHallId).Take(perPage);
-        return await GetReviewsWithUsers(query);
+        return await GetReviewsWithUsers(query, userId);
     }
 
-    public async Task<List<ReviewWithUser>> GetReviewsByCourseId(int courseId, int prev, int perPage)
+    public async Task<List<ReviewWithUser>> GetReviewsByCourseId(int courseId, int prev, int perPage, int userId)
     {
         var query = _dbContext.Review.AsQueryable();
         perPage = int.Min(perPage, _paginationSettings.MaxPerPage);
         query = query.Where(r => r.Id > prev && r.CourseId == courseId).Take(perPage);
-        return await GetReviewsWithUsers(query);
+        return await GetReviewsWithUsers(query, userId);
     }
 
 #nullable enable
@@ -97,4 +140,59 @@ public class ReviewRepository : IReviewRepository
 
         return new ReviewWithSummary { review = review, summary = reviewSummary };
     }
+    public async Task<Review> GetReviewById(int id)
+    {
+        var review = await _dbContext.Review.FirstOrDefaultAsync(r => r.Id == id);
+        return review;
+    }
+    public async Task<Review> SaveVote(Vote vote, int userId)
+    {
+        var existingVote = await _dbContext.Vote
+            .FirstOrDefaultAsync(v => v.ReviewId == vote.ReviewId && v.UserId == userId);
+
+        // Retrieve review and check for null
+        var review = await _dbContext.Review.FirstOrDefaultAsync(r => r.Id == vote.ReviewId);
+        if (review == null)
+        {
+            throw new Exception($"Review with ID {vote.ReviewId} not found.");
+        }
+
+        if (existingVote != null)
+        {
+            // Undo previous vote effect
+            if (existingVote.SelectedVote == VoteType.Upvote)
+            {
+                review.AverageVote--;  // Remove previous upvote
+            }
+            else if (existingVote.SelectedVote == VoteType.Downvote)
+            {
+                review.AverageVote++;  // Remove previous downvote
+            }
+
+            // Update existing vote
+            existingVote.SelectedVote = vote.SelectedVote;
+            _dbContext.Vote.Update(existingVote);  // Ensures an update, not a new insert
+        }
+        else
+        {
+            // New vote, so add it
+            await _dbContext.Vote.AddAsync(vote);
+        }
+
+        await _dbContext.SaveChangesAsync();
+
+        // Recalculate total votes
+        review.AverageVote = await _dbContext.Vote
+            .Where(v => v.ReviewId == review.Id)
+            .SumAsync(v => v.SelectedVote == VoteType.Upvote ? 1 : (v.SelectedVote == VoteType.Downvote ? -1 : 0));
+
+        // Update the user's vote type
+        var userVote = await _dbContext.Vote
+            .FirstOrDefaultAsync(v => v.ReviewId == review.Id && v.UserId == userId);
+
+        review.UserVoteType = userVote != null ? (VoteType)userVote.SelectedVote : VoteType.NoVote;
+
+        return review;
+    }
+
 }

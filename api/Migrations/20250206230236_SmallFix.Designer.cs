@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api.Models;
 
@@ -11,9 +12,11 @@ using api.Models;
 namespace api.Migrations
 {
     [DbContext(typeof(UCReviewsContext))]
-    partial class UCReviewsContextModelSnapshot : ModelSnapshot
+    [Migration("20250206230236_SmallFix")]
+    partial class SmallFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,50 +24,6 @@ namespace api.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("api.Models.Course", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NameQueryParameter")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Number")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Subject")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Course", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "SR CAPSTONE PROJECT I",
-                            NameQueryParameter = "IT5003C",
-                            Number = "5003C",
-                            Subject = "IT"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "SR CAPSTONE PROJECT II",
-                            NameQueryParameter = "IT5004C",
-                            Number = "5004C",
-                            Subject = "IT"
-                        });
-                });
 
             modelBuilder.Entity("api.Models.DiningHall", b =>
                 {
@@ -648,9 +607,6 @@ namespace api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CourseId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("DiningHallId")
                         .HasColumnType("int");
 
@@ -676,8 +632,6 @@ namespace api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CourseId");
-
                     b.HasIndex("DiningHallId");
 
                     b.HasIndex("DormId");
@@ -701,9 +655,6 @@ namespace api.Migrations
                         .HasPrecision(10, 9)
                         .HasColumnType("decimal(10,9)");
 
-                    b.Property<int?>("CourseId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("DiningHallId")
                         .HasColumnType("int");
 
@@ -720,10 +671,6 @@ namespace api.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CourseId")
-                        .IsUnique()
-                        .HasFilter("[CourseId] IS NOT NULL");
 
                     b.HasIndex("DiningHallId")
                         .IsUnique()
@@ -779,30 +726,18 @@ namespace api.Migrations
                     b.Property<int>("ReviewId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ReviewSummaryId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("SelectedVote")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ReviewId");
 
-                    b.HasIndex("ReviewSummaryId");
-
                     b.ToTable("Vote");
                 });
 
             modelBuilder.Entity("api.Models.Review", b =>
                 {
-                    b.HasOne("api.Models.Course", "Course")
-                        .WithMany("Reviews")
-                        .HasForeignKey("CourseId");
-
                     b.HasOne("api.Models.DiningHall", "DiningHall")
                         .WithMany("Reviews")
                         .HasForeignKey("DiningHallId");
@@ -821,8 +756,6 @@ namespace api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Course");
-
                     b.Navigation("DiningHall");
 
                     b.Navigation("Dorm");
@@ -834,10 +767,6 @@ namespace api.Migrations
 
             modelBuilder.Entity("api.Models.ReviewSummary", b =>
                 {
-                    b.HasOne("api.Models.Course", "Course")
-                        .WithOne("ReviewSummary")
-                        .HasForeignKey("api.Models.ReviewSummary", "CourseId");
-
                     b.HasOne("api.Models.DiningHall", "DiningHall")
                         .WithOne("ReviewSummary")
                         .HasForeignKey("api.Models.ReviewSummary", "DiningHallId");
@@ -849,8 +778,6 @@ namespace api.Migrations
                     b.HasOne("api.Models.ParkingGarage", "ParkingGarage")
                         .WithOne("ReviewSummary")
                         .HasForeignKey("api.Models.ReviewSummary", "ParkingGarageId");
-
-                    b.Navigation("Course");
 
                     b.Navigation("DiningHall");
 
@@ -867,20 +794,7 @@ namespace api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("api.Models.ReviewSummary", "ReviewSummary")
-                        .WithMany()
-                        .HasForeignKey("ReviewSummaryId");
-
                     b.Navigation("Review");
-
-                    b.Navigation("ReviewSummary");
-                });
-
-            modelBuilder.Entity("api.Models.Course", b =>
-                {
-                    b.Navigation("ReviewSummary");
-
-                    b.Navigation("Reviews");
                 });
 
             modelBuilder.Entity("api.Models.DiningHall", b =>

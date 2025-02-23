@@ -10,15 +10,21 @@ export interface IReview {
   reviewText: string;
   starRating: number;
   timeCreated: Date;
+  averageVote: number;
   userId: number;
   dormId: number;
   user: IUser;
   dorm?: ILargeDorm;
   parkingGarage?: IParkingGarage;
+  userVoteType: UserVoteType;
   diningHall?: IDiningHall;
   course?: ICourse;
 }
-
+export enum UserVoteType {
+  UserUpvoted,
+  UserDownvoted,
+  UserNeutral,
+}
 export type Review = IReview;
 
 export type Reviewable = Dorm | ParkingGarage | DiningHall | Course;
