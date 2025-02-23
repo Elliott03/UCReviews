@@ -7,6 +7,7 @@ import { IReview, UserVoteType } from 'src/app/Models/Review';
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 import { ReviewService } from 'src/app/core/services/review.service';
 import { PageableQueryParam } from 'src/app/core/types/QueryParams';
+import { IReviewWithUser } from 'src/app/Models/ReviewWithUser';
 
 @Component({
   selector: 'reviews',
@@ -20,13 +21,13 @@ export class ReviewsComponent {
   convertDateToReadable = _convertDateToReadable;
   perPage = 2;
   prev = 0;
-  reviews: Map<number, IReview> = new Map();
-  
+  reviews: Map<number, IReviewWithUser> = new Map();
+
   JSON = JSON;
 
   @Input() loadReviewsMethod!: (
     params: PageableQueryParam
-  ) => Promise<IReview[]>;
+  ) => Promise<IReviewWithUser[]>;
 
   constructor(private _reviewService: ReviewService) {}
 
@@ -38,20 +39,20 @@ export class ReviewsComponent {
     this.loadReviews();
   }
 
-  reviewsToMap(reviews: IReview[]): Map<number, IReview> {
-    return new Map(reviews.map((review) => [review.id, review]));
+  reviewsToMap(reviews: IReviewWithUser[]): Map<number, IReviewWithUser> {
+    return new Map(reviews.map((review) => [review.review.id, review]));
   }
   public upvoteReviewColor(review: IReview): string {
     if (review.userVoteType === UserVoteType.UserUpvoted) {
-      return "red";
-    } 
-    return "black";
+      return 'red';
+    }
+    return 'black';
   }
   public downvoteReviewColor(review: IReview): string {
     if (review.userVoteType === UserVoteType.UserDownvoted) {
-      return "red";
-    } 
-    return "black";
+      return 'red';
+    }
+    return 'black';
   }
   async loadReviews() {
     const reviews = this.reviewsToMap(
@@ -60,47 +61,57 @@ export class ReviewsComponent {
         perPage: this.perPage,
       })
     );
-    for (const review of reviews.values()) {
+    for (const reviewWithUser of reviews.values()) {
+      const { review, user } = reviewWithUser;
       if (!this.reviews?.has(review.id)) {
-        this.reviews?.set(review.id, review);
+        this.reviews?.set(review.id, reviewWithUser);
         this.prev = review.id;
       }
       console.log(review);
     }
   }
 
-  addReviewToFront(review: IReview): void {
-    if (!this.reviews.has(review.id)) {
-      this.reviews = new Map([[review.id, review], ...this.reviews]);
+  addReviewToFront(reviewUser: IReviewWithUser): void {
+    const { review, user } = reviewUser;
+    if (!this.reviews.has(reviewUser.review.id)) {
+      this.reviews = new Map([
+        [reviewUser.review.id, reviewUser],
+        ...Array.from(this.reviews).map(
+          ([_, reviewUsr]): [number, IReviewWithUser] => [
+            reviewUsr.review.id,
+            reviewUsr,
+          ]
+        ),
+      ]);
     }
   }
   public upvote(review: IReview) {
     if (review.userVoteType === UserVoteType.UserUpvoted) {
       // un upvote
-      this.vote(review, "novote");
+      this.vote(review, 'novote');
     } else {
       // upvote
-      this.vote(review, "upvote");
+      this.vote(review, 'upvote');
     }
   }
   public downvote(review: IReview) {
     if (review.userVoteType === UserVoteType.UserDownvoted) {
-      this.vote(review, "novote");
+      this.vote(review, 'novote');
     } else {
-      this.vote(review, "downvote");
+      this.vote(review, 'downvote');
     }
-    
   }
   public vote(review: IReview, vote: string) {
-    this._reviewService.updateVote(review, vote).subscribe((review: IReview) => {
-      console.log(review);
-      this.reviews.forEach((val, index) => {
-        if (val.id == review.id) {
-          val.averageVote = review.averageVote;
-          val.userVoteType = review.userVoteType;
-        }
-      })
-    });
+    this._reviewService
+      .updateVote(review, vote)
+      .subscribe((review: IReview) => {
+        console.log(review);
+        this.reviews.forEach((val, index) => {
+          if (val.review.id == review.id) {
+            val.review.averageVote = review.averageVote;
+            val.review.userVoteType = review.userVoteType;
+          }
+        });
+      });
   }
-
 }

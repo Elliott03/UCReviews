@@ -12,15 +12,16 @@ import { IReview, SaveReview } from '../Models/Review';
 import { PageableQueryParam } from '../core/types/QueryParams';
 import { ReviewsComponent } from '../shared/reviews/reviews.component';
 import { IParkingGarage } from '../Models/ParkingGarage';
+import { IReviewWithUser } from '../Models/ReviewWithUser';
+import { BreadcrumbService } from 'xng-breadcrumb';
 
 @Component({
   selector: 'garage-page',
   templateUrl: './garage-page.component.html',
-  styleUrl: './garage-page.component.scss',
+  styleUrls: ['./garage-page.component.scss'],
 })
 export class GaragePageComponent implements OnInit, AfterViewInit {
   garage?: IParkingGarage;
-  // JSON: any;
   user: IUser | undefined;
   username: string | undefined;
   reviewText: string = '';
@@ -37,12 +38,11 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
   reviewStarsComponent: NgxStarsComponent = new NgxStarsComponent();
 
   @ViewChild('reviewsComponent')
-  reviewsComponent: ReviewsComponent = new ReviewsComponent(
-    this._reviewService
-  );
+  reviewsComponent!: ReviewsComponent;
 
   constructor(
-    private route: ActivatedRoute,
+    private _bcService: BreadcrumbService,
+    private _route: ActivatedRoute,
     private _garageService: GarageService,
     private _reviewService: ReviewService,
     private _authService: AuthService,
@@ -54,36 +54,31 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
       this._router.navigate(['/signup']);
       return;
     }
-    const slug = this.route.snapshot.params['slug'];
-    // this.JSON = JSON;
-    this.garage = await firstValueFrom(
-      this._garageService.getParkingGarage(slug)
-    );
+
+    const slug = this._route.snapshot.params['slug']; 
+
+    this.garage = await firstValueFrom(this._garageService.getParkingGarage(slug));
 
     if (!this.garage) {
       this._router.navigate(['/dashboard', 'garages']);
       return;
     }
 
-    const stringUser = localStorage.getItem('user');
+    this._bcService.set('dashboard/garages/:slug', this.garage.name);
 
+    const stringUser = localStorage.getItem('user');
     if (stringUser) {
       this.user = JSON.parse(stringUser);
       const numberOfCharactersForEmailEnding = -12;
-      this.username = this.user?.email.slice(
-        0,
-        numberOfCharactersForEmailEnding
-      );
+      this.username = this.user?.email.slice(0, numberOfCharactersForEmailEnding);
     }
   }
 
   ngAfterViewInit() {
-    // Wait for the garage data to be loaded
     if (this.garage) {
       this.setGarageRating();
     } else {
-      // If garage is not yet loaded, listen for it
-      this.route.params.subscribe(async (params) => {
+      this._route.params.subscribe(async (params) => {
         const slug = params['slug'];
         this.garage = await firstValueFrom(
           this._garageService.getParkingGarage(slug)
@@ -95,9 +90,7 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
 
   private setGarageRating() {
     if (this.garageStarsComponent && this.garage) {
-      this.garageStarsComponent.setRating(
-        this.garage.reviewSummary?.averageRating || 0
-      );
+      this.garageStarsComponent.setRating(this.garage.reviewSummary?.averageRating || 0);
     }
   }
 
@@ -110,10 +103,14 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
       userId,
       parkingGarageId: this.garage.id,
     });
-    const addedReview = await firstValueFrom(
-      this._reviewService.addReview(newReview)
-    );
-    this.reviewsComponent.addReviewToFront(addedReview.review);
+    const addedReview = await firstValueFrom(this._reviewService.addReview(newReview));
+    this.reviewsComponent.addReviewToFront({
+      review: addedReview.review,
+      user: {
+        id: userId,
+        email: this.user?.email || '',
+      },
+    });
     this.garageStarsComponent.setRating(addedReview.summary.averageRating);
     this.reviewStarsComponent.setRating(0); // Reset component
     this.reviewText = '';
@@ -125,7 +122,7 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
     this.currentCharacterCount = currentText.length;
   }
 
-  getReviewsLoader(): (params: PageableQueryParam) => Promise<IReview[]> {
+  getReviewsLoader(): (params: PageableQueryParam) => Promise<IReviewWithUser[]> {
     return async ({ prev, perPage }: PageableQueryParam) => {
       if (!this.garage) return [];
       const reviews = await firstValueFrom(

@@ -19,18 +19,20 @@ public class ReviewService : IReviewService
     {
         return await _repository.GetReviews(prev, perPage, userId);
     }
-    public async Task<List<Review>> GetReviewsByDormId(int dormId, int prev, int perPage, int userId)
+
+    public async Task<List<ReviewWithUser>> GetReviewsByDormId(int dormId, int prev, int perPage, int userId)
     {
         return await _repository.GetReviewsByDormId(dormId, prev, perPage, userId);
     }
 
-    public async Task<List<Review>> GetReviewsByParkingGarageId(int garageId, int prev, int perPage, int userId)
+    public async Task<List<ReviewWithUser>> GetReviewsByParkingGarageId(int garageId, int prev, int perPage, int userId)
     {
         return await _repository.GetReviewsByParkingGarageId(garageId, prev, perPage, userId);
     }
 
 
-    public async Task<List<Review>> GetReviewsByDiningHallId(int diningHallId, int prev, int perPage, int userId)
+
+    public async Task<List<ReviewWithUser>> GetReviewsByDiningHallId(int diningHallId, int prev, int perPage, int userId)
     {
         return await _repository.GetReviewsByDiningHallId(diningHallId, prev, perPage, userId);
     }
@@ -50,11 +52,11 @@ public class ReviewService : IReviewService
         return await _repository.SaveReview(review);
     }
 
-    public async Task<Review> GetReviewById(int id) 
+    public async Task<Review> GetReviewById(int id)
     {
         return await _repository.GetReviewById(id);
     }
-    public async Task<Review> SaveVote(Vote vote, int userId) 
+    public async Task<Review> SaveVote(Vote vote, int userId)
     {
         return await _repository.SaveVote(vote, userId);
     }

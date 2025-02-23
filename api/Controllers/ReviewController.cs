@@ -37,7 +37,7 @@ public class ReviewController : ControllerBase
     }
 
     [HttpGet("Dorm/{dormId}")]
-    public async Task<ActionResult<List<Review>>> GetReviewByDormId(int dormId, [FromQuery] int prev = 0, [FromQuery] int? perPage = null)
+    public async Task<ActionResult<List<ReviewWithUser>>> GetReviewByDormId(int dormId, [FromQuery] int prev = 0, [FromQuery] int? perPage = null)
     {
         var userId = GetUserIdFromJwt();
         perPage ??= _paginationSettings.DefaultPerPage;
@@ -45,7 +45,7 @@ public class ReviewController : ControllerBase
     }
 
     [HttpGet("ParkingGarage/{garageId}")]
-    public async Task<ActionResult<List<Review>>> GetReviewByParkingGarageId(int garageId, [FromQuery] int prev = 0, [FromQuery] int? perPage = null)
+    public async Task<ActionResult<List<ReviewWithUser>>> GetReviewByParkingGarageId(int garageId, [FromQuery] int prev = 0, [FromQuery] int? perPage = null)
     {
         var userId = GetUserIdFromJwt();
         perPage ??= _paginationSettings.DefaultPerPage;
@@ -53,7 +53,7 @@ public class ReviewController : ControllerBase
     }
 
     [HttpGet("DiningHall/{diningHallId}")]
-    public async Task<ActionResult<List<Review>>> GetReviewByDiningHallId(int diningHallId, [FromQuery] int prev = 0, [FromQuery] int? perPage = null)
+    public async Task<ActionResult<List<ReviewWithUser>>> GetReviewByDiningHallId(int diningHallId, [FromQuery] int prev = 0, [FromQuery] int? perPage = null)
     {
         var userId = GetUserIdFromJwt();
         perPage ??= _paginationSettings.DefaultPerPage;

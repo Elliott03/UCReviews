@@ -46,9 +46,7 @@
         [initialStars]="0"
         [size]="3"
       ></ngx-stars>
-      <mat-form-field
-        class="create-review-text-field"
-      >
+      <mat-form-field class="create-review-text-field">
         <textarea
           matInput
           [maxLength]="1000"
@@ -72,7 +70,12 @@
       </button>
     </mat-card-content>
   </mat-card>
-  <reviews #reviewsComponent [loadReviewsMethod]="getReviewsLoader()"></reviews>
+  <div class="review-container">
+    <reviews
+      #reviewsComponent
+      [loadReviewsMethod]="getReviewsLoader()"
+    ></reviews>
+  </div>
 </div>
 
 }

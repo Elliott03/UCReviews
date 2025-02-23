@@ -5,45 +5,50 @@
   [infiniteScrollThrottle]="500"
   (scrolled)="onScroll()"
 >
-  @for (review of reviews.values(); track review) {
+  @for (reviewWithUser of reviews.values(); track reviewWithUser) {
 
   <mat-card class="review card">
     <!-- {{ JSON.stringify(review) }} -->
     <mat-card-content>
       <div class="review-heading">
         <div class="review-heading-group">
-          <!-- TODO - Add username once we can grab it form the backend, also needs to work for anonymous reviews -->
-          <!-- <span class="review-username">{{ emailToUsername(review.user.email) }}</span> -->
-          <span class="review-username">$USERNAME</span>
+          <span class="review-username">{{
+            emailToUsername(reviewWithUser.user.email)
+          }}</span>
           <ngx-stars
             class="review-stars"
             [readonly]="true"
-            [initialStars]="review.starRating"
+            [initialStars]="reviewWithUser.review.starRating"
             [size]="2"
           ></ngx-stars>
         </div>
         <em class="review-time-created">
-          {{ convertDateToReadable(review.timeCreated, true) }}
+          {{ convertDateToReadable(reviewWithUser.review.timeCreated, true) }}
         </em>
       </div>
       <div class="text-votes">
-        <span class="review-text">{{ review.reviewText }}</span>
+        <span class="review-text">{{ reviewWithUser.review.reviewText }}</span>
         <div class="votes">
-          <span class="vote" (click)="upvote(review)">
+          <span class="vote" (click)="upvote(reviewWithUser.review)">
             <svg width="36" height="36" viewBox="0 0 36 36">
-              <path d="M18 6L6 22h8v6h8v-6h8L18 6z" [attr.fill]="upvoteReviewColor(review)"></path>
+              <path
+                d="M18 6L6 22h8v6h8v-6h8L18 6z"
+                [attr.fill]="upvoteReviewColor(reviewWithUser.review)"
+              ></path>
             </svg>
           </span>
-          {{ review.averageVote }}
-          <span class="vote" (click)="downvote(review)">
+          {{ reviewWithUser.review.averageVote }}
+          <span class="vote" (click)="downvote(reviewWithUser.review)">
             <svg width="36" height="36" viewBox="0 0 36 36">
-              <path d="M18 30L6 14h8V8h8v6h8L18 30z" [attr.fill]="downvoteReviewColor(review)"></path>
+              <path
+                d="M18 30L6 14h8V8h8v6h8L18 30z"
+                [attr.fill]="downvoteReviewColor(reviewWithUser.review)"
+              ></path>
             </svg>
           </span>
         </div>
-        
-        
       </div>
+      <span class="review-text">{{ reviewWithUser.review.reviewText }}</span>
     </mat-card-content>
   </mat-card>
   }
