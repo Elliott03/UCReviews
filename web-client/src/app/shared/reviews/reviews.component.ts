@@ -8,11 +8,17 @@ import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 import { ReviewService } from 'src/app/core/services/review.service';
 import { PageableQueryParam } from 'src/app/core/types/QueryParams';
 import { IReviewWithUser } from 'src/app/Models/ReviewWithUser';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'reviews',
   standalone: true,
-  imports: [NgxStarsModule, MatCardModule, InfiniteScrollDirective],
+  imports: [
+    NgxStarsModule,
+    MatCardModule,
+    InfiniteScrollDirective,
+    MatIconModule,
+  ],
   templateUrl: './reviews.component.html',
   styleUrl: './reviews.component.scss',
 })
@@ -42,17 +48,14 @@ export class ReviewsComponent {
   reviewsToMap(reviews: IReviewWithUser[]): Map<number, IReviewWithUser> {
     return new Map(reviews.map((review) => [review.review.id, review]));
   }
-  public upvoteReviewColor(review: IReview): string {
-    if (review.userVoteType === UserVoteType.UserUpvoted) {
-      return 'red';
+  public voteSelectedClass(review: IReview, vote: 'upvote' | 'downvote') {
+    if (
+      (UserVoteType.UserUpvoted === review.userVoteType && vote === 'upvote') ||
+      (UserVoteType.UserDownvoted === review.userVoteType && vote === 'downvote')
+    ) {
+      return 'selected';
     }
-    return 'black';
-  }
-  public downvoteReviewColor(review: IReview): string {
-    if (review.userVoteType === UserVoteType.UserDownvoted) {
-      return 'red';
-    }
-    return 'black';
+    return '';
   }
   async loadReviews() {
     const reviews = this.reviewsToMap(

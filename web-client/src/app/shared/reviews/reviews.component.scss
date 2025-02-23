@@ -1,3 +1,5 @@
+@use "util" as *;
+
 .review-container {
   display: flex;
   flex-direction: column;
@@ -5,30 +7,42 @@
 }
 
 .review {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
   &-heading {
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    width: 100%;
+  }
+  &-body {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     gap: 0.5rem;
     margin-bottom: 0.5rem;
   }
   &-heading-group {
     display: inline-flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 0.5rem;
   }
 }
 
-.text-votes {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
 .votes {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-.vote:hover {
   cursor: pointer;
+  mat-icon {
+    transition: transform 0.2s ease-in-out;
+    &:hover,
+    &.selected {
+      color: $primary-color;
+      transform: scale(1.2);
+      transition: none;
+    }
+  }
 }
