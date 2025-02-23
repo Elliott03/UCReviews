@@ -65,12 +65,11 @@ public class UCReviewsContext : DbContext
             .WithOne(r => r.DiningHall)
             .HasForeignKey<ReviewSummary>(rs => rs.DiningHallId)
             .IsRequired(false);
-<<<<<<< HEAD
+            
         builder.Entity<Review>()
             .HasMany(x => x.Votes)
             .WithOne(x => x.Review)
             .HasForeignKey(x => x.ReviewId);
-=======
 
         builder.Entity<Course>()
             .ToTable("Course")
@@ -84,7 +83,6 @@ public class UCReviewsContext : DbContext
             .WithOne(r => r.Course)
             .HasForeignKey<ReviewSummary>(rs => rs.CourseId)
             .IsRequired(false);
->>>>>>> main
 
         builder.Entity<Dorm>()
         .HasData(

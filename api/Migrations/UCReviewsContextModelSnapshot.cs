@@ -854,7 +854,6 @@ namespace api.Migrations
                     b.Navigation("ParkingGarage");
                 });
 
-<<<<<<< HEAD
             modelBuilder.Entity("api.Models.Vote", b =>
                 {
                     b.HasOne("api.Models.Review", "Review")
@@ -864,13 +863,12 @@ namespace api.Migrations
                         .IsRequired();
 
                     b.Navigation("Review");
-=======
+                });
             modelBuilder.Entity("api.Models.Course", b =>
                 {
                     b.Navigation("ReviewSummary");
 
                     b.Navigation("Reviews");
->>>>>>> main
                 });
 
             modelBuilder.Entity("api.Models.DiningHall", b =>
