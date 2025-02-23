@@ -67,9 +67,10 @@ public class UCReviewsContext : DbContext
             .IsRequired(false);
             
         builder.Entity<Review>()
-            .HasMany(x => x.Votes)
-            .WithOne(x => x.Review)
-            .HasForeignKey(x => x.ReviewId);
+            .HasMany(r => r.Votes)
+            .WithOne(v => v.Review)
+            .HasForeignKey(v => v.ReviewId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder.Entity<Course>()
             .ToTable("Course")
@@ -81,6 +82,12 @@ public class UCReviewsContext : DbContext
         builder.Entity<Course>()
             .HasOne(c => c.ReviewSummary)
             .WithOne(r => r.Course)
+            .HasForeignKey<ReviewSummary>(rs => rs.CourseId)
+            .IsRequired(false);
+
+        builder.Entity<ReviewSummary>()
+            .HasOne(rs => rs.Course)
+            .WithOne(c => c.ReviewSummary)
             .HasForeignKey<ReviewSummary>(rs => rs.CourseId)
             .IsRequired(false);
 

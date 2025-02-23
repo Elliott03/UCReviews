@@ -44,7 +44,7 @@ public class Review
     [JsonIgnore]
     public virtual Course? Course { get; set; }
 
-    [JsonIgnore]
+    // [JsonIgnore]
     public List<Vote>? Votes { get; set; }
     [NotMapped]
     public int AverageVote { get; set; }
