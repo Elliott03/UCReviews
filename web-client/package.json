@@ -19,6 +19,7 @@
     "@angular/material": "^18.2.6",
     "@angular/platform-browser": "^18.2.5",
     "@angular/platform-browser-dynamic": "^18.2.5",
+    "@angular/pwa": "^0.5.3",
     "@angular/router": "^18.2.5",
     "jwt-decode": "^4.0.0",
     "moment": "^2.29.4",
