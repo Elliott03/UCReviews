@@ -5,9 +5,10 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AuthService } from '../core/services/auth.service';
 
 @Component({
-  selector: 'dorm-dashboard',
-  templateUrl: './dorm-dashboard.component.html',
-  styleUrls: ['./dorm-dashboard.component.scss'],
+    selector: 'dorm-dashboard',
+    templateUrl: './dorm-dashboard.component.html',
+    styleUrls: ['./dorm-dashboard.component.scss'],
+    standalone: false
 })
 export class DormDashboardComponent implements OnInit {
   hasChildRoute = false;

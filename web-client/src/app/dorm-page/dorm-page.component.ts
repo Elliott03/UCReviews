@@ -16,9 +16,10 @@ import { IReviewWithUser } from '../Models/ReviewWithUser';
 import { BreadcrumbService } from 'xng-breadcrumb';
 
 @Component({
-  selector: 'dorm-page',
-  templateUrl: './dorm-page.component.html',
-  styleUrls: ['./dorm-page.component.scss'],
+    selector: 'dorm-page',
+    templateUrl: './dorm-page.component.html',
+    styleUrls: ['./dorm-page.component.scss'],
+    standalone: false
 })
 export class DormPageComponent implements OnInit {
   dorm: ILargeDorm | undefined;

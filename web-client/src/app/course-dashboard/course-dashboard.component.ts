@@ -7,9 +7,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddCourseModalComponent } from '../add-course-modal/add-course-modal.component';
 
 @Component({
-  selector: 'course-dashboard',
-  templateUrl: './course-dashboard.component.html',
-  styleUrl: './course-dashboard.component.scss',
+    selector: 'course-dashboard',
+    templateUrl: './course-dashboard.component.html',
+    styleUrl: './course-dashboard.component.scss',
+    standalone: false
 })
 export class CourseDashboardComponent implements OnInit {
   hasChildRoute = false;

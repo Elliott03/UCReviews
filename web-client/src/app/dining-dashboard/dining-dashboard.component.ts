@@ -6,9 +6,10 @@ import { AuthService } from '../core/services/auth.service';
 import { BreadcrumbService } from 'xng-breadcrumb';
 
 @Component({
-  selector: 'dining-dashboard',
-  templateUrl: './dining-dashboard.component.html',
-  styleUrls: ['./dining-dashboard.component.scss'],
+    selector: 'dining-dashboard',
+    templateUrl: './dining-dashboard.component.html',
+    styleUrls: ['./dining-dashboard.component.scss'],
+    standalone: false
 })
 export class DiningDashboardComponent implements OnInit {
   hasChildRoute = false;

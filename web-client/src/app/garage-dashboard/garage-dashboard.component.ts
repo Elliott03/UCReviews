@@ -6,9 +6,10 @@ import { AuthService } from '../core/services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'garage-dashboard',
-  templateUrl: './garage-dashboard.component.html',
-  styleUrls: ['./garage-dashboard.component.scss'],
+    selector: 'garage-dashboard',
+    templateUrl: './garage-dashboard.component.html',
+    styleUrls: ['./garage-dashboard.component.scss'],
+    standalone: false
 })
 export class GarageDashboardComponent implements OnInit {
   hasChildRoute = false;
