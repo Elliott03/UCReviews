@@ -21,6 +21,7 @@
     "@angular/platform-browser-dynamic": "^18.2.5",
     "@angular/pwa": "^19.2.0",
     "@angular/router": "^18.2.5",
+    "@angular/service-worker": "^18.2.5",
     "jwt-decode": "^4.0.0",
     "moment": "^2.29.4",
     "ng-otp-input": "^2.0.6",
