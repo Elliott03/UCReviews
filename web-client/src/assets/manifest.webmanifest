@@ -1,7 +1,7 @@
 {
-  "name": "web-client",
-  "short_name": "web-client",
-  "theme_color": "#1976d2",
+  "name": "UCReviews",
+  "short_name": "UCReviews",
+  "theme_color": "#cd2c2e",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "./",
