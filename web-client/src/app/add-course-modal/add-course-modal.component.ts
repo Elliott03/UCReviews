@@ -7,6 +7,7 @@ import { Filter } from 'bad-words';
 import { AbstractControl, FormControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { merge } from 'rxjs';
+import { profanityValidator } from '../core/validators/profanity.validator';
 
 @Component({
   selector: 'app-add-course-modal',
@@ -23,9 +24,9 @@ export class AddCourseModalComponent {
   readonly courseSubject = new FormControl('', [
     Validators.required, 
     Validators.pattern(/^[a-zA-Z]{2,4}$/),
-    this.profanityValidator()    
+    profanityValidator()    
   ]);
-  readonly courseName = new FormControl('', [Validators.required, this.profanityValidator()]);
+  readonly courseName = new FormControl('', [Validators.required, profanityValidator()]);
   readonly courseNumber = new FormControl('', [Validators.required, Validators.pattern(/^\d{4}[a-zA-Z]?$/)]);
 
   courseSubjectError = signal('');
@@ -46,13 +47,6 @@ export class AddCourseModalComponent {
     merge(this.courseNumber.statusChanges, this.courseNumber.valueChanges)
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.updateNumberError());
-  }
-
-  profanityValidator(): ValidatorFn {
-    return (control:AbstractControl): ValidationErrors | null => {
-      const filter = new Filter();
-      return filter.isProfane(control.value) ? {profanity: true} : null;
-    };
   }
 
   updateSubjectError() {
