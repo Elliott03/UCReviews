@@ -91,7 +91,6 @@ import { SearchComponent } from './components/search/search.component';
     ReviewsComponent,
     RouterOutlet,
     MatCheckboxModule,
-    TextFieldModule,
     BreadcrumbComponent,
     BreadcrumbItemDirective,
     MatProgressSpinnerModule,

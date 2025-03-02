@@ -1,5 +1,6 @@
 @use "main.scss";
-@use "single.scss";
+@use "resets/link.scss";
+@use "util" as *;
 
 .add-course-modal {
     display: flex;
@@ -37,6 +38,11 @@
   mat-form-field {
     width: 300px;
     margin-bottom: 16px;
+    transition: margin-bottom 0.3s ease;
+  }
+
+  mat-form-field.mat-form-field-invalid {
+    margin-bottom: 32px;
   }
 
   mat-dialog-actions {
