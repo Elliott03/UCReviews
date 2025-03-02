@@ -74,6 +74,7 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
+              "proxyConfig": "src/proxy.conf.json",
               "buildTarget": "web-client:build:production"
             },
             "development": {
