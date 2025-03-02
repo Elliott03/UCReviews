@@ -8,9 +8,10 @@ import { merge } from 'rxjs';
 import { checkIsNumber } from '../core/validators/pin-password.validator';
 
 @Component({
-  selector: 'login-page',
-  templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.scss'],
+    selector: 'login-page',
+    templateUrl: './login-page.component.html',
+    styleUrls: ['./login-page.component.scss'],
+    standalone: false
 })
 export class LoginPageComponent {
   email: string = '';

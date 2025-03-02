@@ -16,9 +16,10 @@ import { IReviewWithUser } from '../Models/ReviewWithUser';
 import { BreadcrumbService } from 'xng-breadcrumb';
 
 @Component({
-  selector: 'dining-page',
-  templateUrl: './dining-page.component.html',
-  styleUrl: './dining-page.component.scss',
+    selector: 'dining-page',
+    templateUrl: './dining-page.component.html',
+    styleUrl: './dining-page.component.scss',
+    standalone: false
 })
 export class DiningPageComponent implements OnInit, AfterViewInit {
   diningHall?: IDiningHall;

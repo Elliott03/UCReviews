@@ -5,9 +5,10 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AuthService } from '../core/services/auth.service';
 
 @Component({
-  selector: 'dorm-dashboard',
-  templateUrl: './dorm-dashboard.component.html',
-  styleUrls: ['./dorm-dashboard.component.scss'],
+    selector: 'dorm-dashboard',
+    templateUrl: './dorm-dashboard.component.html',
+    styleUrls: ['./dorm-dashboard.component.scss'],
+    standalone: false
 })
 export class DormDashboardComponent implements OnInit {
   hasChildRoute = false;
@@ -31,12 +32,12 @@ export class DormDashboardComponent implements OnInit {
     }
 
     this._router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.hasChildRoute = this._route.children.length > 0;
-
-        if (this._router.url.includes('/dashboard/housing/')) {
-          this.searchTerm = ''; 
-        }
+      this.hasChildRoute = this._route.children.length > 0;
+      if (
+        event instanceof NavigationEnd &&
+        this._router.url.includes('/dashboard/housing/')
+      ) {
+        this.searchTerm = '';
       }
     });
   }
@@ -56,8 +57,8 @@ export class DormDashboardComponent implements OnInit {
 
   onSearchChange(searchTerm: string) {
     this.searchTerm = searchTerm;
-    this.dorms = []; 
-    this.prev = 0; 
+    this.dorms = [];
+    this.prev = 0;
     this.loadDorms();
   }
 
@@ -74,7 +75,7 @@ export class DormDashboardComponent implements OnInit {
   }
 
   filteredDorms(): ISmallDorm[] {
-    return this.dorms.filter(dorm =>
+    return this.dorms.filter((dorm) =>
       dorm.name.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
   }

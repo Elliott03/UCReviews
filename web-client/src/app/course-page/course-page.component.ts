@@ -16,9 +16,10 @@ import { IReviewWithUser } from '../Models/ReviewWithUser';
 import { BreadcrumbService } from 'xng-breadcrumb';
 
 @Component({
-  selector: 'course-page',
-  templateUrl: './course-page.component.html',
-  styleUrl: './course-page.component.scss',
+    selector: 'course-page',
+    templateUrl: './course-page.component.html',
+    styleUrl: './course-page.component.scss',
+    standalone: false
 })
 export class CoursePageComponent implements OnInit, AfterViewInit {
   course?: ICourse;

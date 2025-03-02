@@ -7,9 +7,10 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import { checkValidUcEmail } from '../core/validators/mail-uc-edu.validator';
 
 @Component({
-  selector: 'signup-page',
-  templateUrl: './signup-page.component.html',
-  styleUrls: ['./signup-page.component.scss']
+    selector: 'signup-page',
+    templateUrl: './signup-page.component.html',
+    styleUrls: ['./signup-page.component.scss'],
+    standalone: false
 })
 export class SignupPageComponent {
   readonly email = new FormControl('', [Validators.required, Validators.email, checkValidUcEmail()]);

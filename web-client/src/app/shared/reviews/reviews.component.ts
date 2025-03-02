@@ -11,16 +11,15 @@ import { IReviewWithUser } from 'src/app/Models/ReviewWithUser';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-  selector: 'reviews',
-  standalone: true,
-  imports: [
-    NgxStarsModule,
-    MatCardModule,
-    InfiniteScrollDirective,
-    MatIconModule,
-  ],
-  templateUrl: './reviews.component.html',
-  styleUrl: './reviews.component.scss',
+    selector: 'reviews',
+    imports: [
+        NgxStarsModule,
+        MatCardModule,
+        InfiniteScrollDirective,
+        MatIconModule,
+    ],
+    templateUrl: './reviews.component.html',
+    styleUrl: './reviews.component.scss'
 })
 export class ReviewsComponent {
   emailToUsername = _emailToUsername;

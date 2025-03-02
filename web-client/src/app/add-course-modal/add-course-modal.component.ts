@@ -5,9 +5,10 @@ import { CourseService } from '../core/services/course.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-add-course-modal',
-  templateUrl: './add-course-modal.component.html',
-  styleUrls: ['./add-course-modal.component.scss']
+    selector: 'app-add-course-modal',
+    templateUrl: './add-course-modal.component.html',
+    styleUrls: ['./add-course-modal.component.scss'],
+    standalone: false
 })
 export class AddCourseModalComponent {
   course?: ICourse;

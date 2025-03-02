@@ -1,15 +1,11 @@
-<div class="container">
-  <app-search
-    *ngIf="!hasChildRoute"
-    (searchChanged)="onSearchChange($event)"
-  ></app-search>
+<div class="container" *ngIf="!hasChildRoute">
+  <app-search (searchChanged)="onSearchChange($event)"></app-search>
   <div
     class="dashboard dining"
     infiniteScroll
     [infiniteScrollDistance]="2"
     [infiniteScrollThrottle]="50"
     (scrolled)="onScroll()"
-    *ngIf="!hasChildRoute"
   >
     <ng-container
       *ngFor="let diningHall of filteredDiningHalls(); trackBy: trackById"

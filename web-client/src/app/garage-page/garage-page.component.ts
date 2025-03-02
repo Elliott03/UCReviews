@@ -16,9 +16,10 @@ import { IReviewWithUser } from '../Models/ReviewWithUser';
 import { BreadcrumbService } from 'xng-breadcrumb';
 
 @Component({
-  selector: 'garage-page',
-  templateUrl: './garage-page.component.html',
-  styleUrls: ['./garage-page.component.scss'],
+    selector: 'garage-page',
+    templateUrl: './garage-page.component.html',
+    styleUrls: ['./garage-page.component.scss'],
+    standalone: false
 })
 export class GaragePageComponent implements OnInit, AfterViewInit {
   garage?: IParkingGarage;

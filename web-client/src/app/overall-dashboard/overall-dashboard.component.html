@@ -1,5 +1,5 @@
-<div class="container">
-  <div id="dashboard-page" class="dashboard" *ngIf="!hasChildRoute">
+<div class="container" *ngIf="!hasChildRoute">
+  <div id="dashboard-page" class="dashboard">
     <ng-container *ngFor="let category of categories; trackBy: trackByCategoryId">
       <a class="inline-card reset" [routerLink]="category.path">
         <mat-card class="card">
