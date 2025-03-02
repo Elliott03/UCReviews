@@ -14,6 +14,7 @@ import { PageableQueryParam } from '../core/types/QueryParams';
 import { ReviewsComponent } from '../shared/reviews/reviews.component';
 import { IReviewWithUser } from '../Models/ReviewWithUser';
 import { BreadcrumbService } from 'xng-breadcrumb';
+import { Filter } from 'bad-words';
 
 @Component({
   selector: 'dining-page',
@@ -29,6 +30,7 @@ export class DiningPageComponent implements OnInit, AfterViewInit {
   reviewText: string = '';
   maxCharacterCount: number = 1000;
   currentCharacterCount: number = 0;
+  filter: Filter = new Filter();
 
   emailToUsername = _emailToUsername;
   convertDateToReadable = _convertDateToReadable;
@@ -117,6 +119,7 @@ export class DiningPageComponent implements OnInit, AfterViewInit {
     const addedReview = await firstValueFrom(
       this._reviewService.addReview(newReview)
     );
+    addedReview.review.reviewText = this.filter.clean(addedReview.review.reviewText);
     this.reviewsComponent.addReviewToFront({
       review: addedReview.review,
       user: {
@@ -147,6 +150,7 @@ export class DiningPageComponent implements OnInit, AfterViewInit {
           diningHallId: String(this.diningHall.id),
         })
       );
+      reviews.forEach((r) => r.review.reviewText = this.filter.clean(r.review.reviewText));
       return reviews;
     };
   }

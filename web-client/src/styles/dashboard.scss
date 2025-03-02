@@ -2,16 +2,16 @@
 @use "mixins" as *;
 
 .container {
-  padding: 20px 20px;
+  padding: 10px 20px;
   margin: 0 auto;
   @include breakpoint($bp-medium) {
-    padding: 20px 40px;
+    padding: 10px 40px;
   }
   @include breakpoint($bp-large) {
-    padding: 20px 60px;
+    padding: 10px 60px;
   }
   @include breakpoint($bp-xlarge) {
-    padding: 20px 80px;
+    padding: 10px 80px;
   }
 }
 
