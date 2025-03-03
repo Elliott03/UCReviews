@@ -8,10 +8,11 @@ import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-search',
-  templateUrl: './search.component.html',
-  styleUrls: ['./search.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+    selector: 'app-search',
+    templateUrl: './search.component.html',
+    styleUrls: ['./search.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class SearchComponent {
   searchTerm: string = '';

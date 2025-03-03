@@ -6,9 +6,10 @@ import { AuthService } from '../core/services/auth.service';
 import { BreadcrumbService } from 'xng-breadcrumb';
 
 @Component({
-  selector: 'dining-dashboard',
-  templateUrl: './dining-dashboard.component.html',
-  styleUrls: ['./dining-dashboard.component.scss'],
+    selector: 'dining-dashboard',
+    templateUrl: './dining-dashboard.component.html',
+    styleUrls: ['./dining-dashboard.component.scss'],
+    standalone: false
 })
 export class DiningDashboardComponent implements OnInit {
   hasChildRoute = false;
@@ -32,12 +33,9 @@ export class DiningDashboardComponent implements OnInit {
     }
 
     this._router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.hasChildRoute = this._route.children.length > 0;
-
-        if (this._router.url.includes('/dashboard/dining/')) {
-          this.searchTerm = ''; 
-        }
+      this.hasChildRoute = this._route.children.length > 0;
+      if (event instanceof NavigationEnd && this._router.url.includes('/dashboard/dining/')) {
+          this.searchTerm = '';
       }
     });
   }
@@ -56,10 +54,10 @@ export class DiningDashboardComponent implements OnInit {
   }
 
   onSearchChange(searchTerm: string) {
-    this.searchTerm = searchTerm; 
+    this.searchTerm = searchTerm;
     this.diningHalls = [];
     this.prev = 0;
-    this.loadDiningHalls(); 
+    this.loadDiningHalls();
   }
 
   getDiningRatingTitle(diningHall: IDiningHall) {

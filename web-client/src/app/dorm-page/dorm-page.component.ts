@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Dorm, ILargeDorm } from '../Models/Dorm';
+import { ILargeDorm } from '../Models/Dorm';
 import { DormService } from '../core/services/dorm.service';
 import { NgxStarsComponent } from 'ngx-stars';
 import { IUser } from '../Models/User';
-import { IReview, SaveReview } from '../Models/Review';
+import { SaveReview } from '../Models/Review';
 import { AuthService } from '../core/services/auth.service';
 import { ReviewService } from '../core/services/review.service';
 import { emailToUsername as _emailToUsername } from '../core/helpers/emailToUsername';
@@ -16,9 +16,10 @@ import { IReviewWithUser } from '../Models/ReviewWithUser';
 import { BreadcrumbService } from 'xng-breadcrumb';
 
 @Component({
-  selector: 'dorm-page',
-  templateUrl: './dorm-page.component.html',
-  styleUrls: ['./dorm-page.component.scss'],
+    selector: 'dorm-page',
+    templateUrl: './dorm-page.component.html',
+    styleUrls: ['./dorm-page.component.scss'],
+    standalone: false
 })
 export class DormPageComponent implements OnInit {
   dorm: ILargeDorm | undefined;
@@ -68,11 +69,11 @@ export class DormPageComponent implements OnInit {
       return;
     }
 
-    // Get the dorm's slug from the route parameters
-    const slug = this._route.snapshot.params['slug']; // Make sure your URL is correct
+    // Get the dorm's name from the route parameters
+    const name = this._route.snapshot.params['name'];
 
-    // Fetch the dorm details using the slug
-    this.dorm = await firstValueFrom(this._dormService.getDorm(slug));
+    // Fetch the dorm details using the name
+    this.dorm = await firstValueFrom(this._dormService.getDorm(name));
 
     if (!this.dorm) {
       // If the dorm is not found, redirect to another page or show an error
@@ -81,7 +82,7 @@ export class DormPageComponent implements OnInit {
     }
 
     // Set the breadcrumb for the current dorm
-    this._bcService.set('dashboard/housing/:slug', this.dorm.name);
+    this._bcService.set('dashboard/housing/:name', this.dorm.name);
 
     // Set the user's username if logged in
     const stringUser = localStorage.getItem('user');

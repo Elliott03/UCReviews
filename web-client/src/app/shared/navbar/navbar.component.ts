@@ -3,9 +3,10 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
-  selector: 'navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss'],
+    selector: 'navbar',
+    templateUrl: './navbar.component.html',
+    styleUrls: ['./navbar.component.scss'],
+    standalone: false
 })
 export class NavbarComponent {
   constructor(private _authService: AuthService, private router: Router) {}

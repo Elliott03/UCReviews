@@ -6,9 +6,10 @@ import { AuthService } from '../core/services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'garage-dashboard',
-  templateUrl: './garage-dashboard.component.html',
-  styleUrls: ['./garage-dashboard.component.scss'],
+    selector: 'garage-dashboard',
+    templateUrl: './garage-dashboard.component.html',
+    styleUrls: ['./garage-dashboard.component.scss'],
+    standalone: false
 })
 export class GarageDashboardComponent implements OnInit {
   hasChildRoute = false;
@@ -32,11 +33,12 @@ export class GarageDashboardComponent implements OnInit {
     }
 
     this._router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.hasChildRoute = this._route.children.length > 0;
-        if (this._router.url.includes('/dashboard/garages/')) {
-          this.searchTerm = '';
-        }
+      this.hasChildRoute = this._route.children.length > 0;
+      if (
+        event instanceof NavigationEnd &&
+        this._router.url.includes('/dashboard/garages/')
+      ) {
+        this.searchTerm = '';
       }
     });
   }
@@ -74,7 +76,7 @@ export class GarageDashboardComponent implements OnInit {
   }
 
   filteredGarages(): IParkingGarage[] {
-    return this.garages.filter(garage =>
+    return this.garages.filter((garage) =>
       garage.name.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
   }
