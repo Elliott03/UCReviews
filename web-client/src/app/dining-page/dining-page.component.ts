@@ -17,9 +17,10 @@ import { BreadcrumbService } from 'xng-breadcrumb';
 import { Filter } from 'bad-words';
 
 @Component({
-  selector: 'dining-page',
-  templateUrl: './dining-page.component.html',
-  styleUrl: './dining-page.component.scss',
+    selector: 'dining-page',
+    templateUrl: './dining-page.component.html',
+    styleUrl: './dining-page.component.scss',
+    standalone: false
 })
 export class DiningPageComponent implements OnInit, AfterViewInit {
   diningHall?: IDiningHall;

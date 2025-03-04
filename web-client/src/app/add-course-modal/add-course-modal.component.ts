@@ -10,10 +10,11 @@ import { merge } from 'rxjs';
 import { profanityValidator } from '../core/validators/profanity.validator';
 
 @Component({
-  selector: 'app-add-course-modal',
-  templateUrl: './add-course-modal.component.html',
-  styleUrls: ['./add-course-modal.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-add-course-modal',
+    templateUrl: './add-course-modal.component.html',
+    styleUrls: ['./add-course-modal.component.scss'],
+    standalone: false,
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddCourseModalComponent {
   course?: ICourse;
@@ -22,9 +23,9 @@ export class AddCourseModalComponent {
   filter: Filter = new Filter();
 
   readonly courseSubject = new FormControl('', [
-    Validators.required, 
+    Validators.required,
     Validators.pattern(/^[a-zA-Z]{2,4}$/),
-    profanityValidator()    
+    profanityValidator()
   ]);
   readonly courseName = new FormControl('', [Validators.required, profanityValidator()]);
   readonly courseNumber = new FormControl('', [Validators.required, Validators.pattern(/^\d{4}[a-zA-Z]?$/)]);
@@ -93,7 +94,7 @@ export class AddCourseModalComponent {
   }
 
   onAddCourse(): void {
-    if (this.courseSubject.invalid || this.courseName.invalid || this.courseNumber.invalid || 
+    if (this.courseSubject.invalid || this.courseName.invalid || this.courseNumber.invalid ||
       !this.courseSubject.value || !this.courseName.value || !this.courseNumber.value) {
       return;
     }

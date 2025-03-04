@@ -4,9 +4,10 @@ import { AuthService } from '../core/services/auth.service';
 import { Category } from '../Models/category.model';
 
 @Component({
-  selector: 'overall-dashboard',
-  templateUrl: './overall-dashboard.component.html',
-  styleUrls: ['./overall-dashboard.component.scss'],
+    selector: 'overall-dashboard',
+    templateUrl: './overall-dashboard.component.html',
+    styleUrls: ['./overall-dashboard.component.scss'],
+    standalone: false
 })
 export class OverallDashboardComponent implements OnInit {
   hasChildRoute = false;

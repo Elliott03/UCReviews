@@ -23,9 +23,9 @@
           <dorm-style-icon [style]="dorm.style"></dorm-style-icon>
         </li>
         <li class="attribute">
-          Cost: 
+          Cost: @for (char of dorm.cost.split(''); track char) {
           <mat-icon class="cost-icon">attach_money</mat-icon>
-          {{ dorm.cost }}
+          }
         </li>
       </ul>
     </div>
