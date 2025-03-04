@@ -23,6 +23,7 @@
     "@angular/pwa": "^19.2.0",
     "@angular/router": "^19.2.0",
     "@angular/service-worker": "^19.2.0",
+    "bad-words": "^4.0.0",
     "jwt-decode": "^4.0.0",
     "moment": "^2.29.4",
     "ng-otp-input": "^2.0.6",

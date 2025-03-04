@@ -14,6 +14,7 @@ import { ReviewsComponent } from '../shared/reviews/reviews.component';
 import { IParkingGarage } from '../Models/ParkingGarage';
 import { IReviewWithUser } from '../Models/ReviewWithUser';
 import { BreadcrumbService } from 'xng-breadcrumb';
+import { Filter } from 'bad-words';
 
 @Component({
     selector: 'garage-page',
@@ -28,6 +29,7 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
   reviewText: string = '';
   maxCharacterCount: number = 1000;
   currentCharacterCount: number = 0;
+  filter: Filter = new Filter();
 
   emailToUsername = _emailToUsername;
   convertDateToReadable = _convertDateToReadable;
@@ -105,6 +107,7 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
       parkingGarageId: this.garage.id,
     });
     const addedReview = await firstValueFrom(this._reviewService.addReview(newReview));
+    addedReview.review.reviewText = this.filter.clean(addedReview.review.reviewText);
     this.reviewsComponent.addReviewToFront({
       review: addedReview.review,
       user: {
@@ -133,6 +136,7 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
           parkingGarageId: String(this.garage.id),
         })
       );
+      reviews.forEach(r => r.review.reviewText = this.filter.clean(r.review.reviewText));
       return reviews;
     };
   }

@@ -83,3 +83,8 @@ h6,
   background-color: rgba(255, 255, 255, 0.8);
   z-index: 1000;
 }
+
+ngx-stars {
+  position: relative;
+  z-index: 1;
+}

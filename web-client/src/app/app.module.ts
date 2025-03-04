@@ -92,7 +92,6 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     ReviewsComponent,
     RouterOutlet,
     MatCheckboxModule,
-    TextFieldModule,
     BreadcrumbComponent,
     BreadcrumbItemDirective,
     MatProgressSpinnerModule,
