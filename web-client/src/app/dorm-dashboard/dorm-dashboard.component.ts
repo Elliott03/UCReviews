@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DormService } from '../core/services/dorm.service';
 import { ISmallDorm } from '../Models/Dorm';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AuthService } from '../core/services/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'dorm-dashboard',
@@ -30,17 +31,22 @@ export class DormDashboardComponent implements OnInit {
     } else {
       this._router.navigate(['/signup']);
     }
-
+  
     this._router.events.subscribe((event) => {
-      this.hasChildRoute = this._route.children.length > 0;
-      if (
-        event instanceof NavigationEnd &&
-        this._router.url.includes('/dashboard/housing/')
-      ) {
-        this.searchTerm = '';
+      if (event instanceof NavigationEnd) {
+        this.hasChildRoute = this._route.children.length > 0;
+        if (this._router.url.includes('/dashboard/housing/')) {
+          this.searchTerm = '';
+        }
+        if (this._router.url === '/dashboard/housing') {
+          this.prev = 0;
+          this.dorms = [];
+          this.loadDorms();
+        }
       }
     });
   }
+
 
   loadDorms() {
     this._dormService

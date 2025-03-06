@@ -35,10 +35,18 @@ export class CourseDashboardComponent implements OnInit {
     } else {
       this._router.navigate(['/signup']);
     }
+
     this._router.events.subscribe((event) => {
-      this.hasChildRoute = this._route.children.length > 0;
-      if (event instanceof NavigationEnd && !this.hasChildRoute) {
-        this.showAddButtons = true;
+      if (event instanceof NavigationEnd) {
+        this.hasChildRoute = this._route.children.length > 0;
+        this.showAddButtons = !this.hasChildRoute;
+
+        // Reload courses when navigating back to the dashboard
+        if (this._router.url === '/dashboard/courses') {
+          this.prev = 0;
+          this.courses = [];
+          this.loadCourses();
+        }
       }
     });
   }

@@ -33,12 +33,18 @@ export class GarageDashboardComponent implements OnInit {
     }
 
     this._router.events.subscribe((event) => {
-      this.hasChildRoute = this._route.children.length > 0;
-      if (
-        event instanceof NavigationEnd &&
-        this._router.url.includes('/dashboard/garages/')
-      ) {
-        this.searchTerm = '';
+      if (event instanceof NavigationEnd) {
+        this.hasChildRoute = this._route.children.length > 0;
+
+        if (this._router.url.includes('/dashboard/garages/')) {
+          this.searchTerm = '';
+        }
+
+        if (this._router.url === '/dashboard/garages') {
+          this.prev = 0;
+          this.garages = [];
+          this.loadGarages();
+        }
       }
     });
   }
