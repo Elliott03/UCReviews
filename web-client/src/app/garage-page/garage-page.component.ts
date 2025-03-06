@@ -57,7 +57,6 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
       this._router.navigate(['/signup']);
       return;
     }
-
     const slug = this._route.snapshot.params['slug']; 
 
     this.garage = await firstValueFrom(this._garageService.getParkingGarage(slug));

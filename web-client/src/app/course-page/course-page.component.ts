@@ -87,7 +87,7 @@ export class CoursePageComponent implements OnInit, AfterViewInit {
     } else {
       // If course is not yet loaded, listen for it
       this._route.params.subscribe(async (params) => {
-        const slug = params['name'];
+        const slug = params['slug'];
         this.course = await firstValueFrom(
           this._courseService.getCourse(slug)
         );

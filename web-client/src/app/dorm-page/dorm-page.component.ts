@@ -54,6 +54,7 @@ export class DormPageComponent implements OnInit {
 
   async ngOnInit() {
     if (this._authService.isLoggedIn()) {
+
       const queryParam = this._route.snapshot.params['name'];
       this.dorm = await firstValueFrom(this._dormService.getDorm(queryParam));
       this._bcService.set('dashboard/housing/:slug', this.dorm.name);
@@ -102,9 +103,7 @@ export class DormPageComponent implements OnInit {
     } else {
       this._route.params.subscribe(async (params) => {
         const nameQueryParameter = params['name'];
-        this.dorm = await firstValueFrom(
-          this._dormService.getDorm(nameQueryParameter)
-        );
+        this.dorm = await firstValueFrom(this._dormService.getDorm(nameQueryParameter));
         this.setDormRating();
       });
     }
