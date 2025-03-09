@@ -13,7 +13,6 @@ using System.Security.Claims;
 
 [ApiController]
 [Route("[controller]")]
-[Authorize]
 public class ReviewController : ControllerBase
 {
     private readonly IReviewService _service;
@@ -69,6 +68,7 @@ public class ReviewController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<ActionResult<ReviewWithSummary>> SaveReview(SaveReviewViewModel review)
     {
         if (review.ReviewText.Length <= 1000)
@@ -76,24 +76,29 @@ public class ReviewController : ControllerBase
         return Conflict();
     }
     [HttpGet("vote/{reviewId}")]
-    public async Task<ActionResult> UpdateVote(int reviewId, [FromQuery(Name = "voteType")] string voteType) 
+    public async Task<ActionResult> UpdateVote(int reviewId, [FromQuery(Name = "voteType")] string voteType)
     {
         var userId = GetUserIdFromJwt();
         VoteType finalVoteType;
-        if (voteType == "upvote") {
+        if (voteType == "upvote")
+        {
             finalVoteType = VoteType.Upvote;
-        } else if (voteType == "downvote") {
+        }
+        else if (voteType == "downvote")
+        {
             finalVoteType = VoteType.Downvote;
-        } else {
+        }
+        else
+        {
             finalVoteType = VoteType.NoVote;
         }
         Review reviewToVoteOn = await _service.GetReviewById(reviewId);
-        Vote vote = new Vote() 
+        Vote vote = new Vote()
         {
             ReviewId = reviewToVoteOn.Id,
             SelectedVote = finalVoteType,
             UserId = userId
-            
+
         };
         Review review = await _service.SaveVote(vote, userId);
 
@@ -106,7 +111,7 @@ public class ReviewController : ControllerBase
             return -1;
         }
 
-        var userIdClaim = HttpContext.User.Claims.FirstOrDefault(c => 
+        var userIdClaim = HttpContext.User.Claims.FirstOrDefault(c =>
             c.Type == ClaimTypes.NameIdentifier || c.Type == "sub")?.Value;
 
         if (userIdClaim == null)
@@ -118,8 +123,8 @@ public class ReviewController : ControllerBase
         {
             return userId;
         }
-    return 0;
-}
+        return 0;
+    }
 
 
 

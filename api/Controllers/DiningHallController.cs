@@ -7,7 +7,6 @@ using Microsoft.Extensions.Options;
 
 [ApiController]
 [Route("[controller]")]
-[Authorize]
 public class DiningHallController : ControllerBase
 {
     private readonly IDiningHallService _service;
