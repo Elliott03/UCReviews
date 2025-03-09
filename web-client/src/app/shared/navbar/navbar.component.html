@@ -6,6 +6,8 @@
     </a>
   </div>
   @if (isLoggedIn()) {
-  <h1 (click)="logout()" class="logout">Logout</h1>
+  <button mat-raised-button (click)="logout()" color="accent" class="auth-btn logout">Logout</button>
+  } @else {
+  <a mat-raised-button routerLink="/signup" color="accent" class="auth-btn sign-up">Sign Up</a>
   }
 </nav>

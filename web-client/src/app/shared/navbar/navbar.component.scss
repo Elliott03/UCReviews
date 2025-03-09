@@ -32,16 +32,13 @@
   font-weight: 500;
 }
 
-.logout {
-  margin-right: 15px;
-  color: get-color($shades-of-blue-grey, 10);
-  font-size: get-size(6);
-  font-family: "Inter", sans-serif;
-  font-weight: 500;
-}
-
 .title:hover,
 .logout:hover {
   color: get-color($shades-of-blue-grey, 8);
   cursor: pointer;
+}
+
+
+.auth-btn {
+  margin-right: 20px;
 }
