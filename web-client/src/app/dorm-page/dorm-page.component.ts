@@ -53,29 +53,19 @@ export class DormPageComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    if (this._authService.isLoggedIn()) {
-      const queryParam = this._route.snapshot.params['name'];
-      this.dorm = await firstValueFrom(this._dormService.getDorm(queryParam));
-      this._bcService.set('dashboard/housing/:slug', this.dorm.name);
-      const stringUser = localStorage.getItem('user');
-      if (stringUser) {
-        this.user = JSON.parse(stringUser);
-        const numberOfCharactersForEmailEnding = -12;
-        this.username = this.user?.email.slice(
-          0,
-          numberOfCharactersForEmailEnding
-        );
-      }
-    } else {
-      this._router.navigate(['/signup']);
-      return;
+    const queryParam = this._route.snapshot.params['name'];
+    this.dorm = await firstValueFrom(this._dormService.getDorm(queryParam));
+    this._bcService.set('dashboard/housing/:slug', this.dorm.name);
+    const stringUser = localStorage.getItem('user');
+    if (stringUser) {
+      this.user = JSON.parse(stringUser);
+      const numberOfCharactersForEmailEnding = -12;
+      this.username = this.user?.email.slice(
+        0,
+        numberOfCharactersForEmailEnding
+      );
+      this.username = this.user?.email.slice(0, numberOfCharactersForEmailEnding);
     }
-
-    // Get the dorm's name from the route parameters
-    const name = this._route.snapshot.params['name'];
-
-    // Fetch the dorm details using the name
-    this.dorm = await firstValueFrom(this._dormService.getDorm(name));
 
     if (!this.dorm) {
       // If the dorm is not found, redirect to another page or show an error
@@ -85,14 +75,6 @@ export class DormPageComponent implements OnInit {
 
     // Set the breadcrumb for the current dorm
     this._bcService.set('dashboard/housing/:name', this.dorm.name);
-
-    // Set the user's username if logged in
-    const stringUser = localStorage.getItem('user');
-    if (stringUser) {
-      this.user = JSON.parse(stringUser);
-      const numberOfCharactersForEmailEnding = -12;
-      this.username = this.user?.email.slice(0, numberOfCharactersForEmailEnding);
-    }
   }
 
   ngAfterViewInit() {

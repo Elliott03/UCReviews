@@ -53,10 +53,6 @@ export class CoursePageComponent implements OnInit, AfterViewInit {
   ) {}
 
   async ngOnInit() {
-    if (!this._authService.isLoggedIn()) {
-      this._router.navigate(['/signup']);
-      return;
-    }
     const slug = this._route.snapshot.params['slug'];
     this.course = await firstValueFrom(
       this._courseService.getCourse(slug)

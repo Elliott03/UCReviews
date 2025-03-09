@@ -29,12 +29,7 @@ export class CourseDashboardComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.showAddButtons = true;
-
-    if (this._authService.isLoggedIn()) {
-      this.loadCourses();
-    } else {
-      this._router.navigate(['/signup']);
-    }
+    this.loadCourses();
     this._router.events.subscribe((event) => {
       this.hasChildRoute = this._route.children.length > 0;
       if (event instanceof NavigationEnd && !this.hasChildRoute) {

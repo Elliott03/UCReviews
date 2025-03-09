@@ -65,7 +65,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     OverallDashboardComponent,
     CourseDashboardComponent,
     CoursePageComponent,
-    AddCourseModalComponent
+    AddCourseModalComponent,
   ],
   bootstrap: [AppComponent],
   imports: [
@@ -102,61 +102,52 @@ import { ServiceWorkerModule } from '@angular/service-worker';
         {
           path: 'dashboard',
           component: OverallDashboardComponent,
-          canActivate: [AuthGuard],
           data: { breadcrumb: 'Dashboard' },
           children: [
             {
               path: 'housing',
               component: DormDashboardComponent,
-              canActivate: [AuthGuard],
               data: { breadcrumb: 'Housing' },
               children: [
                 {
                   path: ':name',
                   component: DormPageComponent,
-                  canActivate: [AuthGuard],
                 },
               ],
             },
             {
               path: 'garages',
               component: GarageDashboardComponent,
-              canActivate: [AuthGuard],
               data: { breadcrumb: 'Garages' },
               children: [
                 {
                   path: ':slug',
                   component: GaragePageComponent,
-                  canActivate: [AuthGuard],
                 },
               ],
             },
             {
               path: 'dining',
               component: DiningDashboardComponent,
-              canActivate: [AuthGuard],
               data: { breadcrumb: 'Dining' },
               children: [
                 {
                   path: ':name',
                   component: DiningPageComponent,
-                  canActivate: [AuthGuard],
                 },
               ],
-              },
-              {
-                  path: 'courses',
-                  component: CourseDashboardComponent,
-                  canActivate: [AuthGuard],
-                  data: { breadcrumb: 'Courses' },
-                  children: [
-                      {
-                          path: ':slug',
-                          component: CoursePageComponent,
-                          canActivate: [AuthGuard],
-                      }
-                  ]
-              }
+            },
+            {
+              path: 'courses',
+              component: CourseDashboardComponent,
+              data: { breadcrumb: 'Courses' },
+              children: [
+                {
+                  path: ':slug',
+                  component: CoursePageComponent,
+                },
+              ],
+            },
           ],
         },
         { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -168,7 +159,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000'
+      registrationStrategy: 'registerWhenStable:30000',
     }),
   ],
   providers: [

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AuthService } from '../core/services/auth.service';
 import { Category } from '../Models/category.model';
@@ -9,7 +9,7 @@ import { Category } from '../Models/category.model';
     styleUrls: ['./overall-dashboard.component.scss'],
     standalone: false
 })
-export class OverallDashboardComponent implements OnInit {
+export class OverallDashboardComponent {
   hasChildRoute = false;
 
   categories: Category[] = [
@@ -53,12 +53,6 @@ export class OverallDashboardComponent implements OnInit {
         this.hasChildRoute = this.route.children.length > 0;
       }
     });
-  }
-
-  ngOnInit(): void {
-    if (!this._authService.isLoggedIn()) {
-      this._router.navigate(['/signup']);
-    }
   }
 
   trackByCategoryId(index: number, category: Category): number {

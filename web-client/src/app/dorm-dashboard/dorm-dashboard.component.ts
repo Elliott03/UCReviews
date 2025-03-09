@@ -25,11 +25,7 @@ export class DormDashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (this._authService.isLoggedIn()) {
-      this.loadDorms();
-    } else {
-      this._router.navigate(['/signup']);
-    }
+    this.loadDorms();
 
     this._router.events.subscribe((event) => {
       this.hasChildRoute = this._route.children.length > 0;

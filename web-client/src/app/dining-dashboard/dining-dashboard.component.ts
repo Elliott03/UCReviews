@@ -26,11 +26,7 @@ export class DiningDashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (this._authService.isLoggedIn()) {
-      this.loadDiningHalls();
-    } else {
-      this._router.navigate(['/signup']);
-    }
+    this.loadDiningHalls();
 
     this._router.events.subscribe((event) => {
       this.hasChildRoute = this._route.children.length > 0;

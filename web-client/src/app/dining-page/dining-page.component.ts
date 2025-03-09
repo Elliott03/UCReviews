@@ -55,10 +55,6 @@ export class DiningPageComponent implements OnInit, AfterViewInit {
   ) {}
 
   async ngOnInit() {
-    if (!this._authService.isLoggedIn()) {
-      this._router.navigate(['/signup']);
-      return;
-    }
     const nameQueryParameter = this._route.snapshot.params['name'];
     this.JSON = JSON;
     this.diningHall = await firstValueFrom(
