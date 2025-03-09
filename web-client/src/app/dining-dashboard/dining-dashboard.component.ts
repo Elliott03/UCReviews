@@ -33,9 +33,17 @@ export class DiningDashboardComponent implements OnInit {
     }
 
     this._router.events.subscribe((event) => {
-      this.hasChildRoute = this._route.children.length > 0;
-      if (event instanceof NavigationEnd && this._router.url.includes('/dashboard/dining/')) {
+      if (event instanceof NavigationEnd) {
+        this.hasChildRoute = this._route.children.length > 0;
+
+        if (this._router.url.includes('/dashboard/dining/')) {
           this.searchTerm = '';
+        }
+        if (this._router.url === '/dashboard/dining') {
+          this.prev = 0;
+          this.diningHalls = [];
+          this.loadDiningHalls();
+        }
       }
     });
   }

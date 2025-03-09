@@ -69,7 +69,6 @@ export class ReviewsComponent {
         this.reviews?.set(review.id, reviewWithUser);
         this.prev = review.id;
       }
-      console.log(review);
     }
   }
 
@@ -107,7 +106,6 @@ export class ReviewsComponent {
     this._reviewService
       .updateVote(review, vote)
       .subscribe((review: IReview) => {
-        console.log(review);
         this.reviews.forEach((val, index) => {
           if (val.review.id == review.id) {
             val.review.averageVote = review.averageVote;
