@@ -17,10 +17,10 @@ import { BreadcrumbService } from 'xng-breadcrumb';
 import { Filter } from 'bad-words';
 
 @Component({
-    selector: 'dorm-page',
-    templateUrl: './dorm-page.component.html',
-    styleUrls: ['./dorm-page.component.scss'],
-    standalone: false
+  selector: 'dorm-page',
+  templateUrl: './dorm-page.component.html',
+  styleUrls: ['./dorm-page.component.scss'],
+  standalone: false,
 })
 export class DormPageComponent implements OnInit {
   dorm: ILargeDorm | undefined;
@@ -64,7 +64,10 @@ export class DormPageComponent implements OnInit {
         0,
         numberOfCharactersForEmailEnding
       );
-      this.username = this.user?.email.slice(0, numberOfCharactersForEmailEnding);
+      this.username = this.user?.email.slice(
+        0,
+        numberOfCharactersForEmailEnding
+      );
     }
 
     if (!this.dorm) {
@@ -94,7 +97,9 @@ export class DormPageComponent implements OnInit {
 
   setDormRating() {
     if (this.dormStarsComponent && this.dorm) {
-      this.dormStarsComponent.setRating(this.dorm.reviewSummary?.averageRating || 0);
+      this.dormStarsComponent.setRating(
+        this.dorm.reviewSummary?.averageRating || 0
+      );
     }
   }
 
@@ -112,8 +117,12 @@ export class DormPageComponent implements OnInit {
       userId,
       dormId: this.dorm.id,
     });
-    const addedReview = await firstValueFrom(this._reviewService.addReview(newReview));
-    addedReview.review.reviewText = this.filter.clean(addedReview.review.reviewText);
+    const addedReview = await firstValueFrom(
+      this._reviewService.addReview(newReview)
+    );
+    addedReview.review.reviewText = this.filter.clean(
+      addedReview.review.reviewText
+    );
     this.reviewsComponent.addReviewToFront({
       review: addedReview.review,
       user: {
@@ -127,16 +136,26 @@ export class DormPageComponent implements OnInit {
     this.currentCharacterCount = 0;
   }
 
-  getReviewsLoader(): (params: PageableQueryParam) => Promise<IReviewWithUser[]> {
+  getReviewsLoader(): (
+    params: PageableQueryParam
+  ) => Promise<IReviewWithUser[]> {
     return async ({ prev, perPage }: PageableQueryParam) => {
       if (!this.dorm) return [];
-      const reviews = await firstValueFrom(this._reviewService.getReviewsByDormId({
-        perPage,
-        prev,
-        dormId: String(this.dorm.id),
-      }));
-      reviews.forEach((r) => r.review.reviewText = this.filter.clean(r.review.reviewText));
+      const reviews = await firstValueFrom(
+        this._reviewService.getReviewsByDormId({
+          perPage,
+          prev,
+          dormId: String(this.dorm.id),
+        })
+      );
+      reviews.forEach(
+        (r) => (r.review.reviewText = this.filter.clean(r.review.reviewText))
+      );
       return reviews;
     };
+  }
+
+  isLoggedIn() {
+    return this._authService.isLoggedIn();
   }
 }

@@ -17,10 +17,10 @@ import { BreadcrumbService } from 'xng-breadcrumb';
 import { Filter } from 'bad-words';
 
 @Component({
-    selector: 'garage-page',
-    templateUrl: './garage-page.component.html',
-    styleUrls: ['./garage-page.component.scss'],
-    standalone: false
+  selector: 'garage-page',
+  templateUrl: './garage-page.component.html',
+  styleUrls: ['./garage-page.component.scss'],
+  standalone: false,
 })
 export class GaragePageComponent implements OnInit, AfterViewInit {
   garage?: IParkingGarage;
@@ -54,7 +54,9 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
 
   async ngOnInit() {
     const slug = this._route.snapshot.params['slug'];
-    this.garage = await firstValueFrom(this._garageService.getParkingGarage(slug));
+    this.garage = await firstValueFrom(
+      this._garageService.getParkingGarage(slug)
+    );
 
     if (!this.garage) {
       this._router.navigate(['/dashboard', 'garages']);
@@ -63,11 +65,15 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
 
     this._bcService.set('dashboard/garages/:slug', this.garage.name);
 
-    const stringUser = localStorage.getItem('user');
+    const stringUser =
+      this._authService.isLoggedIn() && localStorage.getItem('user');
     if (stringUser) {
       this.user = JSON.parse(stringUser);
       const numberOfCharactersForEmailEnding = -12;
-      this.username = this.user?.email.slice(0, numberOfCharactersForEmailEnding);
+      this.username = this.user?.email.slice(
+        0,
+        numberOfCharactersForEmailEnding
+      );
     }
   }
 
@@ -87,7 +93,9 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
 
   private setGarageRating() {
     if (this.garageStarsComponent && this.garage) {
-      this.garageStarsComponent.setRating(this.garage.reviewSummary?.averageRating || 0);
+      this.garageStarsComponent.setRating(
+        this.garage.reviewSummary?.averageRating || 0
+      );
     }
   }
 
@@ -100,8 +108,12 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
       userId,
       parkingGarageId: this.garage.id,
     });
-    const addedReview = await firstValueFrom(this._reviewService.addReview(newReview));
-    addedReview.review.reviewText = this.filter.clean(addedReview.review.reviewText);
+    const addedReview = await firstValueFrom(
+      this._reviewService.addReview(newReview)
+    );
+    addedReview.review.reviewText = this.filter.clean(
+      addedReview.review.reviewText
+    );
     this.reviewsComponent.addReviewToFront({
       review: addedReview.review,
       user: {
@@ -120,7 +132,9 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
     this.currentCharacterCount = currentText.length;
   }
 
-  getReviewsLoader(): (params: PageableQueryParam) => Promise<IReviewWithUser[]> {
+  getReviewsLoader(): (
+    params: PageableQueryParam
+  ) => Promise<IReviewWithUser[]> {
     return async ({ prev, perPage }: PageableQueryParam) => {
       if (!this.garage) return [];
       const reviews = await firstValueFrom(
@@ -130,8 +144,14 @@ export class GaragePageComponent implements OnInit, AfterViewInit {
           parkingGarageId: String(this.garage.id),
         })
       );
-      reviews.forEach(r => r.review.reviewText = this.filter.clean(r.review.reviewText));
+      reviews.forEach(
+        (r) => (r.review.reviewText = this.filter.clean(r.review.reviewText))
+      );
       return reviews;
     };
+  }
+
+  isLoggedIn() {
+    return this._authService.isLoggedIn();
   }
 }

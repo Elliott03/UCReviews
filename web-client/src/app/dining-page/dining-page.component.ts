@@ -17,10 +17,10 @@ import { BreadcrumbService } from 'xng-breadcrumb';
 import { Filter } from 'bad-words';
 
 @Component({
-    selector: 'dining-page',
-    templateUrl: './dining-page.component.html',
-    styleUrl: './dining-page.component.scss',
-    standalone: false
+  selector: 'dining-page',
+  templateUrl: './dining-page.component.html',
+  styleUrl: './dining-page.component.scss',
+  standalone: false,
 })
 export class DiningPageComponent implements OnInit, AfterViewInit {
   diningHall?: IDiningHall;
@@ -116,7 +116,9 @@ export class DiningPageComponent implements OnInit, AfterViewInit {
     const addedReview = await firstValueFrom(
       this._reviewService.addReview(newReview)
     );
-    addedReview.review.reviewText = this.filter.clean(addedReview.review.reviewText);
+    addedReview.review.reviewText = this.filter.clean(
+      addedReview.review.reviewText
+    );
     this.reviewsComponent.addReviewToFront({
       review: addedReview.review,
       user: {
@@ -147,8 +149,14 @@ export class DiningPageComponent implements OnInit, AfterViewInit {
           diningHallId: String(this.diningHall.id),
         })
       );
-      reviews.forEach((r) => r.review.reviewText = this.filter.clean(r.review.reviewText));
+      reviews.forEach(
+        (r) => (r.review.reviewText = this.filter.clean(r.review.reviewText))
+      );
       return reviews;
     };
+  }
+
+  isLoggedIn() {
+    return this._authService.isLoggedIn();
   }
 }
