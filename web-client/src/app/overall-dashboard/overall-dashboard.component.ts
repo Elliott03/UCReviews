@@ -29,14 +29,14 @@ export class OverallDashboardComponent {
     },
     {
       name: 'Dining Halls',
-      description: 'Rate and review all dining locations.',
+      description: 'View and review all dining locations.',
       image: 'dining-halls.jpg',
       id: 3,
       path: '/dashboard/dining',
     },
     {
       name: 'Courses',
-      description: 'Rate and review courses.',
+      description: 'View and review courses.',
       image: 'courses.jpg',
       id: 4,
       path: '/dashboard/courses',
